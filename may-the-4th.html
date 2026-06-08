@@ -1,0 +1,615 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Saber Legacy — Reporte 4 de mayo</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg: #0a0c10;
+    --panel: #12161c;
+    --panel-2: #181d24;
+    --border: #232a32;
+    --text: #e8ebf0;
+    --muted: #8a93a0;
+    --accent: #6aa9ff;
+    --accent-2: #b794f6;
+    --pos: #4ade80;
+    --neg: #f87171;
+    --warn: #fbbf24;
+    --hot: #fb7185;
+    --base: #64748b;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin:0; padding:0; background: var(--bg); color: var(--text); font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 14px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 1440px; margin: 0 auto; padding: 36px 28px 80px; }
+  header { margin-bottom: 32px; display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; flex-wrap: wrap; }
+  h1 { font-size: 28px; font-weight: 700; margin: 0 0 6px; letter-spacing: -0.02em; }
+  .sub { color: var(--muted); font-size: 13px; }
+  .sub strong { color: var(--text); font-weight: 500; }
+  .grade { padding: 10px 18px; border-radius: 12px; font-size: 13px; font-weight: 600; letter-spacing: 0.02em; }
+  .grade-good { background: rgba(74,222,128,0.12); color: var(--pos); border: 1px solid rgba(74,222,128,0.3); }
+  .grade-mid { background: rgba(251,191,36,0.12); color: var(--warn); border: 1px solid rgba(251,191,36,0.3); }
+  .grade-bad { background: rgba(248,113,113,0.12); color: var(--neg); border: 1px solid rgba(248,113,113,0.3); }
+  .grade .label { display: block; font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.8; }
+  .grade .text { font-size: 16px; }
+
+  h2 { font-size: 16px; font-weight: 600; margin: 36px 0 14px; letter-spacing: -0.01em; }
+  h2 .hint { font-weight: 400; color: var(--muted); font-size: 13px; margin-left: 8px; }
+
+  .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 8px; }
+  .kpi { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; }
+  .kpi .label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); font-weight: 600; }
+  .kpi .val { font-size: 26px; font-weight: 700; margin: 8px 0 6px; letter-spacing: -0.02em; }
+  .kpi .baseline { font-size: 12px; color: var(--muted); }
+  .chg { font-weight: 600; font-size: 12px; }
+  .chg.pos { color: var(--pos); }
+  .chg.neg { color: var(--neg); }
+  .muted { color: var(--muted); }
+
+  .verdict { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 22px 26px; margin: 28px 0 8px; }
+  .verdict h2 { margin-top: 0; }
+  .verdict .summary { color: var(--text); font-size: 15px; margin-bottom: 12px; line-height: 1.55; }
+  .bullets { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+  .bullet { display: flex; gap: 12px; align-items: flex-start; padding: 10px 14px; background: var(--panel-2); border-radius: 8px; border-left: 3px solid var(--border); }
+  .bullet.positive { border-left-color: var(--pos); }
+  .bullet.negative { border-left-color: var(--neg); }
+  .bullet.neutral { border-left-color: var(--warn); }
+  .bullet .icon { font-weight: 700; font-size: 13px; flex-shrink: 0; min-width: 16px; }
+  .bullet.positive .icon { color: var(--pos); }
+  .bullet.negative .icon { color: var(--neg); }
+  .bullet.neutral .icon { color: var(--warn); }
+
+  .panel { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 22px; }
+  .panel.chart-panel { position: relative; }
+  .chart-grid { display: grid; gap: 16px; grid-template-columns: 1fr; }
+  @media (min-width: 1000px) { .chart-grid.two { grid-template-columns: 1fr 1fr; } }
+  .chart-wrap { height: 320px; position: relative; }
+  .chart-wrap.tall { height: 380px; }
+
+  table { width: 100%; border-collapse: collapse; }
+  thead th { background: var(--panel-2); color: var(--muted); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; padding: 12px 14px; text-align: left; border-bottom: 1px solid var(--border); }
+  thead th.num { text-align: right; }
+  tbody td { padding: 14px; border-bottom: 1px solid var(--border); vertical-align: top; font-size: 13px; }
+  tbody tr:last-child td { border-bottom: 0; }
+  tbody td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .name { font-weight: 500; font-size: 14px; }
+  .prev { font-size: 11px; color: var(--muted); margin-top: 3px; font-weight: 400; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; margin-left: 6px; vertical-align: middle; }
+  .badge.new { background: rgba(106,169,255,0.15); color: var(--accent); }
+  .badge.gone { background: rgba(138,147,160,0.15); color: var(--muted); }
+
+  .table-panel { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; overflow-x: auto; }
+  .table-panel table { min-width: 100%; }
+
+  .legend-tag { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); margin-right: 16px; }
+  .legend-tag .dot { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+  .legend-tag .dot.hot { background: var(--hot); }
+  .legend-tag .dot.base { background: var(--base); }
+
+  footer { color: var(--muted); font-size: 12px; margin-top: 32px; text-align: center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Saber Legacy — Cómo te fue en May the 4th 🎬</h1>
+      <div class="sub">Semana fuerte: <strong>2026-05-01 → 2026-05-07</strong> · Semana base: <strong>2026-04-24 → 2026-04-30</strong> · MXN · Generado 2026-05-14 17:00</div>
+    </div>
+    <div class="grade grade-good">
+      <span class="label">Veredicto</span>
+      <span class="text">BUEN TRABAJO</span>
+    </div>
+  </header>
+
+  <h2>KPIs principales <span class="hint">semana del 4 de mayo · Δ vs semana base previa</span></h2>
+  <div class="kpis">
+    <div class="kpi">
+      <div class="label">Gasto</div>
+      <div class="val">$73,556.04</div>
+      <div class="baseline"><span class="chg pos">+156.1%</span> vs $28,722.35</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Ingresos (revenue)</div>
+      <div class="val">$599,468.40</div>
+      <div class="baseline"><span class="chg pos">+437.9%</span> vs $111,449.20</div>
+    </div>
+    <div class="kpi">
+      <div class="label">ROAS</div>
+      <div class="val">8.15x</div>
+      <div class="baseline"><span class="chg pos">+110.0%</span> vs 3.88x</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Compras</div>
+      <div class="val">111</div>
+      <div class="baseline"><span class="chg pos">+382.6%</span> vs 23</div>
+    </div>
+    <div class="kpi">
+      <div class="label">CPA</div>
+      <div class="val">$662.67</div>
+      <div class="baseline"><span class="chg pos">-46.9%</span> vs $1,248.80</div>
+    </div>
+    <div class="kpi">
+      <div class="label">CTR</div>
+      <div class="val">3.21%</div>
+      <div class="baseline"><span class="chg pos">+35.6%</span> vs 2.37%</div>
+    </div>
+    <div class="kpi">
+      <div class="label">CPC</div>
+      <div class="val">$1.22</div>
+      <div class="baseline"><span class="chg pos">-27.0%</span> vs $1.67</div>
+    </div>
+    <div class="kpi">
+      <div class="label">CPM</div>
+      <div class="val">$39.16</div>
+      <div class="baseline"><span class="chg pos">-1.0%</span> vs $39.56</div>
+    </div>
+  </div>
+
+  <div class="verdict">
+    <h2>Diagnóstico ejecutivo</h2>
+    <div class="summary">El media buyer ejecutó bien la temporada fuerte: escaló inversión sin perder eficiencia material.</div>
+    <ul class="bullets">
+      <li class="bullet positive"><span class="icon">✓</span><span>Inversión escaló a tiempo: gasto +156% en la semana del 4 de mayo, aprovechando la fecha clave.</span></li><li class="bullet positive"><span class="icon">✓</span><span>ROAS se mantuvo o mejoró pese a escalar gasto: 8.15x vs 3.88x base (+110.0%). Señal fuerte de campañas saludables.</span></li><li class="bullet positive"><span class="icon">✓</span><span>CPC se mantuvo controlado: $1.22 vs $1.67 (-27.0%). En fechas pico es normal pagar más por subasta.</span></li><li class="bullet positive"><span class="icon">✓</span><span>Compras crecieron +383% (23 → 111) — el escalado se tradujo en volumen real.</span></li><li class="bullet positive"><span class="icon">✓</span><span>CPA bajó: $1248.80 → $662.67 (-46.9%). Mayor eficiencia adquiriendo clientes.</span></li><li class="bullet positive"><span class="icon">✓</span><span>Frecuencia promedio sana (2.5) — sin saturación visible.</span></li>
+    </ul>
+  </div>
+
+  <h2>Evolución diaria — gasto y ROAS <span class="hint">1 abr → 13 may · banda rosa = semana 4 de mayo</span></h2>
+  <div class="panel chart-panel">
+    <div class="chart-wrap tall">
+      <canvas id="chartDaily"></canvas>
+    </div>
+  </div>
+
+  <h2>Compras y CPC por día</h2>
+  <div class="chart-grid two">
+    <div class="panel chart-panel">
+      <div class="chart-wrap">
+        <canvas id="chartPurchases"></canvas>
+      </div>
+    </div>
+    <div class="panel chart-panel">
+      <div class="chart-wrap">
+        <canvas id="chartCpcCtr"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <h2>Comparativa por campaña <span class="hint">
+    <span class="legend-tag"><span class="dot hot"></span>Semana 4 de mayo</span>
+    <span class="legend-tag"><span class="dot base"></span>Semana base</span>
+  </span></h2>
+  <div class="chart-grid two">
+    <div class="panel chart-panel">
+      <div class="chart-wrap">
+        <canvas id="chartCampSpend"></canvas>
+      </div>
+    </div>
+    <div class="panel chart-panel">
+      <div class="chart-wrap">
+        <canvas id="chartCampRoas"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <h2>CTR por campaña — hot vs base</h2>
+  <div class="panel chart-panel">
+    <div class="chart-wrap">
+      <canvas id="chartCampCtr"></canvas>
+    </div>
+  </div>
+
+  <h2>Detalle por campaña</h2>
+  <div class="table-panel">
+    <table>
+      <thead>
+        <tr>
+          <th>Campaña</th>
+          <th class="num">Gasto</th>
+          <th class="num">Revenue</th>
+          <th class="num">ROAS</th>
+          <th class="num">Compras</th>
+          <th class="num">CPA</th>
+          <th class="num">CTR</th>
+          <th class="num">CPC</th>
+          <th class="num">Frecuencia</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+  <td><div class="name">MAY 4TH 2026 <span class="badge new">nuevo</span></div></td>
+  <td class="num">$54,488.07<div class="prev">base: —</div></td>
+  <td class="num">$427,399.10<div class="prev">base: —</div></td>
+  <td class="num">7.84x<div class="prev">base: —</div></td>
+  <td class="num">82<div class="prev">base: —</div></td>
+  <td class="num">$664.49<div class="prev">base: —</div></td>
+  <td class="num">2.73%<div class="prev">base: —</div></td>
+  <td class="num">$1.41<div class="prev">base: —</div></td>
+  <td class="num">2.64<div class="prev">base: —</div></td>
+</tr><tr>
+  <td><div class="name">[TJ] - ABO INICIAL</div></td>
+  <td class="num">$6,927.66<div class="prev">base: $21,867.10</div><div class="prev"><span class="chg neg">-68.3%</span></div></td>
+  <td class="num">$66,506.65<div class="prev">base: $66,310.00</div><div class="prev"><span class="chg pos">+0.3%</span></div></td>
+  <td class="num">9.60x<div class="prev">base: 3.03x</div><div class="prev"><span class="chg pos">+216.6%</span></div></td>
+  <td class="num">12<div class="prev">base: 14</div><div class="prev"><span class="chg neg">-14.3%</span></div></td>
+  <td class="num">$577.30<div class="prev">base: $1,561.94</div><div class="prev"><span class="chg pos">-63.0%</span></div></td>
+  <td class="num">2.05%<div class="prev">base: 2.07%</div><div class="prev"><span class="chg neg">-1.1%</span></div></td>
+  <td class="num">$2.68<div class="prev">base: $1.71</div><div class="prev"><span class="chg neg">+56.6%</span></div></td>
+  <td class="num">2.48<div class="prev">base: 2.80</div><div class="prev"><span class="chg pos">-11.6%</span></div></td>
+</tr><tr>
+  <td><div class="name">CONV v13</div></td>
+  <td class="num">$5,135.99<div class="prev">base: $3,326.55</div><div class="prev"><span class="chg pos">+54.4%</span></div></td>
+  <td class="num">$72,830.65<div class="prev">base: $25,718.10</div><div class="prev"><span class="chg pos">+183.2%</span></div></td>
+  <td class="num">14.18x<div class="prev">base: 7.73x</div><div class="prev"><span class="chg pos">+83.4%</span></div></td>
+  <td class="num">11<div class="prev">base: 5</div><div class="prev"><span class="chg pos">+120.0%</span></div></td>
+  <td class="num">$466.91<div class="prev">base: $665.31</div><div class="prev"><span class="chg pos">-29.8%</span></div></td>
+  <td class="num">4.38%<div class="prev">base: 3.66%</div><div class="prev"><span class="chg pos">+19.6%</span></div></td>
+  <td class="num">$1.71<div class="prev">base: $2.83</div><div class="prev"><span class="chg pos">-39.4%</span></div></td>
+  <td class="num">2.24<div class="prev">base: 1.87</div><div class="prev"><span class="chg neg">+20.4%</span></div></td>
+</tr><tr>
+  <td><div class="name">Traff</div></td>
+  <td class="num">$2,865.89<div class="prev">base: $373.23</div><div class="prev"><span class="chg pos">+667.9%</span></div></td>
+  <td class="num">$0.00<div class="prev">base: $0.00</div></td>
+  <td class="num">0.00x<div class="prev">base: 0.00x</div></td>
+  <td class="num">0<div class="prev">base: 0</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">7.45%<div class="prev">base: 9.20%</div><div class="prev"><span class="chg neg">-19.0%</span></div></td>
+  <td class="num">$0.20<div class="prev">base: $0.20</div><div class="prev"><span class="chg pos">-1.9%</span></div></td>
+  <td class="num">1.18<div class="prev">base: 1.05</div><div class="prev"><span class="chg neg">+11.9%</span></div></td>
+</tr><tr>
+  <td><div class="name">SL RMKT v2</div></td>
+  <td class="num">$2,079.76<div class="prev">base: $1,081.55</div><div class="prev"><span class="chg pos">+92.3%</span></div></td>
+  <td class="num">$7,514.00<div class="prev">base: $17,018.10</div><div class="prev"><span class="chg neg">-55.8%</span></div></td>
+  <td class="num">3.61x<div class="prev">base: 15.73x</div><div class="prev"><span class="chg neg">-77.0%</span></div></td>
+  <td class="num">2<div class="prev">base: 3</div><div class="prev"><span class="chg neg">-33.3%</span></div></td>
+  <td class="num">$1,039.88<div class="prev">base: $360.52</div><div class="prev"><span class="chg neg">+188.4%</span></div></td>
+  <td class="num">3.20%<div class="prev">base: 3.37%</div><div class="prev"><span class="chg neg">-5.1%</span></div></td>
+  <td class="num">$2.48<div class="prev">base: $2.36</div><div class="prev"><span class="chg neg">+5.3%</span></div></td>
+  <td class="num">2.96<div class="prev">base: 2.15</div><div class="prev"><span class="chg neg">+37.5%</span></div></td>
+</tr><tr>
+  <td><div class="name">RMKT v3 - Cat</div></td>
+  <td class="num">$2,058.67<div class="prev">base: $2,073.92</div><div class="prev"><span class="chg neg">-0.7%</span></div></td>
+  <td class="num">$25,218.00<div class="prev">base: $2,403.00</div><div class="prev"><span class="chg pos">+949.4%</span></div></td>
+  <td class="num">12.25x<div class="prev">base: 1.16x</div><div class="prev"><span class="chg pos">+957.2%</span></div></td>
+  <td class="num">4<div class="prev">base: 1</div><div class="prev"><span class="chg pos">+300.0%</span></div></td>
+  <td class="num">$514.67<div class="prev">base: $2,073.92</div><div class="prev"><span class="chg pos">-75.2%</span></div></td>
+  <td class="num">1.88%<div class="prev">base: 2.18%</div><div class="prev"><span class="chg neg">-13.7%</span></div></td>
+  <td class="num">$2.28<div class="prev">base: $2.13</div><div class="prev"><span class="chg neg">+7.1%</span></div></td>
+  <td class="num">3.38<div class="prev">base: 4.71</div><div class="prev"><span class="chg pos">-28.1%</span></div></td>
+</tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Top conjuntos de anuncios — semana 4 de mayo</h2>
+  <div class="table-panel">
+    <table>
+      <thead>
+        <tr>
+          <th>Conjunto / Campaña</th>
+          <th class="num">Gasto</th>
+          <th class="num">Revenue</th>
+          <th class="num">ROAS</th>
+          <th class="num">Compras</th>
+          <th class="num">CPA</th>
+          <th class="num">CTR</th>
+          <th class="num">CPC</th>
+          <th class="num">Frecuencia</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+  <td><div class="name">UGC</div><div class="prev">MAY 4TH 2026</div></td>
+  <td class="num">$38,131.45</td>
+  <td class="num">$281,362.95</td>
+  <td class="num">7.38x</td>
+  <td class="num">55</td>
+  <td class="num">$693.30</td>
+  <td class="num">3.09%</td>
+  <td class="num">$1.19</td>
+  <td class="num">2.03</td>
+</tr><tr>
+  <td><div class="name">STATIC</div><div class="prev">MAY 4TH 2026</div></td>
+  <td class="num">$16,356.62</td>
+  <td class="num">$146,036.15</td>
+  <td class="num">8.93x</td>
+  <td class="num">27</td>
+  <td class="num">$605.80</td>
+  <td class="num">1.73%</td>
+  <td class="num">$2.51</td>
+  <td class="num">3.15</td>
+</tr><tr>
+  <td><div class="name">Personajes Evergreen CC$1000</div><div class="prev">CONV v13</div></td>
+  <td class="num">$5,135.99</td>
+  <td class="num">$72,830.65</td>
+  <td class="num">14.18x</td>
+  <td class="num">11</td>
+  <td class="num">$466.91</td>
+  <td class="num">4.38%</td>
+  <td class="num">$1.71</td>
+  <td class="num">2.24</td>
+</tr><tr>
+  <td><div class="name">TJ - M4 - F2 - CC$1000 - Imágenes</div><div class="prev">[TJ] - ABO INICIAL</div></td>
+  <td class="num">$4,546.10</td>
+  <td class="num">$32,521.00</td>
+  <td class="num">7.15x</td>
+  <td class="num">6</td>
+  <td class="num">$757.68</td>
+  <td class="num">1.87%</td>
+  <td class="num">$2.54</td>
+  <td class="num">2.08</td>
+</tr><tr>
+  <td><div class="name">Int + Money</div><div class="prev">Traff</div></td>
+  <td class="num">$2,865.89</td>
+  <td class="num">$0.00</td>
+  <td class="num">0.00x</td>
+  <td class="num">0</td>
+  <td class="num">—</td>
+  <td class="num">7.45%</td>
+  <td class="num">$0.20</td>
+  <td class="num">1.18</td>
+</tr><tr>
+  <td><div class="name">TJ - M4 - F2 - CC$1000 - Videos</div><div class="prev">[TJ] - ABO INICIAL</div></td>
+  <td class="num">$2,381.56</td>
+  <td class="num">$19,608.65</td>
+  <td class="num">8.23x</td>
+  <td class="num">4</td>
+  <td class="num">$595.39</td>
+  <td class="num">2.61%</td>
+  <td class="num">$3.00</td>
+  <td class="num">1.77</td>
+</tr><tr>
+  <td><div class="name">RMKT</div><div class="prev">SL RMKT v2</div></td>
+  <td class="num">$2,079.76</td>
+  <td class="num">$7,514.00</td>
+  <td class="num">3.61x</td>
+  <td class="num">2</td>
+  <td class="num">$1,039.88</td>
+  <td class="num">3.20%</td>
+  <td class="num">$2.48</td>
+  <td class="num">2.96</td>
+</tr><tr>
+  <td><div class="name">RMKT - 60 days - CC$500</div><div class="prev">RMKT v3 - Cat</div></td>
+  <td class="num">$2,058.67</td>
+  <td class="num">$25,218.00</td>
+  <td class="num">12.25x</td>
+  <td class="num">4</td>
+  <td class="num">$514.67</td>
+  <td class="num">1.88%</td>
+  <td class="num">$2.28</td>
+  <td class="num">3.38</td>
+</tr><tr>
+  <td><div class="name">TJ - M4 - F1 - CC$1000 - Videos</div><div class="prev">[TJ] - ABO INICIAL</div></td>
+  <td class="num">$0.00</td>
+  <td class="num">$8,007.00</td>
+  <td class="num">0.00x</td>
+  <td class="num">1</td>
+  <td class="num">—</td>
+  <td class="num">0.00%</td>
+  <td class="num">$0.00</td>
+  <td class="num">0.00</td>
+</tr><tr>
+  <td><div class="name">TJ - E2 - F1 - CC$1000 - Imágenes</div><div class="prev">[TJ] - ABO INICIAL</div></td>
+  <td class="num">$0.00</td>
+  <td class="num">$6,370.00</td>
+  <td class="num">0.00x</td>
+  <td class="num">1</td>
+  <td class="num">—</td>
+  <td class="num">0.00%</td>
+  <td class="num">$0.00</td>
+  <td class="num">0.00</td>
+</tr>
+      </tbody>
+    </table>
+  </div>
+
+  <footer>
+    Fuente: Marketing API v21.0 · Cuenta act_461452066012476 (Saber Legacy Ad account) · Moneda MXN · Compras y revenue medidos vía píxel de Meta (purchase / omni_purchase).
+  </footer>
+</div>
+
+<script>
+const dates = ["2026-04-01", "2026-04-02", "2026-04-03", "2026-04-04", "2026-04-05", "2026-04-06", "2026-04-07", "2026-04-08", "2026-04-09", "2026-04-10", "2026-04-11", "2026-04-12", "2026-04-13", "2026-04-14", "2026-04-15", "2026-04-16", "2026-04-17", "2026-04-18", "2026-04-19", "2026-04-20", "2026-04-21", "2026-04-22", "2026-04-23", "2026-04-24", "2026-04-25", "2026-04-26", "2026-04-27", "2026-04-28", "2026-04-29", "2026-04-30", "2026-05-01", "2026-05-02", "2026-05-03", "2026-05-04", "2026-05-05", "2026-05-06", "2026-05-07", "2026-05-08", "2026-05-09", "2026-05-10", "2026-05-11", "2026-05-12", "2026-05-13"];
+const spendDaily = [1088.85, 880.53, 1039.71, 805.56, 1219.13, 1193.4, 1093.26, 1043.32, 1320.22, 1246.42, 976.79, 1236.33, 1184.55, 1079.71, 1127.04, 207.21, 708.47, 766.29, 203.13, 903.33, 1703.5, 2861.43, 3525.7, 3209.43, 3372.97, 5272.35, 4466.72, 4231.25, 4065.58, 4104.05, 10883.17, 14287.89, 16346.77, 27964.01, 2025.7, 1023.71, 1024.79, 1027.39, 990.37, 962.52, 573.21, 609.6, 617.57];
+const purchDaily = [0.0, 0.0, 2.0, 1.0, 1.0, 1.0, 1.0, 0.0, 2.0, 1.0, 2.0, 2.0, 0.0, 2.0, 1.0, 0.0, 2.0, 0.0, 1.0, 3.0, 2.0, 3.0, 4.0, 1.0, 2.0, 2.0, 7.0, 3.0, 1.0, 7.0, 17.0, 24.0, 24.0, 43.0, 2.0, 1.0, 0.0, 2.0, 0.0, 0.0, 0.0, 0.0, 0.0];
+const roasDaily = [0.0, 0.0, 13.455963682180608, 4.0965291225979445, 2.4361634936389063, 4.851684263448969, 4.89224887035106, 0.0, 6.314856614806623, 2.3828244091076844, 12.202213372372773, 4.564315352697096, 0.0, 8.446712543182892, 5.651591780238501, 0.0, 24.76604513952602, 0.0, 38.28090385467435, 15.077546411610374, 5.23569122395069, 6.973086883131861, 4.923277646992087, 1.4158588908310823, 4.440003913464988, 2.5394748072491393, 8.41266074434932, 2.098434268833087, 1.4101309038316796, 6.420755107759407, 8.21218450139068, 10.12540690052905, 6.7744239381847295, 8.65371776079325, 3.9191390630399368, 4.641451192232175, 0.0, 6.907795481754737, 0.0, 0.0, 0.0, 0.0, 0.0];
+const ctrDaily = [8.668446, 8.387001, 6.035065, 4.720312, 2.549836, 2.342512, 2.64465, 2.570434, 2.361785, 2.645854, 2.231345, 2.305539, 2.262854, 2.176507, 2.408807, 2.874396, 2.486766, 2.624979, 2.734884, 2.226833, 2.267932, 2.339569, 2.250203, 2.432648, 2.128238, 2.153684, 1.955373, 2.200485, 2.857241, 2.903062, 3.111813, 3.037919, 2.840284, 3.411611, 4.614862, 3.959469, 3.753903, 3.578056, 4.097548, 3.993586, 4.348005, 4.251284, 3.511637];
+const cpcDaily = [0.360546, 0.388583, 0.554216, 0.792874, 1.336765, 1.717122, 1.801087, 1.643024, 1.750955, 1.648704, 2.114264, 1.686671, 1.636119, 2.04104, 1.69991, 1.741261, 1.753639, 1.626943, 1.381837, 1.402686, 1.886489, 1.930789, 1.926612, 1.948652, 1.596294, 2.119112, 2.166208, 1.55962, 1.224204, 1.433479, 1.266811, 1.384083, 1.466341, 1.041645, 1.356798, 1.100763, 1.00273, 1.005274, 0.826686, 0.743259, 0.543327, 0.566543, 0.718105];
+
+const HOT_START = "2026-05-01";
+const HOT_END = "2026-05-07";
+
+const chartNames = ["MAY 4TH 2026", "[TJ] - ABO INICIAL", "CONV v13", "Traff", "SL RMKT v2", "RMKT v3 - Cat"];
+const spendHot = [54488.07, 6927.66, 5135.99, 2865.89, 2079.76, 2058.67];
+const spendBase = [0, 21867.1, 3326.55, 373.23, 1081.55, 2073.92];
+const roasHot = [7.843902344127806, 9.600160804658426, 14.180450117698827, 0.0, 3.612916875024041, 12.249656331515007];
+const roasBase = [0, 3.0324094187157877, 7.7311629165351485, 0.0, 15.734917479543247, 1.158675358740935];
+const ctrHot = [2.7271103404404635, 2.0483964412980846, 4.382528359256228, 7.454245339156262, 3.201650492855505, 1.8782073923251128];
+const ctrBase = [0, 2.0720834876633463, 3.6648399551625355, 9.204079592040795, 3.3740076448103498, 2.175368139223561];
+
+const HOT = '#fb7185';
+const BASE = '#64748b';
+const ACCENT = '#6aa9ff';
+const PURP = '#b794f6';
+const GREEN = '#4ade80';
+
+Chart.defaults.color = '#8a93a0';
+Chart.defaults.font.family = "'Inter', -apple-system, sans-serif";
+Chart.defaults.borderColor = '#232a32';
+
+// Plugin: highlight band for hot week
+const hotBandPlugin = {
+  id: 'hotBand',
+  beforeDraw(chart, args, opts) {
+    const {ctx, chartArea, scales: {x}} = chart;
+    if (!x || !chartArea) return;
+    const startIdx = dates.indexOf(HOT_START);
+    const endIdx = dates.indexOf(HOT_END);
+    if (startIdx === -1 || endIdx === -1) return;
+    const x1 = x.getPixelForValue(startIdx);
+    const x2 = x.getPixelForValue(endIdx);
+    ctx.save();
+    ctx.fillStyle = 'rgba(251,113,133,0.10)';
+    ctx.fillRect(x1, chartArea.top, x2 - x1, chartArea.bottom - chartArea.top);
+    ctx.fillStyle = 'rgba(251,113,133,0.6)';
+    ctx.font = '600 11px Inter';
+    ctx.fillText('May 4 week', x1 + 6, chartArea.top + 16);
+    ctx.restore();
+  }
+};
+
+// Chart 1: Daily spend + ROAS combo
+new Chart(document.getElementById('chartDaily').getContext('2d'), {
+  type: 'bar',
+  data: {
+    labels: dates,
+    datasets: [
+      {
+        type: 'bar',
+        label: 'Gasto diario (MXN)',
+        data: spendDaily,
+        backgroundColor: 'rgba(106,169,255,0.55)',
+        borderColor: ACCENT,
+        borderWidth: 1,
+        yAxisID: 'y',
+      },
+      {
+        type: 'line',
+        label: 'ROAS',
+        data: roasDaily,
+        borderColor: GREEN,
+        backgroundColor: 'rgba(74,222,128,0.1)',
+        tension: 0.35,
+        borderWidth: 2,
+        pointRadius: 2,
+        yAxisID: 'y1',
+        fill: false,
+      },
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { position: 'top', align: 'end' } },
+    scales: {
+      x: { grid: { display: false }, ticks: { maxTicksLimit: 14, autoSkip: true } },
+      y: { position: 'left', title: { display: true, text: 'Gasto MXN' }, grid: { color: 'rgba(255,255,255,0.04)' } },
+      y1: { position: 'right', title: { display: true, text: 'ROAS' }, grid: { display: false }, beginAtZero: true },
+    }
+  },
+  plugins: [hotBandPlugin]
+});
+
+// Chart 2: Daily purchases
+new Chart(document.getElementById('chartPurchases').getContext('2d'), {
+  type: 'line',
+  data: {
+    labels: dates,
+    datasets: [{
+      label: 'Compras diarias',
+      data: purchDaily,
+      borderColor: PURP,
+      backgroundColor: 'rgba(183,148,246,0.18)',
+      tension: 0.35, fill: true,
+      pointRadius: 2,
+      borderWidth: 2,
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false }, title: { display: true, text: 'Compras por día', align: 'start', font: {size: 13, weight: 600} } },
+    scales: {
+      x: { grid: { display: false }, ticks: { maxTicksLimit: 10, autoSkip: true } },
+      y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.04)' } },
+    }
+  },
+  plugins: [hotBandPlugin]
+});
+
+// Chart 3: CPC + CTR
+new Chart(document.getElementById('chartCpcCtr').getContext('2d'), {
+  data: {
+    labels: dates,
+    datasets: [
+      { type: 'line', label: 'CPC (MXN)', data: cpcDaily, borderColor: HOT, backgroundColor: 'rgba(251,113,133,0.15)', tension: 0.35, pointRadius: 2, borderWidth: 2, yAxisID: 'y' },
+      { type: 'line', label: 'CTR (%)', data: ctrDaily, borderColor: ACCENT, backgroundColor: 'rgba(106,169,255,0.15)', tension: 0.35, pointRadius: 2, borderWidth: 2, yAxisID: 'y1' },
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { position: 'top', align: 'end' }, title: { display: true, text: 'CPC y CTR diarios', align: 'start', font: {size: 13, weight: 600} } },
+    scales: {
+      x: { grid: { display: false }, ticks: { maxTicksLimit: 10, autoSkip: true } },
+      y: { position: 'left', title: { display: true, text: 'CPC' }, grid: { color: 'rgba(255,255,255,0.04)' } },
+      y1: { position: 'right', title: { display: true, text: 'CTR %' }, grid: { display: false }, beginAtZero: true },
+    }
+  },
+  plugins: [hotBandPlugin]
+});
+
+// Chart 4: Campaign spend comparison
+new Chart(document.getElementById('chartCampSpend').getContext('2d'), {
+  type: 'bar',
+  data: {
+    labels: chartNames,
+    datasets: [
+      { label: 'Sem. 4 mayo', data: spendHot, backgroundColor: HOT },
+      { label: 'Sem. base', data: spendBase, backgroundColor: BASE },
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+    plugins: { legend: { position: 'top', align: 'end' }, title: { display: true, text: 'Gasto por campaña', align: 'start', font: {size: 13, weight: 600} } },
+    scales: {
+      x: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.04)' }, title: { display: true, text: 'MXN' } },
+      y: { grid: { display: false } },
+    }
+  }
+});
+
+// Chart 5: Campaign ROAS comparison
+new Chart(document.getElementById('chartCampRoas').getContext('2d'), {
+  type: 'bar',
+  data: {
+    labels: chartNames,
+    datasets: [
+      { label: 'Sem. 4 mayo', data: roasHot, backgroundColor: HOT },
+      { label: 'Sem. base', data: roasBase, backgroundColor: BASE },
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+    plugins: { legend: { position: 'top', align: 'end' }, title: { display: true, text: 'ROAS por campaña', align: 'start', font: {size: 13, weight: 600} } },
+    scales: {
+      x: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.04)' }, title: { display: true, text: 'ROAS (x)' } },
+      y: { grid: { display: false } },
+    }
+  }
+});
+
+// Chart 6: CTR comparison
+new Chart(document.getElementById('chartCampCtr').getContext('2d'), {
+  type: 'bar',
+  data: {
+    labels: chartNames,
+    datasets: [
+      { label: 'Sem. 4 mayo', data: ctrHot, backgroundColor: HOT },
+      { label: 'Sem. base', data: ctrBase, backgroundColor: BASE },
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { position: 'top', align: 'end' } },
+    scales: {
+      x: { grid: { display: false } },
+      y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.04)' }, title: { display: true, text: 'CTR %' } },
+    }
+  }
+});
+</script>
+</body>
+</html>

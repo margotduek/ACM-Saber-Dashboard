@@ -1,0 +1,622 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Saber Legacy · Comparativa 30 días</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+  :root {
+    --bg: #0b0d10;
+    --panel: #14181d;
+    --panel-2: #1a1f25;
+    --border: #232a32;
+    --text: #e6e9ee;
+    --muted: #8a93a0;
+    --accent: #6aa9ff;
+    --pos: #4ade80;
+    --neg: #f87171;
+    --flag-bg: rgba(248,113,113,0.07);
+    --flag-border: rgba(248,113,113,0.35);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin:0; padding:0; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif; font-size: 14px; line-height: 1.5; }
+  .wrap { max-width: 1400px; margin: 0 auto; padding: 32px 24px 64px; }
+  header { margin-bottom: 28px; }
+  h1 { font-size: 22px; font-weight: 600; margin: 0 0 4px; letter-spacing: -0.01em; }
+  .sub { color: var(--muted); font-size: 13px; }
+  .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin: 24px 0 28px; }
+  .kpi { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; }
+  .kpi .label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); font-weight: 500; }
+  .kpi .val { font-size: 22px; font-weight: 600; margin: 6px 0 4px; letter-spacing: -0.01em; }
+  .kpi .chg { font-size: 12px; }
+  .legend { display: flex; gap: 18px; flex-wrap: wrap; font-size: 12px; color: var(--muted); margin-bottom: 16px; }
+  .legend .dot { display: inline-block; width: 10px; height: 10px; border-radius: 2px; vertical-align: middle; margin-right: 6px; }
+  .legend .dot.red { background: var(--neg); }
+  .panel { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+  table { width: 100%; border-collapse: collapse; }
+  thead th { position: sticky; top: 0; background: var(--panel-2); color: var(--muted); font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; padding: 12px 14px; text-align: left; border-bottom: 1px solid var(--border); }
+  thead th.num { text-align: right; }
+  tbody td { padding: 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tbody tr:last-child td { border-bottom: 0; }
+  tbody td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  tbody td.name { min-width: 240px; }
+  .adset-name { font-weight: 500; font-size: 14px; }
+  .campaign-name { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .prev { font-size: 11px; color: var(--muted); margin-top: 2px; font-weight: 400; }
+  .chg { font-weight: 500; font-size: 13px; }
+  .chg.pos { color: var(--pos); }
+  .chg.neg { color: var(--neg); }
+  .muted { color: var(--muted); }
+  tr.flagged { background: var(--flag-bg); }
+  tr.flagged td:first-child { border-left: 3px solid var(--flag-border); }
+  .badge { display: inline-block; padding: 2px 7px; border-radius: 999px; font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.04em; margin-left: 6px; vertical-align: middle; }
+  .badge.new { background: rgba(106,169,255,0.15); color: var(--accent); }
+  .badge.gone { background: rgba(138,147,160,0.15); color: var(--muted); }
+  footer { color: var(--muted); font-size: 12px; margin-top: 24px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Saber Legacy — Comparativa 30 días por conjunto de anuncios</h1>
+    <div class="sub">Period A: <strong>2026-04-14 → 2026-05-13</strong> · vs Period B: <strong>2026-03-15 → 2026-04-13</strong> · Moneda: MXN · Generado 2026-05-14 16:52</div>
+  </header>
+
+  <div class="kpis">
+    <div class="kpi">
+      <div class="label">Gasto · Period A</div>
+      <div class="val">$120,144.86</div>
+      <div><span class="chg pos">+234.4%</span> <span class="muted">vs $35,927.83</span></div>
+    </div>
+    <div class="kpi">
+      <div class="label">Clics en enlace · Period A</div>
+      <div class="val">52,587</div>
+      <div><span class="chg pos">+397.5%</span> <span class="muted">vs 10,571</span></div>
+    </div>
+    <div class="kpi">
+      <div class="label">CTR · Period A</div>
+      <div class="val">2.97%</div>
+      <div><span class="chg neg">-50.3%</span> <span class="muted">vs 5.97%</span></div>
+    </div>
+    <div class="kpi">
+      <div class="label">CPC · Period A</div>
+      <div class="val">$1.32</div>
+      <div><span class="chg neg">+97.9%</span> <span class="muted">vs $0.67</span></div>
+    </div>
+    <div class="kpi">
+      <div class="label">Conjuntos en alerta</div>
+      <div class="val">4</div>
+      <div class="muted" style="font-size:12px">CTR ↓ &gt; 15% ó CPC ↑ &gt; 20%</div>
+    </div>
+  </div>
+
+  <div class="legend">
+    <span><span class="dot red"></span>Fila resaltada = CTR cayó &gt;15% o CPC subió &gt;20%</span>
+    <span><span class="badge new">nuevo</span>conjunto sin entrega en Period B</span>
+    <span><span class="badge gone">sin entrega</span>conjunto sin entrega en Period A</span>
+  </div>
+
+  <div class="panel">
+    <table>
+      <thead>
+        <tr>
+          <th>Conjunto / Campaña</th>
+          <th class="num">Gasto</th>
+          <th class="num">Δ</th>
+          <th class="num">Clics enlace</th>
+          <th class="num">Δ</th>
+          <th class="num">CTR</th>
+          <th class="num">Δ</th>
+          <th class="num">CPC</th>
+          <th class="num">Δ</th>
+          <th class="num">Frecuencia</th>
+          <th class="num">Δ</th>
+        </tr>
+      </thead>
+      <tbody>
+<tr>
+  <td class="name">
+    <div class="adset-name">UGC <span class="badge new">nuevo</span></div>
+    <div class="campaign-name">MAY 4TH 2026</div>
+  </td>
+  <td class="num">$38,131.45<div class="prev">prev: —</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">18,748<div class="prev">prev: —</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">3.09%<div class="prev">prev: —</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">$1.19<div class="prev">prev: —</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">2.03<div class="prev">prev: —</div></td>
+  <td class="num"><span class="muted">—</span></td>
+</tr>
+<tr>
+  <td class="name">
+    <div class="adset-name">STATIC <span class="badge new">nuevo</span></div>
+    <div class="campaign-name">MAY 4TH 2026</div>
+  </td>
+  <td class="num">$16,356.62<div class="prev">prev: —</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">4,178<div class="prev">prev: —</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">1.73%<div class="prev">prev: —</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">$2.51<div class="prev">prev: —</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">3.15<div class="prev">prev: —</div></td>
+  <td class="num"><span class="muted">—</span></td>
+</tr>
+<tr class="flagged">
+  <td class="name">
+    <div class="adset-name">TJ - M4 - F1 - CC$1000 - Videos </div>
+    <div class="campaign-name">[TJ] - ABO INICIAL</div>
+  </td>
+  <td class="num">$11,137.57<div class="prev">prev: $1,645.19</div></td>
+  <td class="num"><span class="chg pos">+577.0%</span></td>
+  <td class="num">3,036<div class="prev">prev: 367</div></td>
+  <td class="num"><span class="chg pos">+727.2%</span></td>
+  <td class="num">2.36%<div class="prev">prev: 2.93%</div></td>
+  <td class="num"><span class="chg neg">-19.3%</span></td>
+  <td class="num">$1.70<div class="prev">prev: $1.76</div></td>
+  <td class="num"><span class="chg pos">-3.1%</span></td>
+  <td class="num">2.16<div class="prev">prev: 2.08</div></td>
+  <td class="num"><span class="chg pos">+4.0%</span></td>
+</tr>
+<tr>
+  <td class="name">
+    <div class="adset-name">Personajes Evergreen CC$1000 <span class="badge new">nuevo</span></div>
+    <div class="campaign-name">CONV v13</div>
+  </td>
+  <td class="num">$10,583.94<div class="prev">prev: —</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">2,502<div class="prev">prev: —</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">3.75%<div class="prev">prev: —</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">$1.93<div class="prev">prev: —</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">3.01<div class="prev">prev: —</div></td>
+  <td class="num"><span class="muted">—</span></td>
+</tr>
+<tr>
+  <td class="name">
+    <div class="adset-name">TJ - E2 - F1 - CC$1000 - Imágenes <span class="badge new">nuevo</span></div>
+    <div class="campaign-name">[TJ] - ABO INICIAL</div>
+  </td>
+  <td class="num">$9,970.96<div class="prev">prev: —</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">3,286<div class="prev">prev: —</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">1.98%<div class="prev">prev: —</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">$1.42<div class="prev">prev: —</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">2.21<div class="prev">prev: —</div></td>
+  <td class="num"><span class="muted">—</span></td>
+</tr>
+<tr>
+  <td class="name">
+    <div class="adset-name">TJ - M4 - F2 - CC$1000 - Imágenes <span class="badge new">nuevo</span></div>
+    <div class="campaign-name">[TJ] - ABO INICIAL</div>
+  </td>
+  <td class="num">$9,246.89<div class="prev">prev: —</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">2,007<div class="prev">prev: —</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">1.81%<div class="prev">prev: —</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">$2.39<div class="prev">prev: —</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">3.42<div class="prev">prev: —</div></td>
+  <td class="num"><span class="muted">—</span></td>
+</tr>
+<tr>
+  <td class="name">
+    <div class="adset-name">TJ - M4 - F2 - CC$1000 - Videos <span class="badge new">nuevo</span></div>
+    <div class="campaign-name">[TJ] - ABO INICIAL</div>
+  </td>
+  <td class="num">$6,984.49<div class="prev">prev: —</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">1,163<div class="prev">prev: —</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">2.59%<div class="prev">prev: —</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">$2.32<div class="prev">prev: —</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">3.26<div class="prev">prev: —</div></td>
+  <td class="num"><span class="muted">—</span></td>
+</tr>
+<tr class="flagged">
+  <td class="name">
+    <div class="adset-name">RMKT </div>
+    <div class="campaign-name">SL RMKT v2</div>
+  </td>
+  <td class="num">$6,473.48<div class="prev">prev: $1,631.20</div></td>
+  <td class="num"><span class="chg pos">+296.9%</span></td>
+  <td class="num">1,498<div class="prev">prev: 308</div></td>
+  <td class="num"><span class="chg pos">+386.4%</span></td>
+  <td class="num">2.86%<div class="prev">prev: 3.09%</div></td>
+  <td class="num"><span class="chg neg">-7.4%</span></td>
+  <td class="num">$2.08<div class="prev">prev: $1.66</div></td>
+  <td class="num"><span class="chg neg">+24.8%</span></td>
+  <td class="num">4.46<div class="prev">prev: 2.88</div></td>
+  <td class="num"><span class="chg pos">+54.8%</span></td>
+</tr>
+<tr>
+  <td class="name">
+    <div class="adset-name">RMKT - 60 days - CC$500 <span class="badge new">nuevo</span></div>
+    <div class="campaign-name">RMKT v3 - Cat</div>
+  </td>
+  <td class="num">$5,472.35<div class="prev">prev: —</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">1,895<div class="prev">prev: —</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">1.82%<div class="prev">prev: —</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">$2.04<div class="prev">prev: —</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">6.61<div class="prev">prev: —</div></td>
+  <td class="num"><span class="muted">—</span></td>
+</tr>
+<tr>
+  <td class="name">
+    <div class="adset-name">Int + Money <span class="badge new">nuevo</span></div>
+    <div class="campaign-name">Traff</div>
+  </td>
+  <td class="num">$3,828.69<div class="prev">prev: —</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">13,866<div class="prev">prev: —</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">7.86%<div class="prev">prev: —</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">$0.19<div class="prev">prev: —</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">1.28<div class="prev">prev: —</div></td>
+  <td class="num"><span class="muted">—</span></td>
+</tr>
+<tr>
+  <td class="name">
+    <div class="adset-name">LLA CC$1000 <span class="badge new">nuevo</span></div>
+    <div class="campaign-name">CONV v13</div>
+  </td>
+  <td class="num">$837.80<div class="prev">prev: —</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">86<div class="prev">prev: —</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">1.81%<div class="prev">prev: —</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">$4.53<div class="prev">prev: —</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">1.53<div class="prev">prev: —</div></td>
+  <td class="num"><span class="muted">—</span></td>
+</tr>
+<tr class="flagged">
+  <td class="name">
+    <div class="adset-name">TJ - E1 -  F2  - Imágenes </div>
+    <div class="campaign-name">[TJ] - ABO INICIAL</div>
+  </td>
+  <td class="num">$566.65<div class="prev">prev: $2,936.21</div></td>
+  <td class="num"><span class="chg neg">-80.7%</span></td>
+  <td class="num">163<div class="prev">prev: 1,004</div></td>
+  <td class="num"><span class="chg neg">-83.8%</span></td>
+  <td class="num">1.71%<div class="prev">prev: 2.07%</div></td>
+  <td class="num"><span class="chg neg">-17.4%</span></td>
+  <td class="num">$2.09<div class="prev">prev: $1.59</div></td>
+  <td class="num"><span class="chg neg">+31.5%</span></td>
+  <td class="num">2.06<div class="prev">prev: 3.74</div></td>
+  <td class="num"><span class="chg neg">-45.0%</span></td>
+</tr>
+<tr class="flagged">
+  <td class="name">
+    <div class="adset-name">TJ - E1 - F1 - Imágenes </div>
+    <div class="campaign-name">[TJ] - ABO INICIAL</div>
+  </td>
+  <td class="num">$553.97<div class="prev">prev: $2,993.15</div></td>
+  <td class="num"><span class="chg neg">-81.5%</span></td>
+  <td class="num">159<div class="prev">prev: 1,048</div></td>
+  <td class="num"><span class="chg neg">-84.8%</span></td>
+  <td class="num">1.86%<div class="prev">prev: 2.03%</div></td>
+  <td class="num"><span class="chg neg">-8.4%</span></td>
+  <td class="num">$1.99<div class="prev">prev: $1.52</div></td>
+  <td class="num"><span class="chg neg">+30.8%</span></td>
+  <td class="num">1.32<div class="prev">prev: 2.16</div></td>
+  <td class="num"><span class="chg neg">-39.0%</span></td>
+</tr>
+<tr>
+  <td class="name">
+    <div class="adset-name">LLA+ CC$1500 <span class="badge gone">sin entrega</span></div>
+    <div class="campaign-name">ABO Bestt w/ LLAs</div>
+  </td>
+  <td class="num">—<div class="prev">prev: $12,498.85</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: 3,144</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: 7.43%</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: $0.69</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: 2.07</div></td>
+  <td class="num"><span class="muted">—</span></td>
+</tr>
+<tr>
+  <td class="name">
+    <div class="adset-name">FREE <span class="badge gone">sin entrega</span></div>
+    <div class="campaign-name">CONV CBO - Personajes</div>
+  </td>
+  <td class="num">—<div class="prev">prev: $2,342.77</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: 1,086</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: 8.67%</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: $0.32</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: 1.44</div></td>
+  <td class="num"><span class="muted">—</span></td>
+</tr>
+<tr>
+  <td class="name">
+    <div class="adset-name">Winners - broad MX A <span class="badge gone">sin entrega</span></div>
+    <div class="campaign-name">CONV ASC - Viena</div>
+  </td>
+  <td class="num">—<div class="prev">prev: $1,863.00</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: 707</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: 8.24%</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: $0.37</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: 1.45</div></td>
+  <td class="num"><span class="muted">—</span></td>
+</tr>
+<tr>
+  <td class="name">
+    <div class="adset-name">Catálogo - Free <span class="badge gone">sin entrega</span></div>
+    <div class="campaign-name">SL-TESTING</div>
+  </td>
+  <td class="num">—<div class="prev">prev: $1,451.93</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: 399</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: 2.04%</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: $2.24</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: 2.93</div></td>
+  <td class="num"><span class="muted">—</span></td>
+</tr>
+<tr>
+  <td class="name">
+    <div class="adset-name">Experiencia - Free <span class="badge gone">sin entrega</span></div>
+    <div class="campaign-name">SL-TESTING</div>
+  </td>
+  <td class="num">—<div class="prev">prev: $1,438.31</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: 349</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: 2.37%</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: $1.59</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: 1.88</div></td>
+  <td class="num"><span class="muted">—</span></td>
+</tr>
+<tr>
+  <td class="name">
+    <div class="adset-name">LLA+ BC$1800 <span class="badge gone">sin entrega</span></div>
+    <div class="campaign-name">CBO Bestt w/ LLAs BC</div>
+  </td>
+  <td class="num">—<div class="prev">prev: $1,321.19</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: 348</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: 14.70%</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: $0.25</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: 1.35</div></td>
+  <td class="num"><span class="muted">—</span></td>
+</tr>
+<tr>
+  <td class="name">
+    <div class="adset-name">UGC - Free <span class="badge gone">sin entrega</span></div>
+    <div class="campaign-name">SL-TESTING</div>
+  </td>
+  <td class="num">—<div class="prev">prev: $1,207.14</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: 402</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: 7.52%</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: $0.62</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: 1.35</div></td>
+  <td class="num"><span class="muted">—</span></td>
+</tr>
+<tr>
+  <td class="name">
+    <div class="adset-name">Personajes - Free <span class="badge gone">sin entrega</span></div>
+    <div class="campaign-name">SL-TESTING</div>
+  </td>
+  <td class="num">—<div class="prev">prev: $1,201.88</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: 616</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: 13.53%</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: $0.18</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: 1.21</div></td>
+  <td class="num"><span class="muted">—</span></td>
+</tr>
+<tr>
+  <td class="name">
+    <div class="adset-name">F1 - Imágenes <span class="badge gone">sin entrega</span></div>
+    <div class="campaign-name">[Spring Sale] — Roma</div>
+  </td>
+  <td class="num">—<div class="prev">prev: $905.32</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: 189</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: 1.45%</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: $2.35</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: 1.93</div></td>
+  <td class="num"><span class="muted">—</span></td>
+</tr>
+<tr>
+  <td class="name">
+    <div class="adset-name">F2 - Imágenes <span class="badge gone">sin entrega</span></div>
+    <div class="campaign-name">[Spring Sale] — Roma</div>
+  </td>
+  <td class="num">—<div class="prev">prev: $888.29</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: 143</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: 1.32%</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: $3.48</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: 4.63</div></td>
+  <td class="num"><span class="muted">—</span></td>
+</tr>
+<tr>
+  <td class="name">
+    <div class="adset-name">rmkt 60 everything <span class="badge gone">sin entrega</span></div>
+    <div class="campaign-name">RMKT - omega</div>
+  </td>
+  <td class="num">—<div class="prev">prev: $427.62</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: 156</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: 5.37%</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: $0.68</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: 2.36</div></td>
+  <td class="num"><span class="muted">—</span></td>
+</tr>
+<tr>
+  <td class="name">
+    <div class="adset-name">Experiencia - broad MX A <span class="badge gone">sin entrega</span></div>
+    <div class="campaign-name">CONV CBO - Praga</div>
+  </td>
+  <td class="num">—<div class="prev">prev: $420.16</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: 58</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: 1.16%</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: $3.62</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: 2.19</div></td>
+  <td class="num"><span class="muted">—</span></td>
+</tr>
+<tr>
+  <td class="name">
+    <div class="adset-name">Web 60d - excl purch   atc <span class="badge gone">sin entrega</span></div>
+    <div class="campaign-name">RMKT - Berlín</div>
+  </td>
+  <td class="num">—<div class="prev">prev: $381.53</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: 102</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: 3.11%</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: $1.75</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: 4.22</div></td>
+  <td class="num"><span class="muted">—</span></td>
+</tr>
+<tr>
+  <td class="name">
+    <div class="adset-name">Personajes - broad MX A <span class="badge gone">sin entrega</span></div>
+    <div class="campaign-name">CONV CBO - Praga</div>
+  </td>
+  <td class="num">—<div class="prev">prev: $236.02</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: 129</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: 9.40%</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: $0.31</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: 1.06</div></td>
+  <td class="num"><span class="muted">—</span></td>
+</tr>
+<tr>
+  <td class="name">
+    <div class="adset-name">UGC - broad MX A <span class="badge gone">sin entrega</span></div>
+    <div class="campaign-name">CONV CBO - Praga</div>
+  </td>
+  <td class="num">—<div class="prev">prev: $66.71</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: 7</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: 2.98%</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: $4.45</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: 1.15</div></td>
+  <td class="num"><span class="muted">—</span></td>
+</tr>
+<tr>
+  <td class="name">
+    <div class="adset-name">RMKT <span class="badge gone">sin entrega</span></div>
+    <div class="campaign-name">SL RMKT</div>
+  </td>
+  <td class="num">—<div class="prev">prev: $48.27</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: 5</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: 1.59%</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: $4.02</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: 1.59</div></td>
+  <td class="num"><span class="muted">—</span></td>
+</tr>
+<tr>
+  <td class="name">
+    <div class="adset-name">ATC IC 30d - excl purch 180d <span class="badge gone">sin entrega</span></div>
+    <div class="campaign-name">RMKT - Berlín</div>
+  </td>
+  <td class="num">—<div class="prev">prev: $17.09</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: 2</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: 1.60%</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: $4.27</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: 5.68</div></td>
+  <td class="num"><span class="muted">—</span></td>
+</tr>
+<tr>
+  <td class="name">
+    <div class="adset-name">Int+ - CC$700 <span class="badge gone">sin entrega</span></div>
+    <div class="campaign-name">CONV v11 - CC - Beta</div>
+  </td>
+  <td class="num">—<div class="prev">prev: $6.00</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: 2</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: 10.09%</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: $0.55</div></td>
+  <td class="num"><span class="muted">—</span></td>
+  <td class="num">—<div class="prev">prev: 1.04</div></td>
+  <td class="num"><span class="muted">—</span></td>
+</tr>
+      </tbody>
+    </table>
+  </div>
+
+  <footer>
+    Fuente: Marketing API v21.0 · Cuenta act_461452066012476 (Saber Legacy Ad account) · 31 conjuntos comparados (13 con entrega en Period A, 22 en Period B).
+  </footer>
+</div>
+</body>
+</html>

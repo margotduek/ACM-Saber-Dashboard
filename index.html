@@ -1,0 +1,658 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Propuesta de colaboración · Saber Legacy</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg: #fdfbf7;
+    --panel: #ffffff;
+    --panel-2: #f6f1e7;
+    --text: #1f1b16;
+    --muted: #6b6356;
+    --border: #e8dfcf;
+    --teal: #0d9488;
+    --teal-soft: #ccfbf1;
+    --teal-deep: #115e59;
+    --red: #b91c1c;
+    --red-soft: #fee2e2;
+    --green: #15803d;
+    --green-soft: #dcfce7;
+    --orange: #c2410c;
+    --orange-soft: #fed7aa;
+    --navy: #1e293b;
+    --navy-soft: #e2e8f0;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 15px; line-height: 1.65; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 920px; margin: 0 auto; padding: 56px 28px 80px; }
+
+  /* Hero */
+  .hero { padding: 24px 0 40px; border-bottom: 2px solid var(--border); margin-bottom: 56px; }
+  .eyebrow { font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--teal); font-weight: 700; margin-bottom: 14px; }
+  h1 { font-family: 'Fraunces', serif; font-size: 46px; font-weight: 700; margin: 0 0 16px; letter-spacing: -0.03em; line-height: 1.05; }
+  .hero-sub { font-size: 17px; color: var(--muted); max-width: 700px; }
+  .hero-meta { display: flex; gap: 24px; margin-top: 22px; flex-wrap: wrap; font-size: 13px; color: var(--muted); }
+  .hero-meta strong { color: var(--text); font-weight: 600; }
+
+  /* Sections */
+  h2 { font-family: 'Fraunces', serif; font-size: 30px; font-weight: 700; margin: 64px 0 10px; letter-spacing: -0.01em; line-height: 1.2; }
+  h2 .num { display: inline-block; width: 36px; height: 36px; line-height: 36px; border-radius: 50%; background: var(--text); color: var(--bg); font-size: 17px; font-weight: 800; text-align: center; margin-right: 14px; vertical-align: middle; font-family: 'Plus Jakarta Sans', sans-serif; }
+  .lead { font-size: 17px; color: var(--muted); margin: 0 0 28px 50px; line-height: 1.6; }
+
+  .panel { background: var(--panel); border: 1px solid var(--border); border-radius: 16px; padding: 28px; margin-bottom: 18px; box-shadow: 0 1px 3px rgba(80,60,30,0.04); }
+
+  /* Account snapshot */
+  .snap { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+  .snap-cell { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 18px 20px; }
+  .snap-cell .lbl { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+  .snap-cell .val { font-family: 'Fraunces', serif; font-size: 30px; font-weight: 700; margin: 6px 0 2px; letter-spacing: -0.02em; }
+  .snap-cell .ctx { font-size: 12px; color: var(--muted); }
+
+  /* Month row */
+  .month-list { display: grid; gap: 6px; }
+  .month-row { display: grid; grid-template-columns: 80px 1fr 130px 140px; gap: 14px; align-items: center; padding: 11px 14px; border-radius: 10px; }
+  .month-row.zero { background: var(--red-soft); }
+  .month-row.paid { background: var(--green-soft); }
+  .month-row .m { font-weight: 700; }
+  .month-row .vis { height: 8px; background: rgba(0,0,0,0.05); border-radius: 4px; overflow: hidden; }
+  .month-row .vis-fill { height: 100%; border-radius: 4px; background: var(--green); }
+  .month-row.zero .vis-fill { background: #dc2626; opacity: 0.5; }
+  .month-row .cpa-cell { font-size: 12px; color: var(--muted); }
+  .month-row .pay-cell { font-weight: 700; text-align: right; font-variant-numeric: tabular-nums; }
+  .month-row.zero .pay-cell { color: var(--red); }
+  .month-row.paid .pay-cell { color: var(--green); }
+  .month-row .pay-cell .floor-tag { display: inline-block; background: var(--orange-soft); color: var(--orange); padding: 1px 6px; border-radius: 4px; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-left: 4px; vertical-align: middle; }
+
+  /* Header row for month-list */
+  .month-head { display: grid; grid-template-columns: 80px 1fr 130px 140px; gap: 14px; padding: 6px 14px 4px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); font-weight: 700; }
+  .month-head .pay-h { text-align: right; }
+
+  /* Formula box */
+  .formula-box { background: linear-gradient(135deg, #f0fdfa 0%, #ecfeff 100%); border: 2px solid var(--teal); border-radius: 20px; padding: 36px 32px; text-align: center; margin: 24px 0; }
+  .formula-box .lbl { font-size: 12px; font-weight: 700; color: var(--teal); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 14px; }
+  .formula { font-family: 'Fraunces', serif; font-size: 28px; font-weight: 700; color: var(--teal-deep); letter-spacing: -0.01em; margin: 12px 0; line-height: 1.4; }
+  .formula .op { color: var(--muted); margin: 0 6px; font-weight: 500; }
+  .formula-eg { font-size: 14px; color: var(--muted); margin-top: 16px; padding-top: 16px; border-top: 1px solid #ccfbf1; }
+  .formula-eg strong { color: var(--teal-deep); font-weight: 700; }
+
+  /* Totals comparison */
+  .totals { display: grid; gap: 14px; grid-template-columns: 1fr 1fr; margin: 24px 0; }
+  @media (max-width: 700px) { .totals { grid-template-columns: 1fr; } }
+  .total-card { padding: 22px 26px; border-radius: 18px; }
+  .total-card .lbl { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; }
+  .total-card .val { font-family: 'Fraunces', serif; font-size: 38px; font-weight: 800; letter-spacing: -0.02em; line-height: 1; }
+  .total-card .ctx { font-size: 13px; margin-top: 8px; }
+  .total-card.his { background: var(--red-soft); border: 1.5px solid var(--red); }
+  .total-card.his .lbl, .total-card.his .val { color: var(--red); }
+  .total-card.his .ctx { color: #7f1d1d; }
+  .total-card.mine { background: var(--teal-soft); border: 1.5px solid var(--teal); }
+  .total-card.mine .lbl, .total-card.mine .val { color: var(--teal-deep); }
+  .total-card.mine .ctx { color: var(--teal-deep); }
+
+  /* Side-by-side table */
+  .sxs-table { background: var(--panel); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+  .sxs-table table { width: 100%; border-collapse: collapse; }
+  .sxs-table th { background: var(--panel-2); padding: 14px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); border-bottom: 1px solid var(--border); }
+  .sxs-table th.num { text-align: right; }
+  .sxs-table th.split { background: var(--red-soft); color: var(--red); }
+  .sxs-table th.split.teal { background: var(--teal-soft); color: var(--teal-deep); }
+  .sxs-table td { padding: 12px 16px; border-bottom: 1px solid var(--border); font-size: 13px; }
+  .sxs-table tr:last-child td { border-bottom: 0; }
+  .sxs-table td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .sxs-table td.m-cell { font-weight: 700; }
+  .sxs-table td.red { color: var(--red); font-weight: 700; }
+  .sxs-table td.teal { color: var(--teal-deep); font-weight: 700; }
+  .sxs-table td.paid-light { color: var(--green); }
+  .sxs-table .totals-row td { background: var(--panel-2); font-weight: 700; border-top: 2px solid var(--border); }
+
+  /* Callouts */
+  .callout { display: flex; gap: 16px; align-items: flex-start; padding: 18px 22px; border-radius: 14px; margin: 14px 0; border-left: 5px solid; }
+  .callout.teal { background: var(--teal-soft); border-left-color: var(--teal); }
+  .callout.warm { background: #fff7ed; border-left-color: var(--orange); }
+  .callout.navy { background: var(--navy-soft); border-left-color: var(--navy); }
+  .callout .icon { font-size: 22px; flex-shrink: 0; line-height: 1.2; }
+  .callout p { margin: 0; }
+  .callout p + p { margin-top: 8px; }
+  .callout strong { font-weight: 700; }
+
+  /* Bullet cards (for "why this works for both") */
+  .why-grid { display: grid; gap: 14px; grid-template-columns: 1fr; margin: 18px 0; }
+  @media (min-width: 700px) { .why-grid { grid-template-columns: 1fr 1fr; } }
+  .why-card { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 22px; }
+  .why-card h4 { margin: 0 0 10px; font-family: 'Fraunces', serif; font-size: 18px; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+  .why-card h4 .badge { font-size: 10px; padding: 4px 10px; border-radius: 999px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; font-family: 'Plus Jakarta Sans', sans-serif; }
+  .why-card.client h4 .badge { background: var(--navy-soft); color: var(--navy); }
+  .why-card.me h4 .badge { background: var(--teal-soft); color: var(--teal-deep); }
+  .why-card ul { margin: 8px 0 0; padding-left: 20px; }
+  .why-card li { margin-bottom: 6px; color: var(--text); }
+
+  /* Terms */
+  .terms { background: var(--panel); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+  .term-row { display: grid; grid-template-columns: 200px 1fr; padding: 18px 24px; border-bottom: 1px solid var(--border); gap: 20px; }
+  .term-row:last-child { border-bottom: 0; }
+  .term-row .term-label { font-weight: 700; color: var(--teal-deep); font-size: 13px; }
+  .term-row .term-body { color: var(--text); font-size: 14px; }
+  .term-row .term-body strong { color: var(--text); }
+
+  /* Closing CTA */
+  .close-cta { background: linear-gradient(135deg, var(--teal-deep) 0%, var(--teal) 100%); border-radius: 22px; padding: 40px 36px; color: white; text-align: center; margin: 56px 0 0; }
+  .close-cta h3 { font-family: 'Fraunces', serif; font-size: 26px; margin: 0 0 12px; font-weight: 700; letter-spacing: -0.01em; }
+  .close-cta p { margin: 0 auto; max-width: 540px; color: #ccfbf1; font-size: 16px; line-height: 1.6; }
+
+  /* Chart wrap */
+  .chart-wrap { height: 320px; position: relative; }
+
+  footer { color: var(--muted); font-size: 12px; margin-top: 56px; padding-top: 28px; border-top: 1px solid var(--border); text-align: center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <div class="eyebrow">Propuesta de colaboración</div>
+    <h1>Saber Legacy ×<br>estructura de pago</h1>
+    <div class="hero-sub">Después de analizar los últimos 13 meses de la cuenta, te quiero proponer una estructura de pago que nos alinee a los dos a hacer crecer Saber Legacy — sin meses muertos para ninguno y sin techos que castiguen escalar.</div>
+    <div class="hero-meta">
+      <div>📅 Período analizado: <strong>mayo 2025 — mayo 2026</strong></div>
+      <div>💼 Cuenta: <strong>Saber Legacy</strong></div>
+      <div>📊 Datos: Meta Marketing API</div>
+      <div>Generado 07/06/2026</div>
+    </div>
+  </div>
+
+  <!-- ============ SECTION 1: THE OPPORTUNITY ============ -->
+  <h2><span class="num">1</span>La cuenta tiene buen piso</h2>
+  <p class="lead">Lo primero que vi: Saber Legacy tiene una cuenta con base sólida y mucho upside. Estos son los números reales de los últimos 13 meses:</p>
+
+  <div class="snap">
+    <div class="snap-cell">
+      <div class="lbl">Inversión en pauta</div>
+      <div class="val">$533K</div>
+      <div class="ctx">Promedio $41K/mes</div>
+    </div>
+    <div class="snap-cell">
+      <div class="lbl">Ventas atribuidas a Meta</div>
+      <div class="val">$2.46M</div>
+      <div class="ctx">Pixel · last-click 7d</div>
+    </div>
+    <div class="snap-cell">
+      <div class="lbl">ROAS promedio</div>
+      <div class="val">4.61x</div>
+      <div class="ctx">Por cada $1 invertido</div>
+    </div>
+    <div class="snap-cell">
+      <div class="lbl">Utilidad bruta Meta</div>
+      <div class="val">$1,923K</div>
+      <div class="ctx">Ventas − pauta</div>
+    </div>
+  </div>
+
+  <div class="callout teal">
+    <div class="icon">⚡</div>
+    <div>
+      <p><strong>Lectura honesta:</strong> hay momentum. May 26 cerró con ROAS 7.74x y la May the 4th week sacó $606K en 7 días. La cuenta está en uno de sus mejores momentos — buen punto de entrada para mí, y buena foto para platicar estructuras de pago.</p>
+    </div>
+  </div>
+
+  <!-- ============ SECTION 2: THE PROBLEM WITH PROPOSED MODEL ============ -->
+  <h2><span class="num">2</span>El reto técnico con el modelo de % por CPA</h2>
+  <p class="lead">El modelo escalonado por CPA tiene un tema estructural que vale la pena que veamos juntos antes de firmarlo: la estacionalidad del negocio lo deja en cero durante meses enteros.</p>
+
+  <div class="panel">
+    <div class="month-head">
+      <div>Mes</div><div>Ventas Meta</div><div>CPA del mes</div><div class="pay-h">Comisión bajo % por CPA</div>
+    </div>
+    <div class="month-list">
+      <div class="month-row paid">
+        <div class="m">May 25</div>
+        <div class="vis"><div class="vis-fill" style="width:55%"></div></div>
+        <div class="cpa-cell">CPA $903</div>
+        <div class="pay-cell">$4,993</div>
+    </div>
+<div class="month-row zero">
+        <div class="m">Jun 25</div>
+        <div class="vis"><div class="vis-fill" style="width:14%"></div></div>
+        <div class="cpa-cell">CPA $1,275</div>
+        <div class="pay-cell">$0</div>
+    </div>
+<div class="month-row zero">
+        <div class="m">Jul 25</div>
+        <div class="vis"><div class="vis-fill" style="width:9%"></div></div>
+        <div class="cpa-cell">CPA $1,531</div>
+        <div class="pay-cell">$0</div>
+    </div>
+<div class="month-row zero">
+        <div class="m">Ago 25</div>
+        <div class="vis"><div class="vis-fill" style="width:6%"></div></div>
+        <div class="cpa-cell">CPA $1,750</div>
+        <div class="pay-cell">$0</div>
+    </div>
+<div class="month-row zero">
+        <div class="m">Sep 25</div>
+        <div class="vis"><div class="vis-fill" style="width:5%"></div></div>
+        <div class="cpa-cell">CPA $2,396</div>
+        <div class="pay-cell">$0</div>
+    </div>
+<div class="month-row paid">
+        <div class="m">Oct 25</div>
+        <div class="vis"><div class="vis-fill" style="width:43%"></div></div>
+        <div class="cpa-cell">CPA $791</div>
+        <div class="pay-cell">$11,688</div>
+    </div>
+<div class="month-row paid">
+        <div class="m">Nov 25</div>
+        <div class="vis"><div class="vis-fill" style="width:46%"></div></div>
+        <div class="cpa-cell">CPA $1,143</div>
+        <div class="pay-cell">$2,803</div>
+    </div>
+<div class="month-row paid">
+        <div class="m">Dic 25</div>
+        <div class="vis"><div class="vis-fill" style="width:40%"></div></div>
+        <div class="cpa-cell">CPA $1,191</div>
+        <div class="pay-cell">$2,397</div>
+    </div>
+<div class="month-row zero">
+        <div class="m">Ene 26</div>
+        <div class="vis"><div class="vis-fill" style="width:32%"></div></div>
+        <div class="cpa-cell">CPA $1,373</div>
+        <div class="pay-cell">$0</div>
+    </div>
+<div class="month-row zero">
+        <div class="m">Feb 26</div>
+        <div class="vis"><div class="vis-fill" style="width:3%"></div></div>
+        <div class="cpa-cell">CPA $3,188</div>
+        <div class="pay-cell">$0</div>
+    </div>
+<div class="month-row zero">
+        <div class="m">Mar 26</div>
+        <div class="vis"><div class="vis-fill" style="width:8%"></div></div>
+        <div class="cpa-cell">CPA $2,386</div>
+        <div class="pay-cell">$0</div>
+    </div>
+<div class="month-row paid">
+        <div class="m">Abr 26</div>
+        <div class="vis"><div class="vis-fill" style="width:45%"></div></div>
+        <div class="cpa-cell">CPA $1,040</div>
+        <div class="pay-cell">$2,724</div>
+    </div>
+<div class="month-row paid">
+        <div class="m">May 26</div>
+        <div class="vis"><div class="vis-fill" style="width:100%"></div></div>
+        <div class="cpa-cell">CPA $693</div>
+        <div class="pay-cell">$24,263</div>
+    </div>
+    </div>
+  </div>
+
+  <div class="totals">
+    <div class="total-card his">
+      <div class="lbl">Comisión anual estimada</div>
+      <div class="val">$48,866</div>
+      <div class="ctx">7 de 13 meses en cero · $4,072 promedio/mes</div>
+    </div>
+    <div class="total-card his">
+      <div class="lbl">Meses sin pago</div>
+      <div class="val">7/13</div>
+      <div class="ctx">54% del año sin comisión — pero la operación NO se detiene</div>
+    </div>
+  </div>
+
+  <div class="callout warm">
+    <div class="icon">⚠️</div>
+    <div>
+      <p><strong>Por qué se cae a cero:</strong> el CPA blended de la cuenta en estos 13 meses fue <strong>$1,047</strong>, ligeramente por arriba del cap de $1,200. Lo que ves arriba no es un mes raro — es la realidad operativa de un negocio estacional como sables Star Wars: hay temporadas fuertes (Halloween, Buen Fin, Reyes, May 4th) y meses bajos naturales (verano, post-Navidad).</p>
+      <p>El modelo % por CPA premia los picos y castiga los valles. Pero en los valles también hay trabajo: refrescar creativos, preparar la siguiente temporada, ajustar audiencias. No es justo medirlo igual.</p>
+    </div>
+  </div>
+
+  <!-- ============ SECTION 3: MY PROPOSAL ============ -->
+  <h2><span class="num">3</span>Mi propuesta — alineación 100%</h2>
+  <p class="lead">Una sola fórmula, sin tiers ni escalones. Cobro un % sobre la utilidad bruta que TÚ obtienes gracias a la pauta de Meta. Cuando creces, gano. Cuando hay valle, el piso me sostiene para seguir operando.</p>
+
+  <div class="formula-box">
+    <div class="lbl">La fórmula</div>
+    <div class="formula">
+      <span>(Ventas Meta</span><span class="op">−</span><span>Gasto Meta)</span><span class="op">×</span><span>15%</span>
+    </div>
+    <div class="formula-eg">
+      <strong>Ejemplo:</strong> ventas Meta $120K, gasto en pauta $20K → utilidad bruta $100K → mi comisión = $15K
+      <br>Con piso garantizado de <strong>$10,000/mes</strong> para meses bajos.
+    </div>
+  </div>
+
+  <!-- ============ SECTION 4: HOW IT LOOKS WITH SAME DATA ============ -->
+  <h2><span class="num">4</span>Cómo se ve con los mismos 13 meses</h2>
+  <p class="lead">Mismos meses, mismos números reales — solo cambia la fórmula. En meses bajos el piso de $10K se activa (etiqueta naranja); en meses fuertes no necesita activarse porque la fórmula naturalmente paga más.</p>
+
+  <div class="panel">
+    <div class="month-head">
+      <div>Mes</div><div>Ventas Meta</div><div>Utilidad bruta</div><div class="pay-h">Comisión bajo mi modelo</div>
+    </div>
+    <div class="month-list">
+      <div class="month-row paid">
+        <div class="m">May 25</div>
+        <div class="vis"><div class="vis-fill" style="width:55%; background:var(--teal)"></div></div>
+        <div class="cpa-cell">Utilidad $257,041</div>
+        <div class="pay-cell">$38,556</div>
+    </div>
+<div class="month-row paid">
+        <div class="m">Jun 25</div>
+        <div class="vis"><div class="vis-fill" style="width:14%; background:var(--teal)"></div></div>
+        <div class="cpa-cell">Utilidad $56,552</div>
+        <div class="pay-cell">$10,000 <span class="floor-tag">piso</span></div>
+    </div>
+<div class="month-row paid">
+        <div class="m">Jul 25</div>
+        <div class="vis"><div class="vis-fill" style="width:9%; background:var(--teal)"></div></div>
+        <div class="cpa-cell">Utilidad $37,918</div>
+        <div class="pay-cell">$10,000 <span class="floor-tag">piso</span></div>
+    </div>
+<div class="month-row paid">
+        <div class="m">Ago 25</div>
+        <div class="vis"><div class="vis-fill" style="width:6%; background:var(--teal)"></div></div>
+        <div class="cpa-cell">Utilidad $21,031</div>
+        <div class="pay-cell">$10,000 <span class="floor-tag">piso</span></div>
+    </div>
+<div class="month-row paid">
+        <div class="m">Sep 25</div>
+        <div class="vis"><div class="vis-fill" style="width:5%; background:var(--teal)"></div></div>
+        <div class="cpa-cell">Utilidad $15,532</div>
+        <div class="pay-cell">$10,000 <span class="floor-tag">piso</span></div>
+    </div>
+<div class="month-row paid">
+        <div class="m">Oct 25</div>
+        <div class="vis"><div class="vis-fill" style="width:43%; background:var(--teal)"></div></div>
+        <div class="cpa-cell">Utilidad $210,694</div>
+        <div class="pay-cell">$31,604</div>
+    </div>
+<div class="month-row paid">
+        <div class="m">Nov 25</div>
+        <div class="vis"><div class="vis-fill" style="width:46%; background:var(--teal)"></div></div>
+        <div class="cpa-cell">Utilidad $217,413</div>
+        <div class="pay-cell">$32,612</div>
+    </div>
+<div class="month-row paid">
+        <div class="m">Dic 25</div>
+        <div class="vis"><div class="vis-fill" style="width:40%; background:var(--teal)"></div></div>
+        <div class="cpa-cell">Utilidad $180,090</div>
+        <div class="pay-cell">$27,013</div>
+    </div>
+<div class="month-row paid">
+        <div class="m">Ene 26</div>
+        <div class="vis"><div class="vis-fill" style="width:32%; background:var(--teal)"></div></div>
+        <div class="cpa-cell">Utilidad $152,513</div>
+        <div class="pay-cell">$22,877</div>
+    </div>
+<div class="month-row paid">
+        <div class="m">Feb 26</div>
+        <div class="vis"><div class="vis-fill" style="width:3%; background:var(--teal)"></div></div>
+        <div class="cpa-cell">Utilidad $6,576</div>
+        <div class="pay-cell">$10,000 <span class="floor-tag">piso</span></div>
+    </div>
+<div class="month-row paid">
+        <div class="m">Mar 26</div>
+        <div class="vis"><div class="vis-fill" style="width:8%; background:var(--teal)"></div></div>
+        <div class="cpa-cell">Utilidad $23,622</div>
+        <div class="pay-cell">$10,000 <span class="floor-tag">piso</span></div>
+    </div>
+<div class="month-row paid">
+        <div class="m">Abr 26</div>
+        <div class="vis"><div class="vis-fill" style="width:45%; background:var(--teal)"></div></div>
+        <div class="cpa-cell">Utilidad $216,242</div>
+        <div class="pay-cell">$32,436</div>
+    </div>
+<div class="month-row paid">
+        <div class="m">May 26</div>
+        <div class="vis"><div class="vis-fill" style="width:100%; background:var(--teal)"></div></div>
+        <div class="cpa-cell">Utilidad $528,228</div>
+        <div class="pay-cell">$79,234</div>
+    </div>
+    </div>
+  </div>
+
+  <div class="totals">
+    <div class="total-card mine">
+      <div class="lbl">Comisión anual estimada</div>
+      <div class="val">$324,333</div>
+      <div class="ctx">$27,028/mes promedio · cero meses en cero</div>
+    </div>
+    <div class="total-card mine">
+      <div class="lbl">Como % del ad spend</div>
+      <div class="val">61%</div>
+      <div class="ctx">Comparable al estándar de agencias (15-25%)</div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="chart-wrap"><canvas id="chartCompare"></canvas></div>
+  </div>
+
+  <h3 style="font-family:'Fraunces',serif; font-size:20px; margin:32px 0 14px">Comparativa lado a lado</h3>
+  <div class="sxs-table">
+    <table>
+      <thead>
+        <tr>
+          <th>Mes</th>
+          <th class="num">Ventas Meta</th>
+          <th class="num">Gasto</th>
+          <th class="num split">Modelo % CPA</th>
+          <th class="num split teal">Mi propuesta</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+      <td class="m-cell">May 25</td>
+      <td class="num">$332,852</td>
+      <td class="num">$75,811</td>
+      <td class="num paid-light">$4,993</td>
+      <td class="num teal">$38,556</td>
+    </tr>
+<tr>
+      <td class="m-cell">Jun 25</td>
+      <td class="num">$83,335</td>
+      <td class="num">$26,783</td>
+      <td class="num red">$0</td>
+      <td class="num teal">$10,000</td>
+    </tr>
+<tr>
+      <td class="m-cell">Jul 25</td>
+      <td class="num">$56,284</td>
+      <td class="num">$18,367</td>
+      <td class="num red">$0</td>
+      <td class="num teal">$10,000</td>
+    </tr>
+<tr>
+      <td class="m-cell">Ago 25</td>
+      <td class="num">$35,032</td>
+      <td class="num">$14,001</td>
+      <td class="num red">$0</td>
+      <td class="num teal">$10,000</td>
+    </tr>
+<tr>
+      <td class="m-cell">Sep 25</td>
+      <td class="num">$27,512</td>
+      <td class="num">$11,980</td>
+      <td class="num red">$0</td>
+      <td class="num teal">$10,000</td>
+    </tr>
+<tr>
+      <td class="m-cell">Oct 25</td>
+      <td class="num">$259,736</td>
+      <td class="num">$49,042</td>
+      <td class="num paid-light">$11,688</td>
+      <td class="num teal">$31,604</td>
+    </tr>
+<tr>
+      <td class="m-cell">Nov 25</td>
+      <td class="num">$280,256</td>
+      <td class="num">$62,843</td>
+      <td class="num paid-light">$2,803</td>
+      <td class="num teal">$32,612</td>
+    </tr>
+<tr>
+      <td class="m-cell">Dic 25</td>
+      <td class="num">$239,659</td>
+      <td class="num">$59,570</td>
+      <td class="num paid-light">$2,397</td>
+      <td class="num teal">$27,013</td>
+    </tr>
+<tr>
+      <td class="m-cell">Ene 26</td>
+      <td class="num">$193,703</td>
+      <td class="num">$41,191</td>
+      <td class="num red">$0</td>
+      <td class="num teal">$22,877</td>
+    </tr>
+<tr>
+      <td class="m-cell">Feb 26</td>
+      <td class="num">$19,326</td>
+      <td class="num">$12,750</td>
+      <td class="num red">$0</td>
+      <td class="num teal">$10,000</td>
+    </tr>
+<tr>
+      <td class="m-cell">Mar 26</td>
+      <td class="num">$49,872</td>
+      <td class="num">$26,250</td>
+      <td class="num red">$0</td>
+      <td class="num teal">$10,000</td>
+    </tr>
+<tr>
+      <td class="m-cell">Abr 26</td>
+      <td class="num">$272,379</td>
+      <td class="num">$56,136</td>
+      <td class="num paid-light">$2,724</td>
+      <td class="num teal">$32,436</td>
+    </tr>
+<tr>
+      <td class="m-cell">May 26</td>
+      <td class="num">$606,565</td>
+      <td class="num">$78,337</td>
+      <td class="num paid-light">$24,263</td>
+      <td class="num teal">$79,234</td>
+    </tr>
+        <tr class="totals-row">
+          <td>Total 13 meses</td>
+          <td class="num">$2,456,511</td>
+          <td class="num">$533,059</td>
+          <td class="num red">$48,866</td>
+          <td class="num teal">$324,333</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ============ SECTION 5: WHY IT WORKS FOR BOTH ============ -->
+  <h2><span class="num">5</span>Por qué esta estructura te sirve a ti también</h2>
+  <p class="lead">Lo importante: no te estoy proponiendo algo "pro media buyer" — te estoy proponiendo algo donde a los dos nos conviene crecer la cuenta juntos. Estos son los argumentos del lado del cliente:</p>
+
+  <div class="why-grid">
+    <div class="why-card client">
+      <h4>Lo que ganas tú <span class="badge">Cliente</span></h4>
+      <ul>
+        <li><strong>Solo pagas cuando hay utilidad real.</strong> Si la pauta no genera más ventas que su propio costo, mi comisión es el piso ($10K) — no un porcentaje gordo sobre ventas inexistentes.</li>
+        <li><strong>Mi compromiso es 100% en escalar.</strong> No tengo ningún incentivo para "mantenerme chico" — entre más vendes con la pauta, más gano yo. Mismo equipo.</li>
+        <li><strong>Estructura simple y auditable.</strong> Una fórmula, dos números, cero ambigüedad. Cualquier discrepancia se resuelve abriendo Ads Manager.</li>
+        <li><strong>Sin sorpresas de fin de mes.</strong> Sabes exactamente qué vas a pagar antes de firmar el cierre.</li>
+      </ul>
+    </div>
+    <div class="why-card me">
+      <h4>Lo que gano yo <span class="badge">Media buyer</span></h4>
+      <ul>
+        <li><strong>Estabilidad operativa.</strong> El piso me garantiza poder mantener la cuenta operando 365 días — refrescar creativos, ajustar audiencias, preparar temporadas — sin importar el ciclo.</li>
+        <li><strong>Upside real cuando la cuenta vuela.</strong> En meses como May the 4th, ambos celebramos. No me chocan techos artificiales.</li>
+        <li><strong>Motivación alineada a tu resultado.</strong> Mi trabajo se ve premiado en la misma moneda que tú lo mides: utilidad bruta de Meta.</li>
+        <li><strong>Cero meses en cero.</strong> No estoy trabajando gratis 7 meses al año.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ============ SECTION 6: TERMS ============ -->
+  <h2><span class="num">6</span>Los detalles operativos</h2>
+  <p class="lead">Para que esto funcione sin malentendidos, dejamos por escrito lo siguiente:</p>
+
+  <div class="terms">
+    <div class="term-row">
+      <div class="term-label">Comisión</div>
+      <div class="term-body"><strong>15%</strong> sobre (Ventas atribuidas a Meta − Gasto en pauta de Meta) del mes.</div>
+    </div>
+    <div class="term-row">
+      <div class="term-label">Piso mensual</div>
+      <div class="term-body"><strong>$10,000 MXN</strong> garantizado al mes, independiente del resultado. Cubre operación, juntas, ajustes, reportes.</div>
+    </div>
+    <div class="term-row">
+      <div class="term-label">"Ventas atribuidas a Meta"</div>
+      <div class="term-body">Las que reporta el píxel/CAPI de Meta en ventana <strong>last-click 7 días</strong>. Verificación cruzada con Shopify mensual.</div>
+    </div>
+    <div class="term-row">
+      <div class="term-label">"Gasto en pauta"</div>
+      <div class="term-body">Lo invertido en plataformas Meta (Facebook + Instagram) según Ads Manager. <strong>No</strong> incluye costos de creatividad, herramientas o freelancers contratados por mi cuenta.</div>
+    </div>
+    <div class="term-row">
+      <div class="term-label">Mes con utilidad negativa</div>
+      <div class="term-body">Si en un mes el gasto supera las ventas, la comisión variable es $0 — aplica solo el piso. No pago al cliente.</div>
+    </div>
+    <div class="term-row">
+      <div class="term-label">Alcance del trabajo</div>
+      <div class="term-body">Gestión completa de Meta Ads: estrategia, estructura de campañas, audiencias, optimización diaria, reportería mensual, juntas quincenales de revisión. <strong>No</strong> incluye producción de creatividad (videos/fotos/copy en piezas finales) — se cotiza aparte si lo necesitas.</div>
+    </div>
+    <div class="term-row">
+      <div class="term-label">Periodo de gracia</div>
+      <div class="term-body">Primeros <strong>60 días</strong> el piso es el único pago — entiendo que estoy entrando a una cuenta nueva, limpiando audiencias y entendiendo la operación. Después, fórmula completa.</div>
+    </div>
+    <div class="term-row">
+      <div class="term-label">Aviso de salida</div>
+      <div class="term-body"><strong>30 días</strong> de aviso por cualquiera de las partes. Compromiso mínimo inicial: <strong>3 meses</strong>.</div>
+    </div>
+    <div class="term-row">
+      <div class="term-label">Cierre mensual</div>
+      <div class="term-body">Día <strong>5 de cada mes</strong> reporte de números del mes anterior + factura. Pago a 7 días.</div>
+    </div>
+  </div>
+
+  <!-- ============ CLOSING ============ -->
+  <div class="close-cta">
+    <h3>¿Hacemos esto juntos?</h3>
+    <p>Si esta estructura te hace sentido, podemos arrancar en 7 días con un kick-off para alinear roadmap, accesos y prioridades de las próximas temporadas. Si tienes contraflechas a algún detalle, lo platicamos con calma — el objetivo es que ambos firmemos algo que se sostenga 12+ meses.</p>
+  </div>
+
+  <footer>Propuesta basada en datos reales de Meta Marketing API · Cuenta Saber Legacy · Moneda MXN · 07/06/2026</footer>
+</div>
+
+<script>
+const labels = ["May 25", "Jun 25", "Jul 25", "Ago 25", "Sep 25", "Oct 25", "Nov 25", "Dic 25", "Ene 26", "Feb 26", "Mar 26", "Abr 26", "May 26"];
+const hisComm = [4993, 0, 0, 0, 0, 11688, 2803, 2397, 0, 0, 0, 2724, 24263];
+const myComm = [38556, 10000, 10000, 10000, 10000, 31604, 32612, 27013, 22877, 10000, 10000, 32436, 79234];
+
+Chart.defaults.color = '#6b6356';
+Chart.defaults.font.family = "'Plus Jakarta Sans', sans-serif";
+Chart.defaults.borderColor = '#e8dfcf';
+
+new Chart(document.getElementById('chartCompare').getContext('2d'), {
+  type:'bar',
+  data:{
+    labels,
+    datasets:[
+      {label:'Modelo % por CPA', data:hisComm, backgroundColor:'#dc2626', borderRadius:6},
+      {label:'Mi propuesta (15% · piso $10K)', data:myComm, backgroundColor:'#0d9488', borderRadius:6}
+    ]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{position:'top', align:'end'}, title:{display:true, text:'Comisión mes a mes (MXN) — mismos 13 meses, dos modelos', align:'start', font:{family:'Fraunces', size:16, weight:700}, color:'#1f1b16'},
+      tooltip:{callbacks:{label: ctx => `${ctx.dataset.label}: $${ctx.parsed.y.toLocaleString()}`}}},
+    scales:{
+      x:{grid:{display:false}},
+      y:{beginAtZero:true, grid:{color:'rgba(80,60,30,0.06)'}, ticks:{callback:v=>'$'+v.toLocaleString()}}
+    }
+  }
+});
+</script>
+</body>
+</html>
