@@ -140,6 +140,26 @@
   .term-row .term-body { color: var(--text); font-size: 14px; }
   .term-row .term-body strong { color: var(--text); }
 
+  /* Top nav */
+  .top-nav { display: flex; gap: 8px; align-items: center; padding: 14px 18px; margin-bottom: 28px; background: var(--panel); border: 1px solid var(--border); border-radius: 12px; flex-wrap: wrap; }
+  .top-nav .brand-tag { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-right: auto; }
+  .top-nav a { color: var(--muted); text-decoration: none; font-size: 13px; font-weight: 600; padding: 7px 12px; border-radius: 8px; transition: all 0.15s; }
+  .top-nav a:hover { background: var(--teal-soft); color: var(--teal-deep); }
+  .top-nav a.current { background: var(--text); color: var(--bg); }
+
+  /* More reports cards */
+  .more-reports { margin-top: 56px; padding-top: 36px; border-top: 1px solid var(--border); }
+  .more-reports h3 { font-family: 'Fraunces', serif; font-size: 24px; font-weight: 700; margin: 0 0 18px; letter-spacing: -0.01em; }
+  .report-cards { display: grid; gap: 14px; grid-template-columns: 1fr; }
+  @media (min-width: 700px) { .report-cards { grid-template-columns: repeat(3, 1fr); } }
+  .report-card { display: block; background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 20px 22px; text-decoration: none; color: var(--text); transition: all 0.18s; position: relative; }
+  .report-card:hover { border-color: var(--teal); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(13,148,136,0.08); }
+  .report-card .rc-eye { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--teal); margin-bottom: 8px; }
+  .report-card .rc-title { font-family: 'Fraunces', serif; font-size: 17px; font-weight: 700; margin-bottom: 6px; letter-spacing: -0.01em; line-height: 1.25; }
+  .report-card .rc-desc { font-size: 13px; color: var(--muted); line-height: 1.5; }
+  .report-card .rc-arrow { position: absolute; top: 20px; right: 22px; color: var(--muted); font-weight: 700; transition: transform 0.15s; }
+  .report-card:hover .rc-arrow { transform: translateX(3px); color: var(--teal); }
+
   /* Closing CTA */
   .close-cta { background: linear-gradient(135deg, var(--teal-deep) 0%, var(--teal) 100%); border-radius: 22px; padding: 40px 36px; color: white; text-align: center; margin: 56px 0 0; }
   .close-cta h3 { font-family: 'Fraunces', serif; font-size: 26px; margin: 0 0 12px; font-weight: 700; letter-spacing: -0.01em; }
@@ -153,6 +173,14 @@
 </head>
 <body>
 <div class="wrap">
+
+  <nav class="top-nav">
+    <span class="brand-tag">Saber Legacy · Al Chile Media</span>
+    <a href="./" class="current">Propuesta</a>
+    <a href="auditoria.html">Auditoría 12m</a>
+    <a href="may-the-4th.html">May the 4th</a>
+    <a href="comparativa-30dias.html">Comparativa 30d</a>
+  </nav>
 
   <div class="hero">
     <div class="eyebrow">Propuesta de colaboración</div>
@@ -613,6 +641,31 @@
     <div class="term-row">
       <div class="term-label">Cierre mensual</div>
       <div class="term-body">Día <strong>5 de cada mes</strong> reporte de números del mes anterior + factura. Pago a 7 días.</div>
+    </div>
+  </div>
+
+  <!-- ============ MORE REPORTS ============ -->
+  <div class="more-reports">
+    <h3>📊 Otros reportes de la cuenta</h3>
+    <div class="report-cards">
+      <a class="report-card" href="auditoria.html">
+        <div class="rc-eye">12 meses</div>
+        <div class="rc-title">Auditoría completa<br>de la cuenta</div>
+        <div class="rc-desc">Análisis forense: qué funcionó, qué no, performance en fechas clave, plan Keep / Change / Continue.</div>
+        <div class="rc-arrow">→</div>
+      </a>
+      <a class="report-card" href="may-the-4th.html">
+        <div class="rc-eye">Semana fuerte</div>
+        <div class="rc-title">Reporte May the 4th<br>2026</div>
+        <div class="rc-desc">$73K invertidos, $599K en ventas, ROAS 8.15x. Análisis de la mejor semana del año vs base.</div>
+        <div class="rc-arrow">→</div>
+      </a>
+      <a class="report-card" href="comparativa-30dias.html">
+        <div class="rc-eye">Últimos 30 días</div>
+        <div class="rc-title">Comparativa<br>30 días vs anteriores</div>
+        <div class="rc-desc">Performance por conjunto de anuncios, con banderas rojas en CTR caído &gt;15% o CPC subido &gt;20%.</div>
+        <div class="rc-arrow">→</div>
+      </a>
     </div>
   </div>
 
