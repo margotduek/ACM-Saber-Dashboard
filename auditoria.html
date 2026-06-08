@@ -40,7 +40,6 @@
     background-attachment: fixed;
     background-color: var(--bg);
   }
-  /* Starfield */
   body::before {
     content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 0;
     background-image:
@@ -56,11 +55,16 @@
   }
   .wrap { max-width: 1400px; margin: 0 auto; padding: 40px 28px 80px; position: relative; z-index: 1; }
 
-  /* HERO */
+  /* Top nav */
+  .top-nav { display: flex; gap: 8px; align-items: center; padding: 14px 18px; margin-bottom: 28px; background: var(--panel); border: 1px solid var(--border); border-radius: 12px; flex-wrap: wrap; }
+  .top-nav .brand-tag { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-right: auto; font-family: 'Orbitron', sans-serif; }
+  .top-nav a { color: var(--muted); text-decoration: none; font-size: 13px; font-weight: 600; padding: 7px 12px; border-radius: 8px; transition: all 0.15s; }
+  .top-nav a:hover { background: rgba(56,189,248,0.15); color: var(--jedi); }
+  .top-nav a.current { background: var(--jedi); color: var(--bg); }
+
   .hero { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; flex-wrap: wrap; margin-bottom: 40px; padding-bottom: 36px; border-bottom: 1px solid var(--border); }
   .hero-l { display: flex; gap: 18px; align-items: flex-start; }
   .saber-logo { width: 56px; height: 56px; border-radius: 14px; background: linear-gradient(135deg, var(--jedi), var(--mace)); display: flex; align-items: center; justify-content: center; font-size: 28px; box-shadow: 0 0 30px var(--jedi-glow); position: relative; flex-shrink: 0; }
-  .saber-logo::before { content: ''; position: absolute; inset: -2px; border-radius: 16px; background: linear-gradient(135deg, var(--jedi), var(--mace)); z-index: -1; filter: blur(8px); opacity: 0.4; }
   h1 { font-family: 'Orbitron', sans-serif; font-size: 32px; font-weight: 700; margin: 0; letter-spacing: 0.02em; line-height: 1.05; background: linear-gradient(135deg, #fff 0%, var(--jedi) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
   h1 .small { display: block; font-size: 12px; font-weight: 500; color: var(--muted); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 6px; -webkit-text-fill-color: var(--muted); }
   .hero-sub { color: var(--muted); font-size: 13px; margin-top: 8px; font-weight: 500; }
@@ -85,7 +89,6 @@
   h2 .bar.yellow { background: var(--saber-yellow); box-shadow: 0 0 12px rgba(251,191,36,0.3); }
   h2 .hint { font-family: 'Inter', sans-serif; font-weight: 400; color: var(--muted); font-size: 13px; letter-spacing: 0; }
 
-  /* TIME WINDOW CARDS */
   .windows { display: grid; gap: 18px; grid-template-columns: 1fr; }
   @media (min-width: 1000px) { .windows { grid-template-columns: 1fr 1fr 1fr; } }
   .window-card { background: var(--panel); border: 1px solid var(--border); border-radius: 16px; padding: 22px; }
@@ -110,14 +113,12 @@
   .muted { color: var(--muted); }
   .accent { color: var(--jedi); }
 
-  /* PANELS */
   .panel { background: var(--panel); border: 1px solid var(--border); border-radius: 16px; padding: 24px; }
   .chart-grid { display: grid; gap: 16px; grid-template-columns: 1fr; }
   @media (min-width: 1000px) { .chart-grid.two { grid-template-columns: 1fr 1fr; } }
   .chart-wrap { height: 320px; position: relative; }
   .chart-wrap.tall { height: 380px; }
 
-  /* TABLES */
   .table-panel { background: var(--panel); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; overflow-x: auto; }
   table { width: 100%; border-collapse: collapse; }
   thead th { background: var(--panel-2); color: var(--muted); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding: 14px 16px; text-align: left; border-bottom: 1px solid var(--border); font-family: 'Orbitron', sans-serif; }
@@ -129,7 +130,6 @@
   .name { font-weight: 600; font-size: 14px; }
   .prev { font-size: 11px; color: var(--muted); margin-top: 4px; }
 
-  /* Key dates verdict colors */
   tr.kd-win td { background: linear-gradient(90deg, rgba(16,185,129,0.06), transparent); }
   tr.kd-fail td { background: linear-gradient(90deg, rgba(239,68,68,0.08), transparent); }
   .kd-icon { font-size: 18px; font-weight: 700; }
@@ -137,13 +137,11 @@
   tr.kd-ok .kd-icon { color: var(--saber-yellow); }
   tr.kd-fail .kd-icon { color: var(--sith); }
 
-  /* Fatigue colors */
   .freq-extreme { color: var(--sith); text-shadow: 0 0 12px var(--sith-glow); }
   .freq-high { color: var(--saber-yellow); }
   .freq-med { color: var(--text); }
   tr.fat-extreme td { background: linear-gradient(90deg, rgba(239,68,68,0.10), transparent); }
 
-  /* BULLETS */
   .bullets { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
   .bullet { display: flex; gap: 14px; align-items: flex-start; padding: 14px 18px; background: var(--panel); border-radius: 12px; border: 1px solid var(--border); border-left-width: 4px; }
   .bullet.b-good { border-left-color: var(--yoda); }
@@ -159,8 +157,8 @@
 
   .section-title { font-family: 'Orbitron', sans-serif; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 700; margin: 0 0 14px; display: flex; align-items: center; gap: 10px; }
   .section-title .dot { width: 10px; height: 10px; border-radius: 50%; }
-  .section-title.good .dot { background: var(--yoda); box-shadow: 0 0 10px var(--yoda-glow); }
-  .section-title.bad .dot { background: var(--sith); box-shadow: 0 0 10px var(--sith-glow); }
+  .section-title.good .dot { background: var(--yoda); }
+  .section-title.bad .dot { background: var(--sith); }
   .section-title.keep .dot { background: var(--yoda); }
   .section-title.change .dot { background: var(--saber-yellow); }
   .section-title.continue .dot { background: var(--jedi); }
@@ -172,21 +170,29 @@
 <body>
 <div class="wrap">
 
+  <nav class="top-nav">
+    <span class="brand-tag">Saber Legacy · Al Chile Media</span>
+    <a href="./">Propuesta</a>
+    <a href="auditoria.html" class="current">Auditoría 12m</a>
+    <a href="may-the-4th.html">May the 4th</a>
+    <a href="comparativa-30dias.html">Comparativa 30d</a>
+  </nav>
+
   <div class="hero">
     <div class="hero-l">
       <div class="saber-logo">⚔️</div>
       <div>
         <h1><span class="small">Auditoría de cuenta · Meta Ads</span>Saber Legacy</h1>
-        <div class="hero-sub">Período auditado: <strong>2025-05-15 → 2026-05-13</strong> · Inversión auditada: <strong>$489,224 MXN</strong> · Generado 14/05/2026 · 21:04</div>
+        <div class="hero-sub">Período auditado: <strong>2025-06-08 → 2026-06-07</strong> · Inversión auditada: <strong>$460,430 MXN</strong> · Generado 07/06/2026 · 20:15</div>
       </div>
     </div>
     <div class="verdict-box g-mid">
       <div class="lbl">Veredicto general · 12 meses</div>
       <div class="verdict-grade">
-        <span class="big">B</span>
-        <span class="score">6.1/10</span>
+        <span class="big">B+</span>
+        <span class="score">6.6/10</span>
       </div>
-      <div class="verdict-text">Cuenta correcta con ejecución desigual. Buen ROAS promedio, pero fechas clave y meses específicos quedaron debiendo. Hay margen real para mejorar 30-50% en 6 meses sin cambiar el spend.</div>
+      <div class="verdict-text">Cuenta correcta con ejecución desigual. Buen ROAS promedio, pero meses específicos quedaron debiendo y el último mes muestra freno claro. Hay margen real para mejorar 30-50% en 6 meses.</div>
     </div>
   </div>
 
@@ -197,17 +203,17 @@
       <div class="window-head">
         <div>
           <div class="window-title">1 año</div>
-          <div class="window-sub">vs período inmediato anterior · score 6.1/10</div>
+          <div class="window-sub">vs período inmediato anterior · score 6.6/10</div>
         </div>
-        <div class="grade-mini g-mid">B</div>
+        <div class="grade-mini g-mid">B+</div>
       </div>
       <div class="window-kpis">
-        <div class="wk"><div class="lbl">Inversión</div><div class="val">$489,224</div><div class="dlt"><span class="chg pos">↑ +93.6%</span></div></div>
-        <div class="wk"><div class="lbl">Ventas</div><div class="val">$2,251,100</div><div class="dlt"><span class="chg pos">↑ +81.6%</span></div></div>
-        <div class="wk"><div class="lbl">ROAS</div><div class="val accent">4.60x</div><div class="dlt"><span class="chg neg">↓ -6.2%</span></div></div>
-        <div class="wk"><div class="lbl">Compras</div><div class="val">457</div><div class="dlt"><span class="chg pos">↑ +72.5%</span></div></div>
-        <div class="wk"><div class="lbl">CPA</div><div class="val">$1,071</div><div class="dlt"><span class="chg neg">↑ +12.3%</span></div></div>
-        <div class="wk"><div class="lbl">CTR</div><div class="val">3.81%</div><div class="dlt"><span class="chg pos">↑ +4.7%</span></div></div>
+        <div class="wk"><div class="lbl">Inversión</div><div class="val">$460,430</div><div class="dlt"><span class="chg pos">↑ +59.9%</span></div></div>
+        <div class="wk"><div class="lbl">Ventas</div><div class="val">$2,141,405</div><div class="dlt"><span class="chg pos">↑ +59.7%</span></div></div>
+        <div class="wk"><div class="lbl">ROAS</div><div class="val accent">4.65x</div><div class="dlt"><span class="chg neg">↓ -0.2%</span></div></div>
+        <div class="wk"><div class="lbl">Compras</div><div class="val">429</div><div class="dlt"><span class="chg pos">↑ +49.5%</span></div></div>
+        <div class="wk"><div class="lbl">CPA</div><div class="val">$1,073</div><div class="dlt"><span class="chg neg">↑ +7.0%</span></div></div>
+        <div class="wk"><div class="lbl">CTR</div><div class="val">3.74%</div><div class="dlt"><span class="chg pos">↑ +0.4%</span></div></div>
       </div>
     </div>
     
@@ -220,12 +226,12 @@
         <div class="grade-mini g-good">A-</div>
       </div>
       <div class="window-kpis">
-        <div class="wk"><div class="lbl">Inversión</div><div class="val">$322,475</div><div class="dlt"><span class="chg pos">↑ +93.4%</span></div></div>
-        <div class="wk"><div class="lbl">Ventas</div><div class="val">$1,621,762</div><div class="dlt"><span class="chg pos">↑ +157.7%</span></div></div>
-        <div class="wk"><div class="lbl">ROAS</div><div class="val accent">5.03x</div><div class="dlt"><span class="chg pos">↑ +33.3%</span></div></div>
-        <div class="wk"><div class="lbl">Compras</div><div class="val">308</div><div class="dlt"><span class="chg pos">↑ +106.7%</span></div></div>
-        <div class="wk"><div class="lbl">CPA</div><div class="val">$1,047</div><div class="dlt"><span class="chg pos">↓ -6.4%</span></div></div>
-        <div class="wk"><div class="lbl">CTR</div><div class="val">3.55%</div><div class="dlt"><span class="chg neg">↓ -18.7%</span></div></div>
+        <div class="wk"><div class="lbl">Inversión</div><div class="val">$271,695</div><div class="dlt"><span class="chg pos">↑ +44.0%</span></div></div>
+        <div class="wk"><div class="lbl">Ventas</div><div class="val">$1,366,296</div><div class="dlt"><span class="chg pos">↑ +76.3%</span></div></div>
+        <div class="wk"><div class="lbl">ROAS</div><div class="val accent">5.03x</div><div class="dlt"><span class="chg pos">↑ +22.4%</span></div></div>
+        <div class="wk"><div class="lbl">Compras</div><div class="val">263</div><div class="dlt"><span class="chg pos">↑ +58.4%</span></div></div>
+        <div class="wk"><div class="lbl">CPA</div><div class="val">$1,033</div><div class="dlt"><span class="chg pos">↓ -9.1%</span></div></div>
+        <div class="wk"><div class="lbl">CTR</div><div class="val">3.66%</div><div class="dlt"><span class="chg neg">↓ -5.5%</span></div></div>
       </div>
     </div>
     
@@ -233,17 +239,17 @@
       <div class="window-head">
         <div>
           <div class="window-title">1 mes</div>
-          <div class="window-sub">vs período inmediato anterior · score 10.0/10</div>
+          <div class="window-sub">vs período inmediato anterior · score 3.5/10</div>
         </div>
-        <div class="grade-mini g-good">A</div>
+        <div class="grade-mini g-warn">C</div>
       </div>
       <div class="window-kpis">
-        <div class="wk"><div class="lbl">Inversión</div><div class="val">$120,145</div><div class="dlt"><span class="chg pos">↑ +226.2%</span></div></div>
-        <div class="wk"><div class="lbl">Ventas</div><div class="val">$818,676</div><div class="dlt"><span class="chg pos">↑ +682.3%</span></div></div>
-        <div class="wk"><div class="lbl">ROAS</div><div class="val accent">6.81x</div><div class="dlt"><span class="chg pos">↑ +139.8%</span></div></div>
-        <div class="wk"><div class="lbl">Compras</div><div class="val">154</div><div class="dlt"><span class="chg pos">↑ +600.0%</span></div></div>
-        <div class="wk"><div class="lbl">CPA</div><div class="val">$780</div><div class="dlt"><span class="chg pos">↓ -53.4%</span></div></div>
-        <div class="wk"><div class="lbl">CTR</div><div class="val">2.97%</div><div class="dlt"><span class="chg neg">↓ -50.9%</span></div></div>
+        <div class="wk"><div class="lbl">Inversión</div><div class="val">$23,187</div><div class="dlt"><span class="chg neg">↓ -81.1%</span></div></div>
+        <div class="wk"><div class="lbl">Ventas</div><div class="val">$84,576</div><div class="dlt"><span class="chg neg">↓ -89.9%</span></div></div>
+        <div class="wk"><div class="lbl">ROAS</div><div class="val accent">3.65x</div><div class="dlt"><span class="chg neg">↓ -46.9%</span></div></div>
+        <div class="wk"><div class="lbl">Compras</div><div class="val">19</div><div class="dlt"><span class="chg neg">↓ -88.1%</span></div></div>
+        <div class="wk"><div class="lbl">CPA</div><div class="val">$1,220</div><div class="dlt"><span class="chg neg">↑ +58.6%</span></div></div>
+        <div class="wk"><div class="lbl">CTR</div><div class="val">3.30%</div><div class="dlt"><span class="chg pos">↑ +14.7%</span></div></div>
       </div>
     </div>
   </div>
@@ -273,14 +279,7 @@
         <th class="num">ROAS</th>
         <th class="num">Compras</th>
       </tr></thead>
-      <tbody><tr class="kd-fail">
-      <td><div class="kd-icon">✗</div></td>
-      <td><div class="name">Hot Sale 2025</div><div class="prev">2025-05-26 → 2025-06-02 (8d)</div></td>
-      <td class="num">$30,890</td>
-      <td class="num">$104,497</td>
-      <td class="num"><strong>3.38x</strong><div class="prev">target 5.0x</div></td>
-      <td class="num">26</td>
-    </tr><tr class="kd-win">
+      <tbody><tr class="kd-win">
       <td><div class="kd-icon">⚡</div></td>
       <td><div class="name">Día del Padre 2025</div><div class="prev">2025-06-09 → 2025-06-15 (7d)</div></td>
       <td class="num">$1,393</td>
@@ -343,6 +342,20 @@
       <td class="num">$599,468</td>
       <td class="num"><strong>8.15x</strong><div class="prev">target 6.0x</div></td>
       <td class="num">111</td>
+    </tr><tr class="kd-fail">
+      <td><div class="kd-icon">✗</div></td>
+      <td><div class="name">Día de las Madres 2026</div><div class="prev">2026-05-08 → 2026-05-10 (3d)</div></td>
+      <td class="num">$2,980</td>
+      <td class="num">$7,097</td>
+      <td class="num"><strong>2.38x</strong><div class="prev">target 5.0x</div></td>
+      <td class="num">2</td>
+    </tr><tr class="kd-ok">
+      <td><div class="kd-icon">•</div></td>
+      <td><div class="name">Hot Sale 2026</div><div class="prev">2026-05-26 → 2026-06-02 (8d)</div></td>
+      <td class="num">$16,699</td>
+      <td class="num">$70,101</td>
+      <td class="num"><strong>4.20x</strong><div class="prev">target 5.0x</div></td>
+      <td class="num">16</td>
     </tr></tbody>
     </table>
   </div>
@@ -354,28 +367,28 @@
   <div class="duo" style="margin-top: 40px">
     <div>
       <h2 class="with-bar"><span class="bar yoda"></span>Lo que se hizo bien <span style="font-size:14px;color:var(--muted);font-family:Inter">— Jedi moves</span></h2>
-      <ul class="bullets"><li class="bullet b-good"><span class="emoji">⚡</span><span><strong>ROAS sostenido: 4.60x en 12 meses con $489,224 invertidos.</strong> Para ecommerce mexicano, 3x es sano y 5x es excelente — están justo en zona buena.</span></li>
+      <ul class="bullets"><li class="bullet b-good"><span class="emoji">⚡</span><span><strong>ROAS sostenido: 4.65x en 12 meses con $460,430 invertidos.</strong> Para ecommerce mexicano, 3x es sano y 5x es excelente — están en zona aceptable.</span></li>
 <li class="bullet b-good"><span class="emoji">⚡</span><span><strong>May the 4th 2026 fue una operación quirúrgica:</strong> $73,556 en 7 días con ROAS 8.15x = $599K en ventas. Eso es saber para qué date pivotear el budget. Lección replicable.</span></li>
+<li class="bullet b-good"><span class="emoji">⚡</span><span><strong>Mayo 2026 entero fue explosivo:</strong> $92K invertidos con ROAS 6.95x = $643K en ventas. Mejor mes de los 12. Incluye May 4th + Día Madres + arranque Hot Sale.</span></li>
 <li class="bullet b-good"><span class="emoji">⚡</span><span><strong>Buen Fin 2025: ROAS 8.21x en 4 días.</strong> Cuando entendieron la audiencia, exprimieron. (Aunque solo metieron $10K — ver críticas).</span></li>
 <li class="bullet b-good"><span class="emoji">⚡</span><span><strong>Reyes Magos 2026: ROAS 5.23x con $26K.</strong> Bien jugado: empezaron antes del 6 de enero, capturaron búsqueda.</span></li>
-<li class="bullet b-good"><span class="emoji">⚡</span><span><strong>Halloween 2025: ROAS 5.58x.</strong> La campaña &#x27;Sith Sale&#x27; (nombre genial, btw) rindió. Aprovecharon estética Star Wars × Halloween bien.</span></li>
+<li class="bullet b-good"><span class="emoji">⚡</span><span><strong>Halloween 2025: ROAS 5.58x.</strong> La campaña &#x27;Sith Sale&#x27; rindió. Aprovecharon estética Star Wars × Halloween bien.</span></li>
 <li class="bullet b-good"><span class="emoji">⚡</span><span><strong>Cuenta diversificada:</strong> 16 campañas escalaron arriba de $10K. No dependen de una sola — eso es resiliencia.</span></li>
-<li class="bullet b-good"><span class="emoji">⚡</span><span><strong>Operación consistente:</strong> solo 7 días con cero gasto en todo el año. No hay &#x27;meses muertos&#x27; completos.</span></li>
-<li class="bullet b-good"><span class="emoji">⚡</span><span><strong>Spend creció +94% año/año</strong> ($252,703 → $489,224) mientras ROAS solo cayó -6.2% — eso es escalado sano, no quemar dinero.</span></li>
-<li class="bullet b-good"><span class="emoji">⚡</span><span><strong>Momentum entrando: último mes ROAS 6.81x</strong> (+140% vs mes prior). Tomas la cuenta en pico, no en valle.</span></li></ul>
+<li class="bullet b-good"><span class="emoji">⚡</span><span><strong>Spend creció +60% año/año</strong> ($287,859 → $460,430) con ROAS estable (4.66x → 4.65x) — escalado sano, no quemar dinero.</span></li></ul>
     </div>
     <div>
       <h2 class="with-bar"><span class="bar sith"></span>Lo que se hizo mal <span style="font-size:14px;color:var(--muted);font-family:Inter">— necesita corrección</span></h2>
-      <ul class="bullets"><li class="bullet b-bad"><span class="emoji">✗</span><span><strong>Frecuencia 13.9 en &#x27;RMKT - omega&#x27;</strong> ($26K gastados): se le mostró el mismo anuncio a la misma persona ~14 veces. Eso es no refrescar creativos por meses. Costo de oportunidad enorme — la audiencia ya está saturada y no se hizo nada.</span></li>
+      <ul class="bullets"><li class="bullet b-bad"><span class="emoji">✗</span><span><strong>🚨 ALERTA NUEVA — último mes en caída libre:</strong> spend cayó de $122K (mes prior) a $23,187 (últimos 30d). Compras de 159 → 19. CPA subió de $770 → $1220. El media buyer entró en &#x27;modo coast&#x27; después de May 4th — junio 1-7 solo $4K en 7 días.</span></li>
+<li class="bullet b-bad"><span class="emoji">✗</span><span><strong>Frecuencia 13.9 en &#x27;RMKT - omega&#x27;</strong> ($26K gastados): se le mostró el mismo anuncio a la misma persona ~14 veces. Eso es no refrescar creativos por meses. Costo de oportunidad enorme — la audiencia ya está saturada y no se hizo nada.</span></li>
 <li class="bullet b-bad"><span class="emoji">✗</span><span><strong>Black Friday 2025 quedó debiendo:</strong> solo $8,192 en 3 días con ROAS 2.14x. Para la fecha más fuerte del calendario retail global, ese ticket de inversión refleja falta de planeación. Comparado con May 4th ($73K), no se preparó la temporada decembrina al mismo nivel.</span></li>
-<li class="bullet b-bad"><span class="emoji">✗</span><span><strong>Spring Sale 2026 fue un desastre silencioso:</strong> $9,927 gastados con ROAS 1.14x. Es perder dinero. Las campañas debieron pausarse en día 2-3 al ver el rendimiento; siguieron 8 días.</span></li>
+<li class="bullet b-bad"><span class="emoji">✗</span><span><strong>Spring Sale 2026 fue un desastre silencioso:</strong> $9,927 gastados con ROAS 1.14x. Las campañas debieron pausarse en día 2-3; siguieron 8 días.</span></li>
 <li class="bullet b-bad"><span class="emoji">✗</span><span><strong>San Valentín 2026 con ROAS 0.89x.</strong> Inversión pequeña ($1,710) pero principio claro: si la promo no califica, no se corre.</span></li>
 <li class="bullet b-bad"><span class="emoji">✗</span><span><strong>Febrero 2026 entero con ROAS 1.52x</strong> ($12,750 invertidos). Un mes entero abajo del punto de equilibrio sin ajustes visibles. Eso es no estar mirando la cuenta semanalmente.</span></li>
 <li class="bullet b-bad"><span class="emoji">✗</span><span><strong>Marzo 2026: $26,250 con ROAS 1.90x.</strong> Otro mes en rojo. Dos meses seguidos perdiendo dinero antes del rebote de mayo.</span></li>
-<li class="bullet b-bad"><span class="emoji">✗</span><span><strong>46 campañas creadas en el año, solo 16 (35%) escalaron a &gt;$10K.</strong> 7 campañas quemaron entre $500 y $5K con ROAS &lt;2x — eso es testing sin estructura. Cuando una campaña no cuaja a los 3-5 días, se mata.</span></li>
+<li class="bullet b-bad"><span class="emoji">✗</span><span><strong>46 campañas creadas en el año, solo 16 (35%) escalaron a &gt;$10K.</strong> 5 campañas quemaron entre $500 y $5K con ROAS &lt;2x — testing sin estructura.</span></li>
 <li class="bullet b-bad"><span class="emoji">✗</span><span><strong>Diciembre 2025 con frecuencia promedio 5.0</strong> — toda la cuenta saturada en pico de demanda. Mientras más fuerte la fecha, más urgente refrescar creativos. No pasó.</span></li>
 <li class="bullet b-bad"><span class="emoji">✗</span><span><strong>Día del Padre 2025: solo $1,393 invertidos.</strong> Para una marca de sables Star Wars en una fecha de regalos masculinos, eso es no leer el calendario del retail mexicano.</span></li>
-<li class="bullet b-bad"><span class="emoji">✗</span><span><strong>Naming inconsistente:</strong> mezcla de versiones (&#x27;CONV v9&#x27;, &#x27;CONV v10&#x27;, &#x27;CONV v11&#x27;, &#x27;CONV v12&#x27;, &#x27;CONV v13&#x27;), códigos ciudad (&#x27;Berlín&#x27;, &#x27;Roma&#x27;, &#x27;Praga&#x27;, &#x27;Viena&#x27;), letras griegas (&#x27;alfa&#x27;, &#x27;omega&#x27;, &#x27;magenta&#x27;)... sin convención clara dificulta auditar y entrenar el pixel.</span></li></ul>
+<li class="bullet b-bad"><span class="emoji">✗</span><span><strong>Naming inconsistente:</strong> mezcla de versiones (&#x27;CONV v9-v13&#x27;), códigos ciudad (&#x27;Berlín&#x27;, &#x27;Roma&#x27;, &#x27;Praga&#x27;, &#x27;Viena&#x27;), letras griegas (&#x27;alfa&#x27;, &#x27;omega&#x27;, &#x27;magenta&#x27;)... sin convención clara dificulta auditar y entrenar el pixel.</span></li></ul>
     </div>
   </div>
 
@@ -425,12 +438,12 @@
       <td class="num">3.0</td>
     </tr><tr>
       <td><div class="name">CONV v13</div></td>
-      <td class="num">$11,422</td>
-      <td class="num"><strong class="accent">8.63x</strong></td>
-      <td class="num">16</td>
-      <td class="num">$714</td>
-      <td class="num">3.62%</td>
-      <td class="num">3.0</td>
+      <td class="num">$11,648</td>
+      <td class="num"><strong class="accent">9.09x</strong></td>
+      <td class="num">17</td>
+      <td class="num">$685</td>
+      <td class="num">3.55%</td>
+      <td class="num">3.1</td>
     </tr><tr>
       <td><div class="name">CONV ABO v10 - vdr</div></td>
       <td class="num">$17,510</td>
@@ -477,10 +490,10 @@
       <td class="num">4.58x</td>
     </tr><tr class="fat-extreme">
       <td><div class="name">RMKT v3 - Cat</div></td>
-      <td class="num">$5,472</td>
-      <td class="num"><strong class="freq-extreme">6.6</strong></td>
-      <td class="num">1.82%</td>
-      <td class="num">6.24x</td>
+      <td class="num">$5,689</td>
+      <td class="num"><strong class="freq-extreme">6.9</strong></td>
+      <td class="num">1.79%</td>
+      <td class="num">6.00x</td>
     </tr><tr class="fat-extreme">
       <td><div class="name">CONV - HALLOWEEN</div></td>
       <td class="num">$5,191</td>
@@ -495,22 +508,22 @@
       <td class="num">3.24x</td>
     </tr><tr class="fat-high">
       <td><div class="name">SL RMKT v2</div></td>
-      <td class="num">$8,105</td>
-      <td class="num"><strong class="freq-high">4.7</strong></td>
-      <td class="num">2.91%</td>
-      <td class="num">5.25x</td>
+      <td class="num">$8,213</td>
+      <td class="num"><strong class="freq-high">4.8</strong></td>
+      <td class="num">2.89%</td>
+      <td class="num">5.18x</td>
+    </tr><tr class="fat-med">
+      <td><div class="name">HOT SALE 2026</div></td>
+      <td class="num">$15,893</td>
+      <td class="num"><strong class="freq-med">4.3</strong></td>
+      <td class="num">1.71%</td>
+      <td class="num">4.41x</td>
     </tr><tr class="fat-med">
       <td><div class="name">[TJ] - ABO INICIAL</div></td>
       <td class="num">$46,035</td>
       <td class="num"><strong class="freq-med">4.3</strong></td>
       <td class="num">2.13%</td>
       <td class="num">5.87x</td>
-    </tr><tr class="fat-med">
-      <td><div class="name">HOT SALE CBO</div></td>
-      <td class="num">$5,686</td>
-      <td class="num"><strong class="freq-med">4.3</strong></td>
-      <td class="num">2.07%</td>
-      <td class="num">5.35x</td>
     </tr><tr class="fat-med">
       <td><div class="name">ABO Bestt w/ LLAs</div></td>
       <td class="num">$35,319</td>
@@ -524,37 +537,38 @@
   <h2 class="with-bar"><span class="bar yellow"></span>Plan: Keep · Change · Continue</h2>
 
   <h3 class="section-title keep" style="margin-top:24px"><span class="dot"></span>Keep — mantener tal cual</h3>
-  <ul class="bullets"><li class="bullet b-keep"><span class="emoji">🟢</span><span>Las campañas de fechas con tematización Star Wars que rindieron (Sith Sale, MAY 4TH, Reyes Magos con creativos de personajes).</span></li>
+  <ul class="bullets"><li class="bullet b-keep"><span class="emoji">🟢</span><span>Las campañas de fechas con tematización Star Wars que rindieron (Sith Sale Halloween, MAY 4TH, Reyes Magos con creativos de personajes).</span></li>
 <li class="bullet b-keep"><span class="emoji">🟢</span><span>El esquema CBO + ABO combinado: &#x27;CBO Winners v2&#x27; (5.12x) y &#x27;CONV ABO v10&#x27; (5.43x) demuestran que ambos formatos coexisten bien.</span></li>
 <li class="bullet b-keep"><span class="emoji">🟢</span><span>Remarketing de 60 días con catálogo dinámico (&#x27;RMKT v3 - Cat&#x27; rindió 6.24x). Mantener — solo refrescar creativos cada 2-3 semanas.</span></li>
-<li class="bullet b-keep"><span class="emoji">🟢</span><span>Inversión diaria sostenida sin huecos largos. La consistencia operativa es algo que ya está bien.</span></li>
-<li class="bullet b-keep"><span class="emoji">🟢</span><span>La campaña actual &#x27;CONV v13&#x27; (8.63x en el mes que lleva). Es la mejor de toda la cuenta — entender por qué y replicar la estructura.</span></li></ul>
+<li class="bullet b-keep"><span class="emoji">🟢</span><span>La campaña &#x27;CONV v13&#x27; (8.63x en su ventana). Es de las mejores de la cuenta — entender por qué y replicar la estructura.</span></li>
+<li class="bullet b-keep"><span class="emoji">🟢</span><span>Estrategia agresiva de May the 4th 2026: $55K lifetime budget repartido en 7 días con ROAS 7.84x. Modelo a replicar en otras fechas Star Wars.</span></li></ul>
 
   <h3 class="section-title change" style="margin-top:30px"><span class="dot"></span>Change — cambiar ya</h3>
-  <ul class="bullets"><li class="bullet b-change"><span class="emoji">🟡</span><span><strong>Cap de frecuencia obligatorio a 3.5</strong> en todas las campañas de awareness/conversion. Si pasa, refrescar creativo automático.</span></li>
-<li class="bullet b-change"><span class="emoji">🟡</span><span><strong>Calendario editorial de fechas clave</strong> con presupuesto pre-asignado y revisado 30 días antes. Black Friday y Día del Padre no pueden ser de menos de $30K cada uno para esta cuenta.</span></li>
-<li class="bullet b-change"><span class="emoji">🟡</span><span><strong>Regla de matar campañas:</strong> si en día 5 una campaña de Sales tiene ROAS &lt;2x y &gt;$2K gastados, se pausa. Sin excepción.</span></li>
-<li class="bullet b-change"><span class="emoji">🟡</span><span><strong>Naming convention unificado:</strong> `&lt;TIPO&gt;_&lt;OBJETIVO&gt;_&lt;AUDIENCIA&gt;_&lt;FECHA-vNÚMERO&gt;` (ej. `CONV_ABO_LLA-CC1000_MAY26-v1`). Audita rápido y entrena pixel parejo.</span></li>
+  <ul class="bullets"><li class="bullet b-change"><span class="emoji">🟡</span><span><strong>🚨 URGENTE — reactivar inversión.</strong> El último mes está en &#x27;modo coast&#x27; con $4K/7días en junio. Reactivar gradualmente con Hot Sale y verano. No dejar la cuenta enfriarse.</span></li>
+<li class="bullet b-change"><span class="emoji">🟡</span><span><strong>Cap de frecuencia obligatorio a 3.5</strong> en todas las campañas. Si pasa, refrescar creativo automático.</span></li>
+<li class="bullet b-change"><span class="emoji">🟡</span><span><strong>Calendario editorial de fechas clave</strong> con presupuesto pre-asignado 30 días antes. Black Friday y Día del Padre no pueden ser de menos de $30K cada uno.</span></li>
+<li class="bullet b-change"><span class="emoji">🟡</span><span><strong>Regla de matar campañas:</strong> si en día 5 una Sales tiene ROAS &lt;2x y &gt;$2K gastados, se pausa. Sin excepción.</span></li>
+<li class="bullet b-change"><span class="emoji">🟡</span><span><strong>Naming convention unificado:</strong> `&lt;TIPO&gt;_&lt;OBJETIVO&gt;_&lt;AUDIENCIA&gt;_&lt;FECHA-vNÚMERO&gt;` (ej. `CONV_ABO_LLA-CC1000_MAY26-v1`).</span></li>
 <li class="bullet b-change"><span class="emoji">🟡</span><span><strong>Auditoría semanal de adset frequency.</strong> Cualquier adset arriba de 3 → ticket de creatividad nuevo esa semana.</span></li>
 <li class="bullet b-change"><span class="emoji">🟡</span><span><strong>Tracking de ATC/IC/CPA además de ROAS.</strong> Cuando ROAS baja, el funnel te dice DÓNDE se rompió antes de quemar más budget.</span></li>
-<li class="bullet b-change"><span class="emoji">🟡</span><span><strong>Separar testing real del scaling.</strong> Hoy parecen mezclados — testing en campaña aparte con $200/día tope, no quemando $5K por hipótesis.</span></li></ul>
+<li class="bullet b-change"><span class="emoji">🟡</span><span><strong>Separar testing real del scaling.</strong> Hoy parecen mezclados — testing en campaña aparte con $200/día tope.</span></li></ul>
 
   <h3 class="section-title continue" style="margin-top:30px"><span class="dot"></span>Continue — escalar y profundizar</h3>
-  <ul class="bullets"><li class="bullet b-continue"><span class="emoji">🔵</span><span>Escalado de May the 4th — replicar a otras fechas Star Wars relevantes (mayo 25 = Towel Day Star Wars / &#x27;Order 66 Day&#x27;, diciembre = estrenos series Lucasfilm, etc.).</span></li>
+  <ul class="bullets"><li class="bullet b-continue"><span class="emoji">🔵</span><span>Escalado de May the 4th — replicar a otras fechas Star Wars (Towel Day, estrenos Lucasfilm, etc.).</span></li>
 <li class="bullet b-continue"><span class="emoji">🔵</span><span>Catálogo dinámico de remarketing — multiplica con ticket alto sin saturar.</span></li>
-<li class="bullet b-continue"><span class="emoji">🔵</span><span>Lookalikes basadas en compradores CC$1000+ (audiencias &#x27;Bestt&#x27;, &#x27;CC$1000&#x27;) — tienen ROAS arriba de 4x consistente.</span></li>
+<li class="bullet b-continue"><span class="emoji">🔵</span><span>Lookalikes basadas en compradores CC$1000+ (audiencias &#x27;Bestt&#x27;, &#x27;CC$1000&#x27;) — ROAS arriba de 4x consistente.</span></li>
 <li class="bullet b-continue"><span class="emoji">🔵</span><span>Estética Star Wars + estacionalidad mexicana (la mezcla &#x27;Sith Sale&#x27; funcionó). Pensar &#x27;Día de los Muertos × Sith&#x27;, &#x27;Posadas × Cantina Mos Eisley&#x27;, etc.</span></li>
 <li class="bullet b-continue"><span class="emoji">🔵</span><span>Inversión agresiva los días pico de fechas validadas (May 4th, Buen Fin, Reyes). Cuando funciona, no escatimar.</span></li></ul>
 
   <footer>
     <div class="quote">"Do or do not. There is no try." — Yoda</div>
-    Auditoría basada en datos de Meta Marketing API · Cuenta act_461452066012476 · Moneda MXN<br>
+    Auditoría basada en datos de Meta Marketing API · Cuenta act_461452066012476 · Moneda MXN · Datos al 2026-06-07<br>
     Conversiones medidas vía píxel de Meta (purchase / omni_purchase). Las ventas reales pueden diferir por atribución y compras fuera del píxel.
   </footer>
 </div>
 
 <script>
-const D = {"months": ["2024-05", "2024-06", "2024-07", "2024-08", "2024-09", "2024-10", "2024-11", "2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02", "2026-03", "2026-04", "2026-05"], "spend": [9539, 10805, 16441, 16654, 20998, 20070, 24409, 19991, 12400, 18662, 19111, 19789, 75811, 26783, 18367, 14001, 11980, 49042, 62843, 59570, 41191, 12750, 26250, 56136, 78337], "revenue": [71100, 57262, 76822, 55112, 71451, 122783, 41632, 130955, 87201, 55230, 77752, 187169, 332852, 83335, 56284, 35032, 27512, 259736, 280256, 239659, 193703, 19326, 49872, 272379, 606565], "roas": [7.45, 5.3, 4.67, 3.31, 3.4, 6.12, 1.71, 6.55, 7.03, 2.96, 4.07, 9.46, 4.39, 3.11, 3.06, 2.5, 2.3, 5.3, 4.46, 4.02, 4.7, 1.52, 1.9, 4.85, 7.74], "freq": [2.52, 2.66, 3.36, 3.17, 3.02, 3.26, 2.16, 3.53, 3.25, 2.45, 3.51, 2.59, 3.79, 2.83, 2.99, 3.9, 3.38, 3.57, 3.96, 4.99, 3.68, 2.5, 2.65, 4.1, 2.85], "ctr": [3.29, 2.83, 3.43, 3.31, 3.57, 3.62, 2.11, 3.15, 4.69, 6.18, 5.21, 3.27, 3.51, 5.39, 5.0, 5.23, 3.74, 4.1, 2.83, 2.9, 3.06, 6.62, 7.66, 2.76, 3.27], "key_dates": [{"label": "Hot Sale 2025", "start": "2025-05-26", "roas": 3.38, "spend": 30890, "target": 5.0}, {"label": "D\u00eda del Padre 2025", "start": "2025-06-09", "roas": 4.29, "spend": 1393, "target": 4.0}, {"label": "Halloween 2025", "start": "2025-10-25", "roas": 5.58, "spend": 12521, "target": 5.0}, {"label": "Buen Fin 2025", "start": "2025-11-14", "roas": 8.21, "spend": 10335, "target": 5.0}, {"label": "Black Friday 2025", "start": "2025-11-27", "roas": 2.14, "spend": 8192, "target": 5.0}, {"label": "Navidad 2025", "start": "2025-12-15", "roas": 4.96, "spend": 17403, "target": 4.0}, {"label": "Reyes Magos 2026", "start": "2026-01-01", "roas": 5.23, "spend": 26018, "target": 5.0}, {"label": "San Valent\u00edn 2026", "start": "2026-02-10", "roas": 0.89, "spend": 1710, "target": 3.5}, {"label": "Spring Sale 2026", "start": "2026-03-26", "roas": 1.14, "spend": 9927, "target": 4.0}, {"label": "May 4th 2026", "start": "2026-05-01", "roas": 8.15, "spend": 73556, "target": 6.0}]};
+const D = {"months": ["2024-06", "2024-07", "2024-08", "2024-09", "2024-10", "2024-11", "2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02", "2026-03", "2026-04", "2026-05", "2026-06"], "spend": [10805, 16441, 16654, 20998, 20070, 24409, 19991, 12400, 18662, 19111, 19789, 75811, 26783, 18367, 14001, 11980, 49042, 62843, 59570, 41191, 12750, 26250, 56136, 92621, 4122], "revenue": [57262, 76822, 55112, 71451, 122783, 41632, 130955, 87201, 55230, 77752, 187169, 332852, 83335, 56284, 35032, 27512, 259736, 280256, 239659, 193703, 19326, 49872, 272379, 643819, 40226], "roas": [5.3, 4.67, 3.31, 3.4, 6.12, 1.71, 6.55, 7.03, 2.96, 4.07, 9.46, 4.39, 3.11, 3.06, 2.5, 2.3, 5.3, 4.46, 4.02, 4.7, 1.52, 1.9, 4.85, 6.95, 9.76], "freq": [2.66, 3.36, 3.17, 3.02, 3.26, 2.16, 3.53, 3.25, 2.45, 3.51, 2.59, 3.79, 2.83, 2.99, 3.9, 3.38, 3.57, 3.96, 4.99, 3.68, 2.5, 2.65, 4.1, 3.07, 1.79], "ctr": [2.83, 3.43, 3.31, 3.57, 3.62, 2.11, 3.15, 4.69, 6.18, 5.21, 3.27, 3.51, 5.39, 5.0, 5.23, 3.74, 4.1, 2.83, 2.9, 3.06, 6.62, 7.66, 2.76, 3.24, 3.01], "key_dates": [{"label": "D\u00eda del Padre 2025", "start": "2025-06-09", "roas": 4.29, "spend": 1393, "target": 4.0}, {"label": "Halloween 2025", "start": "2025-10-25", "roas": 5.58, "spend": 12521, "target": 5.0}, {"label": "Buen Fin 2025", "start": "2025-11-14", "roas": 8.21, "spend": 10335, "target": 5.0}, {"label": "Black Friday 2025", "start": "2025-11-27", "roas": 2.14, "spend": 8192, "target": 5.0}, {"label": "Navidad 2025", "start": "2025-12-15", "roas": 4.96, "spend": 17403, "target": 4.0}, {"label": "Reyes Magos 2026", "start": "2026-01-01", "roas": 5.23, "spend": 26018, "target": 5.0}, {"label": "San Valent\u00edn 2026", "start": "2026-02-10", "roas": 0.89, "spend": 1710, "target": 3.5}, {"label": "Spring Sale 2026", "start": "2026-03-26", "roas": 1.14, "spend": 9927, "target": 4.0}, {"label": "May 4th 2026", "start": "2026-05-01", "roas": 8.15, "spend": 73556, "target": 6.0}, {"label": "D\u00eda de las Madres 2026", "start": "2026-05-08", "roas": 2.38, "spend": 2980, "target": 5.0}, {"label": "Hot Sale 2026", "start": "2026-05-26", "roas": 4.2, "spend": 16699, "target": 5.0}]};
 
 Chart.defaults.color = '#8898b8';
 Chart.defaults.font.family = "'Inter', -apple-system, sans-serif";
@@ -562,7 +576,6 @@ Chart.defaults.borderColor = '#1e2a44';
 
 const JEDI='#38bdf8', SITH='#ef4444', YODA='#10b981', YELLOW='#fbbf24', MACE='#a78bfa';
 
-// Chart 1: monthly combo
 new Chart(document.getElementById('chartMonthly').getContext('2d'), {
   type:'bar',
   data:{labels:D.months, datasets:[
@@ -598,12 +611,11 @@ new Chart(document.getElementById('chartFreq').getContext('2d'), {
     {label:'Frecuencia promedio', data:D.freq, backgroundColor:D.freq.map(f=>f>4 ? 'rgba(239,68,68,0.7)' : (f>3 ? 'rgba(251,191,36,0.7)' : 'rgba(16,185,129,0.7)')), borderRadius:3}
   ]},
   options:{responsive:true, maintainAspectRatio:false,
-    plugins:{legend:{display:false}, annotation:{}},
+    plugins:{legend:{display:false}},
     scales:{x:{grid:{display:false}, ticks:{font:{size:10}, autoSkip:false}}, y:{beginAtZero:true, grid:{color:'rgba(251,191,36,0.08)'}, title:{display:true, text:'Veces que cada persona vio el anuncio'}}}
   }
 });
 
-// Key dates
 new Chart(document.getElementById('chartKeyDates').getContext('2d'), {
   type:'bar',
   data:{labels:D.key_dates.map(d=>d.label), datasets:[
