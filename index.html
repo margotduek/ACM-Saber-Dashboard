@@ -2,173 +2,223 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<title>Propuesta de colaboración · Saber Legacy</title>
+<title>Saber Legacy — Auditoría de cuenta Meta Ads</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <style>
   :root {
-    --bg: #fdfbf7;
-    --panel: #ffffff;
-    --panel-2: #f6f1e7;
-    --text: #1f1b16;
-    --muted: #6b6356;
-    --border: #e8dfcf;
-    --teal: #0d9488;
-    --teal-soft: #ccfbf1;
-    --teal-deep: #115e59;
-    --red: #b91c1c;
-    --red-soft: #fee2e2;
-    --green: #15803d;
-    --green-soft: #dcfce7;
-    --orange: #c2410c;
-    --orange-soft: #fed7aa;
-    --navy: #1e293b;
-    --navy-soft: #e2e8f0;
+    --bg: #050810;
+    --bg-2: #080d18;
+    --panel: #0d1322;
+    --panel-2: #131a2e;
+    --border: #1e2a44;
+    --border-2: #2a3a5a;
+    --text: #e5edff;
+    --muted: #8898b8;
+    --jedi: #38bdf8;
+    --jedi-glow: rgba(56,189,248,0.3);
+    --sith: #ef4444;
+    --sith-glow: rgba(239,68,68,0.3);
+    --yoda: #10b981;
+    --yoda-glow: rgba(16,185,129,0.3);
+    --saber-yellow: #fbbf24;
+    --mace: #a78bfa;
+    --pos: #10b981;
+    --neg: #ef4444;
+    --warn: #fbbf24;
   }
   * { box-sizing: border-box; }
-  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 15px; line-height: 1.65; -webkit-font-smoothing: antialiased; }
-  .wrap { max-width: 920px; margin: 0 auto; padding: 56px 28px 80px; }
-
-  /* Hero */
-  .hero { padding: 24px 0 40px; border-bottom: 2px solid var(--border); margin-bottom: 56px; }
-  .eyebrow { font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--teal); font-weight: 700; margin-bottom: 14px; }
-  h1 { font-family: 'Fraunces', serif; font-size: 46px; font-weight: 700; margin: 0 0 16px; letter-spacing: -0.03em; line-height: 1.05; }
-  .hero-sub { font-size: 17px; color: var(--muted); max-width: 700px; }
-  .hero-meta { display: flex; gap: 24px; margin-top: 22px; flex-wrap: wrap; font-size: 13px; color: var(--muted); }
-  .hero-meta strong { color: var(--text); font-weight: 600; }
-
-  /* Sections */
-  h2 { font-family: 'Fraunces', serif; font-size: 30px; font-weight: 700; margin: 64px 0 10px; letter-spacing: -0.01em; line-height: 1.2; }
-  h2 .num { display: inline-block; width: 36px; height: 36px; line-height: 36px; border-radius: 50%; background: var(--text); color: var(--bg); font-size: 17px; font-weight: 800; text-align: center; margin-right: 14px; vertical-align: middle; font-family: 'Plus Jakarta Sans', sans-serif; }
-  .lead { font-size: 17px; color: var(--muted); margin: 0 0 28px 50px; line-height: 1.6; }
-
-  .panel { background: var(--panel); border: 1px solid var(--border); border-radius: 16px; padding: 28px; margin-bottom: 18px; box-shadow: 0 1px 3px rgba(80,60,30,0.04); }
-
-  /* Account snapshot */
-  .snap { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
-  .snap-cell { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 18px 20px; }
-  .snap-cell .lbl { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
-  .snap-cell .val { font-family: 'Fraunces', serif; font-size: 30px; font-weight: 700; margin: 6px 0 2px; letter-spacing: -0.02em; }
-  .snap-cell .ctx { font-size: 12px; color: var(--muted); }
-
-  /* Month row */
-  .month-list { display: grid; gap: 6px; }
-  .month-row { display: grid; grid-template-columns: 80px 1fr 130px 140px; gap: 14px; align-items: center; padding: 11px 14px; border-radius: 10px; }
-  .month-row.zero { background: var(--red-soft); }
-  .month-row.paid { background: var(--green-soft); }
-  .month-row .m { font-weight: 700; }
-  .month-row .vis { height: 8px; background: rgba(0,0,0,0.05); border-radius: 4px; overflow: hidden; }
-  .month-row .vis-fill { height: 100%; border-radius: 4px; background: var(--green); }
-  .month-row.zero .vis-fill { background: #dc2626; opacity: 0.5; }
-  .month-row .cpa-cell { font-size: 12px; color: var(--muted); }
-  .month-row .pay-cell { font-weight: 700; text-align: right; font-variant-numeric: tabular-nums; }
-  .month-row.zero .pay-cell { color: var(--red); }
-  .month-row.paid .pay-cell { color: var(--green); }
-  .month-row .pay-cell .floor-tag { display: inline-block; background: var(--orange-soft); color: var(--orange); padding: 1px 6px; border-radius: 4px; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-left: 4px; vertical-align: middle; }
-
-  /* Header row for month-list */
-  .month-head { display: grid; grid-template-columns: 80px 1fr 130px 140px; gap: 14px; padding: 6px 14px 4px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); font-weight: 700; }
-  .month-head .pay-h { text-align: right; }
-
-  /* Formula box */
-  .formula-box { background: linear-gradient(135deg, #f0fdfa 0%, #ecfeff 100%); border: 2px solid var(--teal); border-radius: 20px; padding: 36px 32px; text-align: center; margin: 24px 0; }
-  .formula-box .lbl { font-size: 12px; font-weight: 700; color: var(--teal); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 14px; }
-  .formula { font-family: 'Fraunces', serif; font-size: 28px; font-weight: 700; color: var(--teal-deep); letter-spacing: -0.01em; margin: 12px 0; line-height: 1.4; }
-  .formula .op { color: var(--muted); margin: 0 6px; font-weight: 500; }
-  .formula-eg { font-size: 14px; color: var(--muted); margin-top: 16px; padding-top: 16px; border-top: 1px solid #ccfbf1; }
-  .formula-eg strong { color: var(--teal-deep); font-weight: 700; }
-
-  /* Totals comparison */
-  .totals { display: grid; gap: 14px; grid-template-columns: 1fr 1fr; margin: 24px 0; }
-  @media (max-width: 700px) { .totals { grid-template-columns: 1fr; } }
-  .total-card { padding: 22px 26px; border-radius: 18px; }
-  .total-card .lbl { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; }
-  .total-card .val { font-family: 'Fraunces', serif; font-size: 38px; font-weight: 800; letter-spacing: -0.02em; line-height: 1; }
-  .total-card .ctx { font-size: 13px; margin-top: 8px; }
-  .total-card.his { background: var(--red-soft); border: 1.5px solid var(--red); }
-  .total-card.his .lbl, .total-card.his .val { color: var(--red); }
-  .total-card.his .ctx { color: #7f1d1d; }
-  .total-card.mine { background: var(--teal-soft); border: 1.5px solid var(--teal); }
-  .total-card.mine .lbl, .total-card.mine .val { color: var(--teal-deep); }
-  .total-card.mine .ctx { color: var(--teal-deep); }
-
-  /* Side-by-side table */
-  .sxs-table { background: var(--panel); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
-  .sxs-table table { width: 100%; border-collapse: collapse; }
-  .sxs-table th { background: var(--panel-2); padding: 14px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); border-bottom: 1px solid var(--border); }
-  .sxs-table th.num { text-align: right; }
-  .sxs-table th.split { background: var(--red-soft); color: var(--red); }
-  .sxs-table th.split.teal { background: var(--teal-soft); color: var(--teal-deep); }
-  .sxs-table td { padding: 12px 16px; border-bottom: 1px solid var(--border); font-size: 13px; }
-  .sxs-table tr:last-child td { border-bottom: 0; }
-  .sxs-table td.num { text-align: right; font-variant-numeric: tabular-nums; }
-  .sxs-table td.m-cell { font-weight: 700; }
-  .sxs-table td.red { color: var(--red); font-weight: 700; }
-  .sxs-table td.teal { color: var(--teal-deep); font-weight: 700; }
-  .sxs-table td.paid-light { color: var(--green); }
-  .sxs-table .totals-row td { background: var(--panel-2); font-weight: 700; border-top: 2px solid var(--border); }
-
-  /* Callouts */
-  .callout { display: flex; gap: 16px; align-items: flex-start; padding: 18px 22px; border-radius: 14px; margin: 14px 0; border-left: 5px solid; }
-  .callout.teal { background: var(--teal-soft); border-left-color: var(--teal); }
-  .callout.warm { background: #fff7ed; border-left-color: var(--orange); }
-  .callout.navy { background: var(--navy-soft); border-left-color: var(--navy); }
-  .callout .icon { font-size: 22px; flex-shrink: 0; line-height: 1.2; }
-  .callout p { margin: 0; }
-  .callout p + p { margin-top: 8px; }
-  .callout strong { font-weight: 700; }
-
-  /* Bullet cards (for "why this works for both") */
-  .why-grid { display: grid; gap: 14px; grid-template-columns: 1fr; margin: 18px 0; }
-  @media (min-width: 700px) { .why-grid { grid-template-columns: 1fr 1fr; } }
-  .why-card { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 22px; }
-  .why-card h4 { margin: 0 0 10px; font-family: 'Fraunces', serif; font-size: 18px; font-weight: 700; display: flex; align-items: center; gap: 10px; }
-  .why-card h4 .badge { font-size: 10px; padding: 4px 10px; border-radius: 999px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; font-family: 'Plus Jakarta Sans', sans-serif; }
-  .why-card.client h4 .badge { background: var(--navy-soft); color: var(--navy); }
-  .why-card.me h4 .badge { background: var(--teal-soft); color: var(--teal-deep); }
-  .why-card ul { margin: 8px 0 0; padding-left: 20px; }
-  .why-card li { margin-bottom: 6px; color: var(--text); }
-
-  /* Terms */
-  .terms { background: var(--panel); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
-  .term-row { display: grid; grid-template-columns: 200px 1fr; padding: 18px 24px; border-bottom: 1px solid var(--border); gap: 20px; }
-  .term-row:last-child { border-bottom: 0; }
-  .term-row .term-label { font-weight: 700; color: var(--teal-deep); font-size: 13px; }
-  .term-row .term-body { color: var(--text); font-size: 14px; }
-  .term-row .term-body strong { color: var(--text); }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 14px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  body {
+    background-image:
+      radial-gradient(ellipse at 0% 0%, rgba(56,189,248,0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 100% 30%, rgba(239,68,68,0.06) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 100%, rgba(167,139,250,0.05) 0%, transparent 50%);
+    background-attachment: fixed;
+    background-color: var(--bg);
+  }
+  body::before {
+    content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background-image:
+      radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.7), transparent),
+      radial-gradient(1px 1px at 60% 70%, rgba(255,255,255,0.5), transparent),
+      radial-gradient(1.5px 1.5px at 80% 15%, rgba(255,255,255,0.8), transparent),
+      radial-gradient(1px 1px at 30% 80%, rgba(255,255,255,0.6), transparent),
+      radial-gradient(1px 1px at 90% 50%, rgba(255,255,255,0.4), transparent),
+      radial-gradient(2px 2px at 50% 10%, rgba(255,255,255,0.6), transparent),
+      radial-gradient(1px 1px at 10% 60%, rgba(255,255,255,0.5), transparent),
+      radial-gradient(1px 1px at 70% 40%, rgba(255,255,255,0.6), transparent);
+    background-size: 100% 100%; opacity: 0.6;
+  }
+  .wrap { max-width: 1400px; margin: 0 auto; padding: 40px 28px 80px; position: relative; z-index: 1; }
 
   /* Top nav */
   .top-nav { display: flex; gap: 8px; align-items: center; padding: 14px 18px; margin-bottom: 28px; background: var(--panel); border: 1px solid var(--border); border-radius: 12px; flex-wrap: wrap; }
-  .top-nav .brand-tag { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-right: auto; }
+  .top-nav .brand-tag { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-right: auto; font-family: 'Orbitron', sans-serif; }
   .top-nav a { color: var(--muted); text-decoration: none; font-size: 13px; font-weight: 600; padding: 7px 12px; border-radius: 8px; transition: all 0.15s; }
-  .top-nav a:hover { background: var(--teal-soft); color: var(--teal-deep); }
-  .top-nav a.current { background: var(--text); color: var(--bg); }
+  .top-nav a:hover { background: rgba(56,189,248,0.15); color: var(--jedi); }
+  .top-nav a.current { background: var(--jedi); color: var(--bg); }
 
-  /* More reports cards */
-  .more-reports { margin-top: 56px; padding-top: 36px; border-top: 1px solid var(--border); }
-  .more-reports h3 { font-family: 'Fraunces', serif; font-size: 24px; font-weight: 700; margin: 0 0 18px; letter-spacing: -0.01em; }
-  .report-cards { display: grid; gap: 14px; grid-template-columns: 1fr; }
-  @media (min-width: 700px) { .report-cards { grid-template-columns: repeat(3, 1fr); } }
-  .report-card { display: block; background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 20px 22px; text-decoration: none; color: var(--text); transition: all 0.18s; position: relative; }
-  .report-card:hover { border-color: var(--teal); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(13,148,136,0.08); }
-  .report-card .rc-eye { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--teal); margin-bottom: 8px; }
-  .report-card .rc-title { font-family: 'Fraunces', serif; font-size: 17px; font-weight: 700; margin-bottom: 6px; letter-spacing: -0.01em; line-height: 1.25; }
-  .report-card .rc-desc { font-size: 13px; color: var(--muted); line-height: 1.5; }
-  .report-card .rc-arrow { position: absolute; top: 20px; right: 22px; color: var(--muted); font-weight: 700; transition: transform 0.15s; }
-  .report-card:hover .rc-arrow { transform: translateX(3px); color: var(--teal); }
+  .hero { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; flex-wrap: wrap; margin-bottom: 40px; padding-bottom: 36px; border-bottom: 1px solid var(--border); }
+  .hero-l { display: flex; gap: 18px; align-items: flex-start; }
+  .saber-logo { width: 56px; height: 56px; border-radius: 14px; background: linear-gradient(135deg, var(--jedi), var(--mace)); display: flex; align-items: center; justify-content: center; font-size: 28px; box-shadow: 0 0 30px var(--jedi-glow); position: relative; flex-shrink: 0; }
+  h1 { font-family: 'Orbitron', sans-serif; font-size: 32px; font-weight: 700; margin: 0; letter-spacing: 0.02em; line-height: 1.05; background: linear-gradient(135deg, #fff 0%, var(--jedi) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  h1 .small { display: block; font-size: 12px; font-weight: 500; color: var(--muted); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 6px; -webkit-text-fill-color: var(--muted); }
+  .hero-sub { color: var(--muted); font-size: 13px; margin-top: 8px; font-weight: 500; }
+  .hero-sub strong { color: var(--text); font-weight: 600; }
 
-  /* Closing CTA */
-  .close-cta { background: linear-gradient(135deg, var(--teal-deep) 0%, var(--teal) 100%); border-radius: 22px; padding: 40px 36px; color: white; text-align: center; margin: 56px 0 0; }
-  .close-cta h3 { font-family: 'Fraunces', serif; font-size: 26px; margin: 0 0 12px; font-weight: 700; letter-spacing: -0.01em; }
-  .close-cta p { margin: 0 auto; max-width: 540px; color: #ccfbf1; font-size: 16px; line-height: 1.6; }
+  .verdict-box { background: var(--panel); border: 1px solid var(--border); border-radius: 16px; padding: 18px 24px; min-width: 280px; max-width: 380px; }
+  .verdict-box .lbl { font-family: 'Orbitron', sans-serif; font-size: 10px; letter-spacing: 0.14em; color: var(--muted); text-transform: uppercase; font-weight: 600; }
+  .verdict-grade { display: flex; align-items: baseline; gap: 12px; margin: 6px 0 8px; }
+  .verdict-grade .big { font-family: 'Orbitron', sans-serif; font-size: 36px; font-weight: 800; line-height: 1; }
+  .verdict-grade .score { font-size: 12px; color: var(--muted); }
+  .verdict-box.g-good .big { color: var(--yoda); text-shadow: 0 0 20px var(--yoda-glow); }
+  .verdict-box.g-mid .big { color: var(--saber-yellow); text-shadow: 0 0 20px rgba(251,191,36,0.3); }
+  .verdict-box.g-warn .big { color: var(--saber-yellow); text-shadow: 0 0 20px rgba(251,191,36,0.3); }
+  .verdict-box.g-bad .big { color: var(--sith); text-shadow: 0 0 20px var(--sith-glow); }
+  .verdict-text { font-size: 13px; line-height: 1.55; color: var(--text); }
 
-  /* Chart wrap */
+  h2 { font-family: 'Orbitron', sans-serif; font-size: 22px; font-weight: 600; letter-spacing: 0.02em; margin: 52px 0 18px; }
+  h2.with-bar { display: flex; align-items: center; gap: 14px; }
+  h2 .bar { width: 4px; height: 26px; border-radius: 2px; background: var(--jedi); box-shadow: 0 0 12px var(--jedi-glow); }
+  h2 .bar.sith { background: var(--sith); box-shadow: 0 0 12px var(--sith-glow); }
+  h2 .bar.yoda { background: var(--yoda); box-shadow: 0 0 12px var(--yoda-glow); }
+  h2 .bar.yellow { background: var(--saber-yellow); box-shadow: 0 0 12px rgba(251,191,36,0.3); }
+  h2 .hint { font-family: 'Inter', sans-serif; font-weight: 400; color: var(--muted); font-size: 13px; letter-spacing: 0; }
+
+  .windows { display: grid; gap: 18px; grid-template-columns: 1fr; }
+  @media (min-width: 1000px) { .windows { grid-template-columns: 1fr 1fr 1fr; } }
+  .window-card { background: var(--panel); border: 1px solid var(--border); border-radius: 16px; padding: 22px; }
+  .window-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 18px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+  .window-title { font-family: 'Orbitron', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 0.04em; }
+  .window-sub { font-size: 11px; color: var(--muted); margin-top: 4px; }
+  .grade-mini { font-family: 'Orbitron', sans-serif; font-size: 22px; font-weight: 800; padding: 6px 14px; border-radius: 10px; min-width: 56px; text-align: center; }
+  .grade-mini.g-good { background: rgba(16,185,129,0.15); color: var(--yoda); border: 1px solid rgba(16,185,129,0.35); }
+  .grade-mini.g-mid { background: rgba(56,189,248,0.12); color: var(--jedi); border: 1px solid rgba(56,189,248,0.35); }
+  .grade-mini.g-warn { background: rgba(251,191,36,0.12); color: var(--saber-yellow); border: 1px solid rgba(251,191,36,0.35); }
+  .grade-mini.g-bad { background: rgba(239,68,68,0.12); color: var(--sith); border: 1px solid rgba(239,68,68,0.35); }
+  .window-kpis { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .wk { padding: 10px 12px; background: var(--panel-2); border-radius: 8px; }
+  .wk .lbl { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); font-weight: 600; }
+  .wk .val { font-family: 'Orbitron', sans-serif; font-size: 19px; font-weight: 700; margin: 4px 0 2px; letter-spacing: -0.01em; }
+  .wk .val.accent { color: var(--jedi); }
+  .wk .dlt { font-size: 11px; }
+
+  .chg { font-weight: 700; font-size: 11px; }
+  .chg.pos { color: var(--pos); }
+  .chg.neg { color: var(--neg); }
+  .muted { color: var(--muted); }
+  .accent { color: var(--jedi); }
+
+  .panel { background: var(--panel); border: 1px solid var(--border); border-radius: 16px; padding: 24px; }
+  .chart-grid { display: grid; gap: 16px; grid-template-columns: 1fr; }
+  @media (min-width: 1000px) { .chart-grid.two { grid-template-columns: 1fr 1fr; } }
   .chart-wrap { height: 320px; position: relative; }
+  .chart-wrap.tall { height: 380px; }
 
-  footer { color: var(--muted); font-size: 12px; margin-top: 56px; padding-top: 28px; border-top: 1px solid var(--border); text-align: center; }
+  .table-panel { background: var(--panel); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; }
+  thead th { background: var(--panel-2); color: var(--muted); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding: 14px 16px; text-align: left; border-bottom: 1px solid var(--border); font-family: 'Orbitron', sans-serif; }
+  thead th.num { text-align: right; }
+  tbody td { padding: 16px; border-bottom: 1px solid var(--border); vertical-align: top; font-size: 13.5px; }
+  tbody tr:last-child td { border-bottom: 0; }
+  tbody tr:hover { background: var(--panel-2); }
+  tbody td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .name { font-weight: 600; font-size: 14px; }
+  .prev { font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+  tr.kd-win td { background: linear-gradient(90deg, rgba(16,185,129,0.06), transparent); }
+  tr.kd-fail td { background: linear-gradient(90deg, rgba(239,68,68,0.08), transparent); }
+  .kd-icon { font-size: 18px; font-weight: 700; }
+  tr.kd-win .kd-icon { color: var(--yoda); }
+  tr.kd-ok .kd-icon { color: var(--saber-yellow); }
+  tr.kd-fail .kd-icon { color: var(--sith); }
+
+  .freq-extreme { color: var(--sith); text-shadow: 0 0 12px var(--sith-glow); }
+  .freq-high { color: var(--saber-yellow); }
+  .freq-med { color: var(--text); }
+  tr.fat-extreme td { background: linear-gradient(90deg, rgba(239,68,68,0.10), transparent); }
+
+  .bullets { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+  .bullet { display: flex; gap: 14px; align-items: flex-start; padding: 14px 18px; background: var(--panel); border-radius: 12px; border: 1px solid var(--border); border-left-width: 4px; }
+  .bullet.b-good { border-left-color: var(--yoda); }
+  .bullet.b-bad { border-left-color: var(--sith); }
+  .bullet.b-keep { border-left-color: var(--yoda); }
+  .bullet.b-change { border-left-color: var(--saber-yellow); }
+  .bullet.b-continue { border-left-color: var(--jedi); }
+  .bullet .emoji { font-size: 18px; line-height: 1.2; flex-shrink: 0; }
+  .bullet strong { color: var(--text); font-weight: 700; }
+
+  .duo { display: grid; gap: 18px; grid-template-columns: 1fr; }
+  @media (min-width: 1100px) { .duo { grid-template-columns: 1fr 1fr; } }
+
+  .section-title { font-family: 'Orbitron', sans-serif; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 700; margin: 0 0 14px; display: flex; align-items: center; gap: 10px; }
+  .section-title .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .section-title.good .dot { background: var(--yoda); }
+  .section-title.bad .dot { background: var(--sith); }
+  .section-title.keep .dot { background: var(--yoda); }
+  .section-title.change .dot { background: var(--saber-yellow); }
+  .section-title.continue .dot { background: var(--jedi); }
+
+  /* Emergency banner */
+  .emergency { background: linear-gradient(135deg, rgba(239,68,68,0.18) 0%, rgba(239,68,68,0.08) 100%); border: 2px solid var(--sith); border-radius: 16px; padding: 24px 28px; margin: 36px 0 0; box-shadow: 0 0 40px rgba(239,68,68,0.15); }
+  .emergency .em-head { display: flex; gap: 16px; align-items: center; margin-bottom: 14px; }
+  .emergency .em-icon { font-size: 30px; }
+  .emergency .em-title { font-family: 'Orbitron', sans-serif; font-size: 18px; font-weight: 700; color: var(--sith); letter-spacing: 0.04em; }
+  .emergency .em-body { color: var(--text); font-size: 14px; line-height: 1.6; }
+  .emergency .em-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin: 16px 0 4px; }
+  .emergency .em-stat { background: rgba(0,0,0,0.25); padding: 12px 14px; border-radius: 10px; border: 1px solid rgba(239,68,68,0.3); }
+  .emergency .em-stat .lbl { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); font-weight: 700; }
+  .emergency .em-stat .val { font-family: 'Orbitron', sans-serif; font-size: 22px; font-weight: 800; color: var(--sith); margin-top: 4px; }
+
+  /* Action plan timeline */
+  .timeline { display: grid; gap: 14px; margin-top: 16px; }
+  .tl-week { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 22px 24px; position: relative; padding-left: 80px; }
+  .tl-week .tag { position: absolute; left: 18px; top: 22px; width: 50px; height: 50px; border-radius: 12px; background: var(--panel-2); display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .tl-week .tag .num { font-family: 'Orbitron', sans-serif; font-size: 22px; font-weight: 800; line-height: 1; color: var(--jedi); }
+  .tl-week .tag .lbl { font-size: 9px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); font-weight: 700; margin-top: 2px; }
+  .tl-week.urgent .tag { background: rgba(239,68,68,0.18); border: 1px solid rgba(239,68,68,0.4); }
+  .tl-week.urgent .tag .num { color: var(--sith); }
+  .tl-week h4 { font-family: 'Orbitron', sans-serif; font-size: 14px; font-weight: 700; margin: 0 0 4px; letter-spacing: 0.04em; }
+  .tl-week h4 .urgent-tag { display: inline-block; background: rgba(239,68,68,0.2); color: var(--sith); padding: 2px 8px; border-radius: 999px; font-size: 9px; font-weight: 700; letter-spacing: 0.08em; margin-left: 8px; vertical-align: middle; }
+  .tl-week .sub { font-size: 11px; color: var(--muted); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
+  .tl-week ul { margin: 0; padding-left: 18px; }
+  .tl-week li { margin-bottom: 4px; font-size: 13.5px; line-height: 1.5; }
+  .tl-week li strong { color: var(--text); font-weight: 700; }
+
+  /* Budget table */
+  .budget-row { display: grid; grid-template-columns: 140px 1fr 90px 80px 1fr; gap: 14px; align-items: center; padding: 14px 18px; border-radius: 10px; margin-bottom: 5px; background: var(--panel-2); }
+  .budget-row.reactivation { border-left: 4px solid var(--saber-yellow); }
+  .budget-row.peak { border-left: 4px solid var(--sith); }
+  .budget-row.maintenance { border-left: 4px solid var(--muted); }
+  .budget-row.spring { border-left: 4px solid var(--yoda); }
+  .budget-row .b-month { font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 13px; }
+  .budget-row .b-tag { font-size: 11px; color: var(--muted); }
+  .budget-row .b-amt { font-family: 'Orbitron', sans-serif; font-size: 17px; font-weight: 700; text-align: right; color: var(--jedi); }
+  .budget-row .b-roas { font-size: 12px; text-align: right; color: var(--yoda); font-weight: 600; }
+  .budget-row .b-notes { font-size: 12px; color: var(--muted); }
+  .budget-totals { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-top: 18px; }
+  .budget-total-card { background: var(--panel-2); border: 1px solid var(--border); border-radius: 12px; padding: 16px 20px; }
+  .budget-total-card .lbl { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); font-weight: 700; }
+  .budget-total-card .val { font-family: 'Orbitron', sans-serif; font-size: 22px; font-weight: 700; margin: 4px 0 2px; }
+  .budget-total-card.spend .val { color: var(--jedi); }
+  .budget-total-card.rev .val { color: var(--mace); }
+  .budget-total-card.margot .val { color: var(--yoda); }
+
+  /* Shopify insight box */
+  .shopify-box { background: linear-gradient(135deg, rgba(123,179,79,0.10) 0%, rgba(56,189,248,0.10) 100%); border: 1px solid rgba(167,139,250,0.3); border-radius: 16px; padding: 22px 26px; margin: 16px 0; }
+  .shopify-box h4 { font-family: 'Orbitron', sans-serif; font-size: 14px; margin: 0 0 12px; letter-spacing: 0.06em; color: var(--mace); }
+  .shopify-box .ship-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 14px; }
+  .shopify-box .ship-stat { background: rgba(0,0,0,0.2); padding: 10px 14px; border-radius: 8px; }
+  .shopify-box .ship-stat .lbl { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700; }
+  .shopify-box .ship-stat .val { font-family: 'Orbitron', sans-serif; font-size: 16px; font-weight: 700; margin-top: 4px; }
+  .shopify-box p { margin: 0; font-size: 13px; line-height: 1.6; }
+
+  footer { color: var(--muted); font-size: 12px; margin-top: 60px; padding-top: 32px; border-top: 1px solid var(--border); text-align: center; }
+  footer .quote { font-family: 'Orbitron', sans-serif; font-style: italic; font-size: 13px; color: var(--jedi); margin-bottom: 8px; letter-spacing: 0.05em; }
 </style>
 </head>
 <body>
@@ -176,534 +226,962 @@
 
   <nav class="top-nav">
     <span class="brand-tag">Saber Legacy · Al Chile Media</span>
-    <a href="./" class="current">Propuesta</a>
-    <a href="auditoria.html">Auditoría 12m</a>
+    <a href="./" class="current">Auditoría 12m</a>
     <a href="may-the-4th.html">May the 4th</a>
     <a href="comparativa-30dias.html">Comparativa 30d</a>
   </nav>
 
   <div class="hero">
-    <div class="eyebrow">Propuesta de colaboración</div>
-    <h1>Saber Legacy ×<br>estructura de pago</h1>
-    <div class="hero-sub">Después de analizar los últimos 13 meses de la cuenta, te quiero proponer una estructura de pago que nos alinee a los dos a hacer crecer Saber Legacy — sin meses muertos para ninguno y sin techos que castiguen escalar.</div>
-    <div class="hero-meta">
-      <div>📅 Período analizado: <strong>mayo 2025 — mayo 2026</strong></div>
-      <div>💼 Cuenta: <strong>Saber Legacy</strong></div>
-      <div>📊 Datos: Meta Marketing API</div>
-      <div>Generado 07/06/2026</div>
+    <div class="hero-l">
+      <div class="saber-logo">⚔️</div>
+      <div>
+        <h1><span class="small">Auditoría de cuenta · Meta Ads</span>Saber Legacy</h1>
+        <div class="hero-sub">Período auditado: <strong>2025-06-12 → 2026-06-11</strong> · Inversión auditada: <strong>$459,631 MXN</strong> · Generado 15/06/2026 · 10:43</div>
+      </div>
+    </div>
+    <div class="verdict-box g-mid">
+      <div class="lbl">Veredicto general · 12 meses</div>
+      <div class="verdict-grade">
+        <span class="big">B+</span>
+        <span class="score">6.6/10</span>
+      </div>
+      <div class="verdict-text">Cuenta correcta con ejecución desigual. Buen ROAS promedio, pero meses específicos quedaron debiendo y el último mes muestra freno claro. Hay margen real para mejorar 30-50% en 6 meses.</div>
     </div>
   </div>
 
-  <!-- ============ SECTION 1: THE OPPORTUNITY ============ -->
-  <h2><span class="num">1</span>La cuenta tiene buen piso</h2>
-  <p class="lead">Lo primero que vi: Saber Legacy tiene una cuenta con base sólida y mucho upside. Estos son los números reales de los últimos 13 meses:</p>
-
-  <div class="snap">
-    <div class="snap-cell">
-      <div class="lbl">Inversión en pauta</div>
-      <div class="val">$533K</div>
-      <div class="ctx">Promedio $41K/mes</div>
+  <div class="emergency">
+    <div class="em-head">
+      <div class="em-icon">🆘</div>
+      <div class="em-title">CÓDIGO ROJO · La cuenta está apagada</div>
     </div>
-    <div class="snap-cell">
-      <div class="lbl">Ventas atribuidas a Meta</div>
-      <div class="val">$2.46M</div>
-      <div class="ctx">Pixel · last-click 7d</div>
+    <div class="em-body">
+      Desde el <strong>3 de junio 2026</strong> el spend cayó a &lt;$25/día y CERO compras se registraron. El pixel está perdiendo señal de eventos y el algoritmo se está desadaptando. <strong>Esta es la primera tarea</strong>: reactivar la cuenta en las próximas 24-48h.
     </div>
-    <div class="snap-cell">
-      <div class="lbl">ROAS promedio</div>
-      <div class="val">4.61x</div>
-      <div class="ctx">Por cada $1 invertido</div>
-    </div>
-    <div class="snap-cell">
-      <div class="lbl">Utilidad bruta Meta</div>
-      <div class="val">$1,923K</div>
-      <div class="ctx">Ventas − pauta</div>
+    <div class="em-stats">
+      <div class="em-stat"><div class="lbl">Días sin compras</div><div class="val">8/8</div></div>
+      <div class="em-stat"><div class="lbl">Spend últimos 8 días</div><div class="val">$237</div></div>
+      <div class="em-stat"><div class="lbl">Compras últimos 8 días</div><div class="val">0</div></div>
+      <div class="em-stat"><div class="lbl">Spend de ayer</div><div class="val">$0</div></div>
     </div>
   </div>
 
-  <div class="callout teal">
-    <div class="icon">⚡</div>
-    <div>
-      <p><strong>Lectura honesta:</strong> hay momentum. May 26 cerró con ROAS 7.74x y la May the 4th week sacó $606K en 7 días. La cuenta está en uno de sus mejores momentos — buen punto de entrada para mí, y buena foto para platicar estructuras de pago.</p>
+  <h2 class="with-bar"><span class="bar"></span>Tres horizontes — cómo ha rendido la cuenta</h2>
+  <div class="windows">
+    
+    <div class="window-card">
+      <div class="window-head">
+        <div>
+          <div class="window-title">1 año</div>
+          <div class="window-sub">vs período inmediato anterior · score 6.6/10</div>
+        </div>
+        <div class="grade-mini g-mid">B+</div>
+      </div>
+      <div class="window-kpis">
+        <div class="wk"><div class="lbl">Inversión</div><div class="val">$459,631</div><div class="dlt"><span class="chg pos">↑ +60.1%</span></div></div>
+        <div class="wk"><div class="lbl">Ventas</div><div class="val">$2,130,305</div><div class="dlt"><span class="chg pos">↑ +58.3%</span></div></div>
+        <div class="wk"><div class="lbl">ROAS</div><div class="val accent">4.63x</div><div class="dlt"><span class="chg neg">↓ -1.1%</span></div></div>
+        <div class="wk"><div class="lbl">Compras</div><div class="val">427</div><div class="dlt"><span class="chg pos">↑ +48.3%</span></div></div>
+        <div class="wk"><div class="lbl">CPA</div><div class="val">$1,076</div><div class="dlt"><span class="chg neg">↑ +8.0%</span></div></div>
+        <div class="wk"><div class="lbl">CTR</div><div class="val">3.74%</div><div class="dlt"><span class="chg pos">↑ +0.3%</span></div></div>
+      </div>
+    </div>
+    
+    <div class="window-card">
+      <div class="window-head">
+        <div>
+          <div class="window-title">6 meses</div>
+          <div class="window-sub">vs período inmediato anterior · score 8.1/10</div>
+        </div>
+        <div class="grade-mini g-good">A-</div>
+      </div>
+      <div class="window-kpis">
+        <div class="wk"><div class="lbl">Inversión</div><div class="val">$264,844</div><div class="dlt"><span class="chg pos">↑ +36.0%</span></div></div>
+        <div class="wk"><div class="lbl">Ventas</div><div class="val">$1,351,288</div><div class="dlt"><span class="chg pos">↑ +73.5%</span></div></div>
+        <div class="wk"><div class="lbl">ROAS</div><div class="val accent">5.10x</div><div class="dlt"><span class="chg pos">↑ +27.6%</span></div></div>
+        <div class="wk"><div class="lbl">Compras</div><div class="val">257</div><div class="dlt"><span class="chg pos">↑ +51.2%</span></div></div>
+        <div class="wk"><div class="lbl">CPA</div><div class="val">$1,031</div><div class="dlt"><span class="chg pos">↓ -10.1%</span></div></div>
+        <div class="wk"><div class="lbl">CTR</div><div class="val">3.69%</div><div class="dlt"><span class="chg neg">↓ -3.8%</span></div></div>
+      </div>
+    </div>
+    
+    <div class="window-card">
+      <div class="window-head">
+        <div>
+          <div class="window-title">1 mes</div>
+          <div class="window-sub">vs período inmediato anterior · score 3.5/10</div>
+        </div>
+        <div class="grade-mini g-warn">C</div>
+      </div>
+      <div class="window-kpis">
+        <div class="wk"><div class="lbl">Inversión</div><div class="val">$19,668</div><div class="dlt"><span class="chg neg">↓ -83.8%</span></div></div>
+        <div class="wk"><div class="lbl">Ventas</div><div class="val">$77,479</div><div class="dlt"><span class="chg neg">↓ -90.6%</span></div></div>
+        <div class="wk"><div class="lbl">ROAS</div><div class="val accent">3.94x</div><div class="dlt"><span class="chg neg">↓ -42.0%</span></div></div>
+        <div class="wk"><div class="lbl">Compras</div><div class="val">17</div><div class="dlt"><span class="chg neg">↓ -89.1%</span></div></div>
+        <div class="wk"><div class="lbl">CPA</div><div class="val">$1,157</div><div class="dlt"><span class="chg neg">↑ +48.7%</span></div></div>
+        <div class="wk"><div class="lbl">CTR</div><div class="val">3.17%</div><div class="dlt"><span class="chg pos">↑ +7.9%</span></div></div>
+      </div>
     </div>
   </div>
 
-  <!-- ============ SECTION 2: THE PROBLEM WITH PROPOSED MODEL ============ -->
-  <h2><span class="num">2</span>El reto técnico con el modelo de % por CPA</h2>
-  <p class="lead">El modelo escalonado por CPA tiene un tema estructural que vale la pena que veamos juntos antes de firmarlo: la estacionalidad del negocio lo deja en cero durante meses enteros.</p>
+  <h2 class="with-bar"><span class="bar"></span>Evolución mensual <span class="hint">25 meses · inversión + retorno + saturación de audiencia</span></h2>
+  <div class="panel"><div class="chart-wrap tall"><canvas id="chartMonthly"></canvas></div></div>
 
-  <div class="panel">
-    <div class="month-head">
-      <div>Mes</div><div>Ventas Meta</div><div>CPA del mes</div><div class="pay-h">Comisión bajo % por CPA</div>
+  <div class="duo" style="margin-top:18px">
+    <div class="panel">
+      <div class="section-title"><span class="dot" style="background:var(--mace)"></span>ROAS mensual</div>
+      <div class="chart-wrap"><canvas id="chartRoas"></canvas></div>
     </div>
-    <div class="month-list">
-      <div class="month-row paid">
-        <div class="m">May 25</div>
-        <div class="vis"><div class="vis-fill" style="width:55%"></div></div>
-        <div class="cpa-cell">CPA $903</div>
-        <div class="pay-cell">$4,993</div>
-    </div>
-<div class="month-row zero">
-        <div class="m">Jun 25</div>
-        <div class="vis"><div class="vis-fill" style="width:14%"></div></div>
-        <div class="cpa-cell">CPA $1,275</div>
-        <div class="pay-cell">$0</div>
-    </div>
-<div class="month-row zero">
-        <div class="m">Jul 25</div>
-        <div class="vis"><div class="vis-fill" style="width:9%"></div></div>
-        <div class="cpa-cell">CPA $1,531</div>
-        <div class="pay-cell">$0</div>
-    </div>
-<div class="month-row zero">
-        <div class="m">Ago 25</div>
-        <div class="vis"><div class="vis-fill" style="width:6%"></div></div>
-        <div class="cpa-cell">CPA $1,750</div>
-        <div class="pay-cell">$0</div>
-    </div>
-<div class="month-row zero">
-        <div class="m">Sep 25</div>
-        <div class="vis"><div class="vis-fill" style="width:5%"></div></div>
-        <div class="cpa-cell">CPA $2,396</div>
-        <div class="pay-cell">$0</div>
-    </div>
-<div class="month-row paid">
-        <div class="m">Oct 25</div>
-        <div class="vis"><div class="vis-fill" style="width:43%"></div></div>
-        <div class="cpa-cell">CPA $791</div>
-        <div class="pay-cell">$11,688</div>
-    </div>
-<div class="month-row paid">
-        <div class="m">Nov 25</div>
-        <div class="vis"><div class="vis-fill" style="width:46%"></div></div>
-        <div class="cpa-cell">CPA $1,143</div>
-        <div class="pay-cell">$2,803</div>
-    </div>
-<div class="month-row paid">
-        <div class="m">Dic 25</div>
-        <div class="vis"><div class="vis-fill" style="width:40%"></div></div>
-        <div class="cpa-cell">CPA $1,191</div>
-        <div class="pay-cell">$2,397</div>
-    </div>
-<div class="month-row zero">
-        <div class="m">Ene 26</div>
-        <div class="vis"><div class="vis-fill" style="width:32%"></div></div>
-        <div class="cpa-cell">CPA $1,373</div>
-        <div class="pay-cell">$0</div>
-    </div>
-<div class="month-row zero">
-        <div class="m">Feb 26</div>
-        <div class="vis"><div class="vis-fill" style="width:3%"></div></div>
-        <div class="cpa-cell">CPA $3,188</div>
-        <div class="pay-cell">$0</div>
-    </div>
-<div class="month-row zero">
-        <div class="m">Mar 26</div>
-        <div class="vis"><div class="vis-fill" style="width:8%"></div></div>
-        <div class="cpa-cell">CPA $2,386</div>
-        <div class="pay-cell">$0</div>
-    </div>
-<div class="month-row paid">
-        <div class="m">Abr 26</div>
-        <div class="vis"><div class="vis-fill" style="width:45%"></div></div>
-        <div class="cpa-cell">CPA $1,040</div>
-        <div class="pay-cell">$2,724</div>
-    </div>
-<div class="month-row paid">
-        <div class="m">May 26</div>
-        <div class="vis"><div class="vis-fill" style="width:100%"></div></div>
-        <div class="cpa-cell">CPA $693</div>
-        <div class="pay-cell">$24,263</div>
-    </div>
+    <div class="panel">
+      <div class="section-title"><span class="dot" style="background:var(--saber-yellow)"></span>Frecuencia (saturación) por mes</div>
+      <div class="chart-wrap"><canvas id="chartFreq"></canvas></div>
     </div>
   </div>
 
-  <div class="totals">
-    <div class="total-card his">
-      <div class="lbl">Comisión anual estimada</div>
-      <div class="val">$48,866</div>
-      <div class="ctx">7 de 13 meses en cero · $4,072 promedio/mes</div>
-    </div>
-    <div class="total-card his">
-      <div class="lbl">Meses sin pago</div>
-      <div class="val">7/13</div>
-      <div class="ctx">54% del año sin comisión — pero la operación NO se detiene</div>
-    </div>
-  </div>
-
-  <div class="callout warm">
-    <div class="icon">⚠️</div>
-    <div>
-      <p><strong>Por qué se cae a cero:</strong> el CPA blended de la cuenta en estos 13 meses fue <strong>$1,047</strong>, ligeramente por arriba del cap de $1,200. Lo que ves arriba no es un mes raro — es la realidad operativa de un negocio estacional como sables Star Wars: hay temporadas fuertes (Halloween, Buen Fin, Reyes, May 4th) y meses bajos naturales (verano, post-Navidad).</p>
-      <p>El modelo % por CPA premia los picos y castiga los valles. Pero en los valles también hay trabajo: refrescar creativos, preparar la siguiente temporada, ajustar audiencias. No es justo medirlo igual.</p>
-    </div>
-  </div>
-
-  <!-- ============ SECTION 3: MY PROPOSAL ============ -->
-  <h2><span class="num">3</span>Mi propuesta — alineación 100%</h2>
-  <p class="lead">Una sola fórmula, sin tiers ni escalones. Cobro un % sobre la utilidad bruta que TÚ obtienes gracias a la pauta de Meta. Cuando creces, gano. Cuando hay valle, el piso me sostiene para seguir operando.</p>
-
-  <div class="formula-box">
-    <div class="lbl">La fórmula</div>
-    <div class="formula">
-      <span>(Ventas Meta</span><span class="op">−</span><span>Gasto Meta)</span><span class="op">×</span><span>15%</span>
-    </div>
-    <div class="formula-eg">
-      <strong>Ejemplo:</strong> ventas Meta $120K, gasto en pauta $20K → utilidad bruta $100K → mi comisión = $15K
-      <br>Con piso garantizado de <strong>$10,000/mes</strong> para meses bajos.
-    </div>
-  </div>
-
-  <!-- ============ SECTION 4: HOW IT LOOKS WITH SAME DATA ============ -->
-  <h2><span class="num">4</span>Cómo se ve con los mismos 13 meses</h2>
-  <p class="lead">Mismos meses, mismos números reales — solo cambia la fórmula. En meses bajos el piso de $10K se activa (etiqueta naranja); en meses fuertes no necesita activarse porque la fórmula naturalmente paga más.</p>
-
-  <div class="panel">
-    <div class="month-head">
-      <div>Mes</div><div>Ventas Meta</div><div>Utilidad bruta</div><div class="pay-h">Comisión bajo mi modelo</div>
-    </div>
-    <div class="month-list">
-      <div class="month-row paid">
-        <div class="m">May 25</div>
-        <div class="vis"><div class="vis-fill" style="width:55%; background:var(--teal)"></div></div>
-        <div class="cpa-cell">Utilidad $257,041</div>
-        <div class="pay-cell">$38,556</div>
-    </div>
-<div class="month-row paid">
-        <div class="m">Jun 25</div>
-        <div class="vis"><div class="vis-fill" style="width:14%; background:var(--teal)"></div></div>
-        <div class="cpa-cell">Utilidad $56,552</div>
-        <div class="pay-cell">$10,000 <span class="floor-tag">piso</span></div>
-    </div>
-<div class="month-row paid">
-        <div class="m">Jul 25</div>
-        <div class="vis"><div class="vis-fill" style="width:9%; background:var(--teal)"></div></div>
-        <div class="cpa-cell">Utilidad $37,918</div>
-        <div class="pay-cell">$10,000 <span class="floor-tag">piso</span></div>
-    </div>
-<div class="month-row paid">
-        <div class="m">Ago 25</div>
-        <div class="vis"><div class="vis-fill" style="width:6%; background:var(--teal)"></div></div>
-        <div class="cpa-cell">Utilidad $21,031</div>
-        <div class="pay-cell">$10,000 <span class="floor-tag">piso</span></div>
-    </div>
-<div class="month-row paid">
-        <div class="m">Sep 25</div>
-        <div class="vis"><div class="vis-fill" style="width:5%; background:var(--teal)"></div></div>
-        <div class="cpa-cell">Utilidad $15,532</div>
-        <div class="pay-cell">$10,000 <span class="floor-tag">piso</span></div>
-    </div>
-<div class="month-row paid">
-        <div class="m">Oct 25</div>
-        <div class="vis"><div class="vis-fill" style="width:43%; background:var(--teal)"></div></div>
-        <div class="cpa-cell">Utilidad $210,694</div>
-        <div class="pay-cell">$31,604</div>
-    </div>
-<div class="month-row paid">
-        <div class="m">Nov 25</div>
-        <div class="vis"><div class="vis-fill" style="width:46%; background:var(--teal)"></div></div>
-        <div class="cpa-cell">Utilidad $217,413</div>
-        <div class="pay-cell">$32,612</div>
-    </div>
-<div class="month-row paid">
-        <div class="m">Dic 25</div>
-        <div class="vis"><div class="vis-fill" style="width:40%; background:var(--teal)"></div></div>
-        <div class="cpa-cell">Utilidad $180,090</div>
-        <div class="pay-cell">$27,013</div>
-    </div>
-<div class="month-row paid">
-        <div class="m">Ene 26</div>
-        <div class="vis"><div class="vis-fill" style="width:32%; background:var(--teal)"></div></div>
-        <div class="cpa-cell">Utilidad $152,513</div>
-        <div class="pay-cell">$22,877</div>
-    </div>
-<div class="month-row paid">
-        <div class="m">Feb 26</div>
-        <div class="vis"><div class="vis-fill" style="width:3%; background:var(--teal)"></div></div>
-        <div class="cpa-cell">Utilidad $6,576</div>
-        <div class="pay-cell">$10,000 <span class="floor-tag">piso</span></div>
-    </div>
-<div class="month-row paid">
-        <div class="m">Mar 26</div>
-        <div class="vis"><div class="vis-fill" style="width:8%; background:var(--teal)"></div></div>
-        <div class="cpa-cell">Utilidad $23,622</div>
-        <div class="pay-cell">$10,000 <span class="floor-tag">piso</span></div>
-    </div>
-<div class="month-row paid">
-        <div class="m">Abr 26</div>
-        <div class="vis"><div class="vis-fill" style="width:45%; background:var(--teal)"></div></div>
-        <div class="cpa-cell">Utilidad $216,242</div>
-        <div class="pay-cell">$32,436</div>
-    </div>
-<div class="month-row paid">
-        <div class="m">May 26</div>
-        <div class="vis"><div class="vis-fill" style="width:100%; background:var(--teal)"></div></div>
-        <div class="cpa-cell">Utilidad $528,228</div>
-        <div class="pay-cell">$79,234</div>
-    </div>
-    </div>
-  </div>
-
-  <div class="totals">
-    <div class="total-card mine">
-      <div class="lbl">Comisión anual estimada</div>
-      <div class="val">$324,333</div>
-      <div class="ctx">$27,028/mes promedio · cero meses en cero</div>
-    </div>
-    <div class="total-card mine">
-      <div class="lbl">Como % del ad spend</div>
-      <div class="val">61%</div>
-      <div class="ctx">Comparable al estándar de agencias (15-25%)</div>
-    </div>
-  </div>
-
-  <div class="panel">
-    <div class="chart-wrap"><canvas id="chartCompare"></canvas></div>
-  </div>
-
-  <h3 style="font-family:'Fraunces',serif; font-size:20px; margin:32px 0 14px">Comparativa lado a lado</h3>
-  <div class="sxs-table">
+  <h2 class="with-bar"><span class="bar yellow"></span>Performance en fechas clave <span class="hint">cómo se ejecutaron las temporadas pico del calendario retail mexicano</span></h2>
+  <div class="table-panel">
     <table>
-      <thead>
-        <tr>
-          <th>Mes</th>
-          <th class="num">Ventas Meta</th>
-          <th class="num">Gasto</th>
-          <th class="num split">Modelo % CPA</th>
-          <th class="num split teal">Mi propuesta</th>
-        </tr>
-      </thead>
+      <thead><tr>
+        <th></th>
+        <th>Fecha / Rango</th>
+        <th class="num">Inversión</th>
+        <th class="num">Ventas</th>
+        <th class="num">ROAS</th>
+        <th class="num">Compras</th>
+      </tr></thead>
+      <tbody><tr class="kd-fail">
+      <td><div class="kd-icon">✗</div></td>
+      <td><div class="name">Día del Padre 2025</div><div class="prev">2025-06-09 → 2025-06-15 (4d)</div></td>
+      <td class="num">$798</td>
+      <td class="num">$379</td>
+      <td class="num"><strong>0.47x</strong><div class="prev">target 4.0x</div></td>
+      <td class="num">1</td>
+    </tr><tr class="kd-win">
+      <td><div class="kd-icon">⚡</div></td>
+      <td><div class="name">Halloween 2025</div><div class="prev">2025-10-25 → 2025-10-31 (7d)</div></td>
+      <td class="num">$12,521</td>
+      <td class="num">$69,860</td>
+      <td class="num"><strong>5.58x</strong><div class="prev">target 5.0x</div></td>
+      <td class="num">17</td>
+    </tr><tr class="kd-win">
+      <td><div class="kd-icon">⚡</div></td>
+      <td><div class="name">Buen Fin 2025</div><div class="prev">2025-11-14 → 2025-11-17 (4d)</div></td>
+      <td class="num">$10,335</td>
+      <td class="num">$84,872</td>
+      <td class="num"><strong>8.21x</strong><div class="prev">target 5.0x</div></td>
+      <td class="num">16</td>
+    </tr><tr class="kd-fail">
+      <td><div class="kd-icon">✗</div></td>
+      <td><div class="name">Black Friday 2025</div><div class="prev">2025-11-27 → 2025-11-29 (3d)</div></td>
+      <td class="num">$8,192</td>
+      <td class="num">$17,541</td>
+      <td class="num"><strong>2.14x</strong><div class="prev">target 5.0x</div></td>
+      <td class="num">4</td>
+    </tr><tr class="kd-win">
+      <td><div class="kd-icon">⚡</div></td>
+      <td><div class="name">Navidad 2025</div><div class="prev">2025-12-15 → 2025-12-24 (10d)</div></td>
+      <td class="num">$17,403</td>
+      <td class="num">$86,399</td>
+      <td class="num"><strong>4.96x</strong><div class="prev">target 4.0x</div></td>
+      <td class="num">19</td>
+    </tr><tr class="kd-win">
+      <td><div class="kd-icon">⚡</div></td>
+      <td><div class="name">Reyes Magos 2026</div><div class="prev">2026-01-01 → 2026-01-06 (6d)</div></td>
+      <td class="num">$26,018</td>
+      <td class="num">$136,022</td>
+      <td class="num"><strong>5.23x</strong><div class="prev">target 5.0x</div></td>
+      <td class="num">22</td>
+    </tr><tr class="kd-fail">
+      <td><div class="kd-icon">✗</div></td>
+      <td><div class="name">San Valentín 2026</div><div class="prev">2026-02-10 → 2026-02-14 (4d)</div></td>
+      <td class="num">$1,710</td>
+      <td class="num">$1,530</td>
+      <td class="num"><strong>0.89x</strong><div class="prev">target 3.5x</div></td>
+      <td class="num">1</td>
+    </tr><tr class="kd-fail">
+      <td><div class="kd-icon">✗</div></td>
+      <td><div class="name">Spring Sale 2026</div><div class="prev">2026-03-26 → 2026-04-02 (8d)</div></td>
+      <td class="num">$9,927</td>
+      <td class="num">$11,303</td>
+      <td class="num"><strong>1.14x</strong><div class="prev">target 4.0x</div></td>
+      <td class="num">2</td>
+    </tr><tr class="kd-win">
+      <td><div class="kd-icon">⚡</div></td>
+      <td><div class="name">May 4th 2026</div><div class="prev">2026-05-01 → 2026-05-07 (7d)</div></td>
+      <td class="num">$73,556</td>
+      <td class="num">$599,468</td>
+      <td class="num"><strong>8.15x</strong><div class="prev">target 6.0x</div></td>
+      <td class="num">111</td>
+    </tr><tr class="kd-fail">
+      <td><div class="kd-icon">✗</div></td>
+      <td><div class="name">Día de las Madres 2026</div><div class="prev">2026-05-08 → 2026-05-10 (3d)</div></td>
+      <td class="num">$2,980</td>
+      <td class="num">$7,097</td>
+      <td class="num"><strong>2.38x</strong><div class="prev">target 5.0x</div></td>
+      <td class="num">2</td>
+    </tr><tr class="kd-ok">
+      <td><div class="kd-icon">•</div></td>
+      <td><div class="name">Hot Sale 2026</div><div class="prev">2026-05-26 → 2026-06-02 (8d)</div></td>
+      <td class="num">$16,699</td>
+      <td class="num">$70,101</td>
+      <td class="num"><strong>4.20x</strong><div class="prev">target 5.0x</div></td>
+      <td class="num">16</td>
+    </tr></tbody>
+    </table>
+  </div>
+  <div class="panel" style="margin-top:18px">
+    <div class="section-title"><span class="dot" style="background:var(--saber-yellow)"></span>ROAS por fecha clave</div>
+    <div class="chart-wrap"><canvas id="chartKeyDates"></canvas></div>
+  </div>
+
+  <div class="duo" style="margin-top: 40px">
+    <div>
+      <h2 class="with-bar"><span class="bar yoda"></span>Lo que se hizo bien <span style="font-size:14px;color:var(--muted);font-family:Inter">— Jedi moves</span></h2>
+      <ul class="bullets"><li class="bullet b-good"><span class="emoji">⚡</span><span><strong>ROAS sostenido: 4.63x en 12 meses con $459,631 invertidos.</strong> Para ecommerce mexicano, 3x es sano y 5x es excelente — están en zona aceptable.</span></li>
+<li class="bullet b-good"><span class="emoji">⚡</span><span><strong>May the 4th 2026 fue una operación quirúrgica:</strong> $73,556 en 7 días con ROAS 8.15x = $599K en ventas. Eso es saber para qué date pivotear el budget. Lección replicable.</span></li>
+<li class="bullet b-good"><span class="emoji">⚡</span><span><strong>Mayo 2026 entero fue explosivo:</strong> $92K invertidos con ROAS 6.95x = $643K en ventas. Mejor mes de los 12. Incluye May 4th + Día Madres + arranque Hot Sale.</span></li>
+<li class="bullet b-good"><span class="emoji">⚡</span><span><strong>Buen Fin 2025: ROAS 8.21x en 4 días.</strong> Cuando entendieron la audiencia, exprimieron. (Aunque solo metieron $10K — ver críticas).</span></li>
+<li class="bullet b-good"><span class="emoji">⚡</span><span><strong>Reyes Magos 2026: ROAS 5.23x con $26K.</strong> Bien jugado: empezaron antes del 6 de enero, capturaron búsqueda.</span></li>
+<li class="bullet b-good"><span class="emoji">⚡</span><span><strong>Halloween 2025: ROAS 5.58x.</strong> La campaña &#x27;Sith Sale&#x27; rindió. Aprovecharon estética Star Wars × Halloween bien.</span></li>
+<li class="bullet b-good"><span class="emoji">⚡</span><span><strong>Cuenta diversificada:</strong> 16 campañas escalaron arriba de $10K. No dependen de una sola — eso es resiliencia.</span></li>
+<li class="bullet b-good"><span class="emoji">⚡</span><span><strong>Spend creció +60% año/año</strong> ($287,134 → $459,631) con ROAS estable (4.69x → 4.63x) — escalado sano, no quemar dinero.</span></li></ul>
+    </div>
+    <div>
+      <h2 class="with-bar"><span class="bar sith"></span>Lo que se hizo mal <span style="font-size:14px;color:var(--muted);font-family:Inter">— necesita corrección</span></h2>
+      <ul class="bullets"><li class="bullet b-bad"><span class="emoji">✗</span><span><strong>🆘 EMERGENCIA — la cuenta está APAGADA:</strong> desde el 3 de junio, spend es &lt;$25/día y CERO ventas. 8 de los últimos 8 días sin compras. El pixel está perdiendo señales de evento — entre más días sin actividad, más cuesta reactivar el algoritmo. Reactivación inmediata o el costo de re-aprendizaje será fuerte.</span></li>
+<li class="bullet b-bad"><span class="emoji">✗</span><span><strong>🚨 Último mes en caída libre (May 12 - Jun 11):</strong> spend $19,668 (-84% vs mes prior). Compras de 156 → 17. CPA subió $778 → $1157. El media buyer entró en &#x27;modo coast&#x27; después de May 4th.</span></li>
+<li class="bullet b-bad"><span class="emoji">✗</span><span><strong>Tasa de conversión del sitio: 0.21% en Q1 2026</strong> (visto en Shopify). De cada 1,000 visitas, solo 2 compran. Si subimos a 0.40% (mediana ecommerce MX), las mismas campañas duplicarían ROAS sin cambiar spend.</span></li>
+<li class="bullet b-bad"><span class="emoji">✗</span><span><strong>🚨 10.5% de pagos FALLAN en Shopify</strong> (56 de 542 transacciones en 8 meses). Casi todos los pagos pasan por Mercado Pago (88%). Cada falla = una venta perdida después de que ya pagaste el click. <strong>Si el cliente arregla el checkout, tu ROAS efectivo sube ~11% automático.</strong></span></li>
+<li class="bullet b-bad"><span class="emoji">✗</span><span><strong>Frecuencia 13.9 en &#x27;RMKT - omega&#x27;</strong> ($26K gastados): se le mostró el mismo anuncio a la misma persona ~14 veces. Eso es no refrescar creativos por meses. Costo de oportunidad enorme — la audiencia ya está saturada y no se hizo nada.</span></li>
+<li class="bullet b-bad"><span class="emoji">✗</span><span><strong>Black Friday 2025 quedó debiendo:</strong> solo $8,192 en 3 días con ROAS 2.14x. Para la fecha más fuerte del calendario retail global, ese ticket de inversión refleja falta de planeación. Comparado con May 4th ($73K), no se preparó la temporada decembrina al mismo nivel.</span></li>
+<li class="bullet b-bad"><span class="emoji">✗</span><span><strong>Spring Sale 2026 fue un desastre silencioso:</strong> $9,927 gastados con ROAS 1.14x. Las campañas debieron pausarse en día 2-3; siguieron 8 días.</span></li>
+<li class="bullet b-bad"><span class="emoji">✗</span><span><strong>San Valentín 2026 con ROAS 0.89x.</strong> Inversión pequeña ($1,710) pero principio claro: si la promo no califica, no se corre.</span></li>
+<li class="bullet b-bad"><span class="emoji">✗</span><span><strong>Febrero 2026 entero con ROAS 1.52x</strong> ($12,750 invertidos). Un mes entero abajo del punto de equilibrio sin ajustes visibles. Eso es no estar mirando la cuenta semanalmente.</span></li>
+<li class="bullet b-bad"><span class="emoji">✗</span><span><strong>Marzo 2026: $26,250 con ROAS 1.90x.</strong> Otro mes en rojo. Dos meses seguidos perdiendo dinero antes del rebote de mayo.</span></li>
+<li class="bullet b-bad"><span class="emoji">✗</span><span><strong>43 campañas creadas en el año, solo 16 (37%) escalaron a &gt;$10K.</strong> 5 campañas quemaron entre $500 y $5K con ROAS &lt;2x — testing sin estructura.</span></li>
+<li class="bullet b-bad"><span class="emoji">✗</span><span><strong>Diciembre 2025 con frecuencia promedio 5.0</strong> — toda la cuenta saturada en pico de demanda. Mientras más fuerte la fecha, más urgente refrescar creativos. No pasó.</span></li>
+<li class="bullet b-bad"><span class="emoji">✗</span><span><strong>Día del Padre 2025: solo $1,393 invertidos.</strong> Para una marca de sables Star Wars en una fecha de regalos masculinos, eso es no leer el calendario del retail mexicano.</span></li>
+<li class="bullet b-bad"><span class="emoji">✗</span><span><strong>Naming inconsistente:</strong> mezcla de versiones (&#x27;CONV v9-v13&#x27;), códigos ciudad (&#x27;Berlín&#x27;, &#x27;Roma&#x27;, &#x27;Praga&#x27;, &#x27;Viena&#x27;), letras griegas (&#x27;alfa&#x27;, &#x27;omega&#x27;, &#x27;magenta&#x27;)... sin convención clara dificulta auditar y entrenar el pixel.</span></li></ul>
+    </div>
+  </div>
+
+  <h2 class="with-bar"><span class="bar yoda"></span>Top performers · 12 meses <span class="hint">campañas con ROAS &gt;4.5x y +$5K invertidos</span></h2>
+  <div class="table-panel">
+    <table>
+      <thead><tr>
+        <th>Campaña</th>
+        <th class="num">Inversión</th>
+        <th class="num">ROAS</th>
+        <th class="num">Compras</th>
+        <th class="num">CPA</th>
+        <th class="num">CTR</th>
+        <th class="num">Freq</th>
+      </tr></thead>
+      <tbody><tr>
+      <td><div class="name">MAY 4TH 2026</div></td>
+      <td class="num">$54,488</td>
+      <td class="num"><strong class="accent">7.84x</strong></td>
+      <td class="num">82</td>
+      <td class="num">$664</td>
+      <td class="num">2.73%</td>
+      <td class="num">2.6</td>
+    </tr><tr>
+      <td><div class="name">[TJ] - ABO INICIAL</div></td>
+      <td class="num">$46,035</td>
+      <td class="num"><strong class="accent">5.87x</strong></td>
+      <td class="num">52</td>
+      <td class="num">$885</td>
+      <td class="num">2.13%</td>
+      <td class="num">4.3</td>
+    </tr><tr>
+      <td><div class="name">RMKT - omega</div></td>
+      <td class="num">$26,242</td>
+      <td class="num"><strong class="accent">4.58x</strong></td>
+      <td class="num">21</td>
+      <td class="num">$1,250</td>
+      <td class="num">2.28%</td>
+      <td class="num">13.9</td>
+    </tr><tr>
+      <td><div class="name">CONV - REYES MAGOS 26</div></td>
+      <td class="num">$18,658</td>
+      <td class="num"><strong class="accent">5.74x</strong></td>
+      <td class="num">19</td>
+      <td class="num">$982</td>
+      <td class="num">1.71%</td>
+      <td class="num">3.0</td>
+    </tr><tr>
+      <td><div class="name">CONV v13</div></td>
+      <td class="num">$11,648</td>
+      <td class="num"><strong class="accent">9.09x</strong></td>
+      <td class="num">17</td>
+      <td class="num">$685</td>
+      <td class="num">3.55%</td>
+      <td class="num">3.1</td>
+    </tr><tr>
+      <td><div class="name">CONV ABO v10 - vdr</div></td>
+      <td class="num">$17,510</td>
+      <td class="num"><strong class="accent">5.43x</strong></td>
+      <td class="num">17</td>
+      <td class="num">$1,030</td>
+      <td class="num">4.51%</td>
+      <td class="num">2.4</td>
+    </tr><tr>
+      <td><div class="name">CBO Winners v2</div></td>
+      <td class="num">$11,601</td>
+      <td class="num"><strong class="accent">5.12x</strong></td>
+      <td class="num">10</td>
+      <td class="num">$1,160</td>
+      <td class="num">4.86%</td>
+      <td class="num">2.2</td>
+    </tr><tr>
+      <td><div class="name">Conv v12  ABO - tests</div></td>
+      <td class="num">$7,053</td>
+      <td class="num"><strong class="accent">7.31x</strong></td>
+      <td class="num">11</td>
+      <td class="num">$641</td>
+      <td class="num">5.06%</td>
+      <td class="num">2.8</td>
+    </tr></tbody>
+    </table>
+  </div>
+
+  <h2 class="with-bar"><span class="bar sith"></span>Audiencias saturadas <span class="hint">frecuencia &gt; 4 = misma persona vio el mismo anuncio 4+ veces · señal de no refrescar creativos</span></h2>
+  <div class="table-panel">
+    <table>
+      <thead><tr>
+        <th>Campaña</th>
+        <th class="num">Inversión</th>
+        <th class="num">Frecuencia</th>
+        <th class="num">CTR</th>
+        <th class="num">ROAS</th>
+      </tr></thead>
+      <tbody><tr class="fat-extreme">
+      <td><div class="name">RMKT - omega</div></td>
+      <td class="num">$26,242</td>
+      <td class="num"><strong class="freq-extreme">13.9</strong></td>
+      <td class="num">2.28%</td>
+      <td class="num">4.58x</td>
+    </tr><tr class="fat-extreme">
+      <td><div class="name">RMKT v3 - Cat</div></td>
+      <td class="num">$5,689</td>
+      <td class="num"><strong class="freq-extreme">6.9</strong></td>
+      <td class="num">1.79%</td>
+      <td class="num">6.00x</td>
+    </tr><tr class="fat-extreme">
+      <td><div class="name">CONV - HALLOWEEN</div></td>
+      <td class="num">$5,191</td>
+      <td class="num"><strong class="freq-extreme">6.3</strong></td>
+      <td class="num">1.77%</td>
+      <td class="num">5.50x</td>
+    </tr><tr class="fat-extreme">
+      <td><div class="name">RMKT Whatsapp</div></td>
+      <td class="num">$7,375</td>
+      <td class="num"><strong class="freq-extreme">6.3</strong></td>
+      <td class="num">2.69%</td>
+      <td class="num">3.24x</td>
+    </tr><tr class="fat-high">
+      <td><div class="name">SL RMKT v2</div></td>
+      <td class="num">$8,213</td>
+      <td class="num"><strong class="freq-high">4.8</strong></td>
+      <td class="num">2.89%</td>
+      <td class="num">5.18x</td>
+    </tr><tr class="fat-med">
+      <td><div class="name">HOT SALE 2026</div></td>
+      <td class="num">$15,893</td>
+      <td class="num"><strong class="freq-med">4.3</strong></td>
+      <td class="num">1.71%</td>
+      <td class="num">4.41x</td>
+    </tr><tr class="fat-med">
+      <td><div class="name">[TJ] - ABO INICIAL</div></td>
+      <td class="num">$46,035</td>
+      <td class="num"><strong class="freq-med">4.3</strong></td>
+      <td class="num">2.13%</td>
+      <td class="num">5.87x</td>
+    </tr><tr class="fat-med">
+      <td><div class="name">ABO Bestt w/ LLAs</div></td>
+      <td class="num">$35,319</td>
+      <td class="num"><strong class="freq-med">4.2</strong></td>
+      <td class="num">4.18%</td>
+      <td class="num">2.90x</td>
+    </tr></tbody>
+    </table>
+  </div>
+
+  <h2 class="with-bar"><span class="bar yellow"></span>Plan: Keep · Change · Continue</h2>
+
+  <h3 class="section-title keep" style="margin-top:24px"><span class="dot"></span>Keep — mantener tal cual</h3>
+  <ul class="bullets"><li class="bullet b-keep"><span class="emoji">🟢</span><span>Las campañas de fechas con tematización Star Wars que rindieron (Sith Sale Halloween, MAY 4TH, Reyes Magos con creativos de personajes).</span></li>
+<li class="bullet b-keep"><span class="emoji">🟢</span><span>El esquema CBO + ABO combinado: &#x27;CBO Winners v2&#x27; (5.12x) y &#x27;CONV ABO v10&#x27; (5.43x) demuestran que ambos formatos coexisten bien.</span></li>
+<li class="bullet b-keep"><span class="emoji">🟢</span><span>Remarketing de 60 días con catálogo dinámico (&#x27;RMKT v3 - Cat&#x27; rindió 6.24x). Mantener — solo refrescar creativos cada 2-3 semanas.</span></li>
+<li class="bullet b-keep"><span class="emoji">🟢</span><span>La campaña &#x27;CONV v13&#x27; (8.63x en su ventana). Es de las mejores de la cuenta — entender por qué y replicar la estructura.</span></li>
+<li class="bullet b-keep"><span class="emoji">🟢</span><span>Estrategia agresiva de May the 4th 2026: $55K lifetime budget repartido en 7 días con ROAS 7.84x. Modelo a replicar en otras fechas Star Wars.</span></li></ul>
+
+  <h3 class="section-title change" style="margin-top:30px"><span class="dot"></span>Change — cambiar ya</h3>
+  <ul class="bullets"><li class="bullet b-change"><span class="emoji">🟡</span><span><strong>🚨 URGENTE — reactivar inversión.</strong> El último mes está en &#x27;modo coast&#x27; con $4K/7días en junio. Reactivar gradualmente con Hot Sale y verano. No dejar la cuenta enfriarse.</span></li>
+<li class="bullet b-change"><span class="emoji">🟡</span><span><strong>🛒 ASK AL CLIENTE — arreglar Mercado Pago checkout.</strong> 10.5% de transacciones fallan. Es plata literal que tiraste por la borda. Cada $1 que invertí en ads para llevar a alguien al checkout y le tronó el pago = inversión muerta. Antes de escalar más, esto se arregla.</span></li>
+<li class="bullet b-change"><span class="emoji">🟡</span><span><strong>Cap de frecuencia obligatorio a 3.5</strong> en todas las campañas. Si pasa, refrescar creativo automático.</span></li>
+<li class="bullet b-change"><span class="emoji">🟡</span><span><strong>Calendario editorial de fechas clave</strong> con presupuesto pre-asignado 30 días antes. Black Friday y Día del Padre no pueden ser de menos de $30K cada uno.</span></li>
+<li class="bullet b-change"><span class="emoji">🟡</span><span><strong>Regla de matar campañas:</strong> si en día 5 una Sales tiene ROAS &lt;2x y &gt;$2K gastados, se pausa. Sin excepción.</span></li>
+<li class="bullet b-change"><span class="emoji">🟡</span><span><strong>Naming convention unificado:</strong> `&lt;TIPO&gt;_&lt;OBJETIVO&gt;_&lt;AUDIENCIA&gt;_&lt;FECHA-vNÚMERO&gt;` (ej. `CONV_ABO_LLA-CC1000_MAY26-v1`).</span></li>
+<li class="bullet b-change"><span class="emoji">🟡</span><span><strong>Auditoría semanal de adset frequency.</strong> Cualquier adset arriba de 3 → ticket de creatividad nuevo esa semana.</span></li>
+<li class="bullet b-change"><span class="emoji">🟡</span><span><strong>Tracking de ATC/IC/CPA además de ROAS.</strong> Cuando ROAS baja, el funnel te dice DÓNDE se rompió antes de quemar más budget.</span></li>
+<li class="bullet b-change"><span class="emoji">🟡</span><span><strong>Separar testing real del scaling.</strong> Hoy parecen mezclados — testing en campaña aparte con $200/día tope.</span></li></ul>
+
+  <h3 class="section-title continue" style="margin-top:30px"><span class="dot"></span>Continue — escalar y profundizar</h3>
+  <ul class="bullets"><li class="bullet b-continue"><span class="emoji">🔵</span><span>Escalado de May the 4th — replicar a otras fechas Star Wars (Towel Day, estrenos Lucasfilm, etc.).</span></li>
+<li class="bullet b-continue"><span class="emoji">🔵</span><span>Catálogo dinámico de remarketing — multiplica con ticket alto sin saturar.</span></li>
+<li class="bullet b-continue"><span class="emoji">🔵</span><span>Lookalikes basadas en compradores CC$1000+ (audiencias &#x27;Bestt&#x27;, &#x27;CC$1000&#x27;) — ROAS arriba de 4x consistente.</span></li>
+<li class="bullet b-continue"><span class="emoji">🔵</span><span>Estética Star Wars + estacionalidad mexicana (la mezcla &#x27;Sith Sale&#x27; funcionó). Pensar &#x27;Día de los Muertos × Sith&#x27;, &#x27;Posadas × Cantina Mos Eisley&#x27;, etc.</span></li>
+<li class="bullet b-continue"><span class="emoji">🔵</span><span>Inversión agresiva los días pico de fechas validadas (May 4th, Buen Fin, Reyes). Cuando funciona, no escatimar.</span></li></ul>
+
+  <!-- ============ ACTION PLAN 90 DÍAS ============ -->
+  <h2 class="with-bar"><span class="bar sith"></span>🚀 Plan de acción · Dejar la cuenta AL TIRO</h2>
+  <p style="color:var(--muted); margin: 0 0 8px 0; font-size:14px">Checklist semana por semana. Cada bullet es ejecutable. Marca lo que vas completando.</p>
+
+  <div class="timeline">
+
+    <div class="tl-week urgent">
+      <div class="tag"><div class="num">24h</div><div class="lbl">URGENTE</div></div>
+      <h4>HOY MISMO <span class="urgent-tag">crítico</span></h4>
+      <div class="sub">Reactivación del pixel y diagnóstico de daño</div>
+      <ul>
+        <li><strong>Prender una campaña Sales de bajo riesgo HOY</strong> con $1,500/día — usar 'CONV v13' o 'RMKT v3 - Cat' (los top performers históricos). Necesitamos volver a alimentar al pixel.</li>
+        <li><strong>Verificar pixel + CAPI:</strong> que purchase, ATC, IC estén disparando correctamente. Ir a Events Manager → Diagnostics.</li>
+        <li><strong>Auditar accesos:</strong> dar de baja al trafficker anterior de Business Manager. Asegurar acceso completo solo a ti.</li>
+        <li><strong>Bajar reporte de creatividades activas</strong> (Ads Manager → Ads tab → últimos 30 días) para entender qué quedó andando.</li>
+      </ul>
+    </div>
+
+    <div class="tl-week">
+      <div class="tag"><div class="num">S1</div><div class="lbl">Semana 1</div></div>
+      <h4>Diagnóstico forense + cleanup</h4>
+      <div class="sub">Limpiar la casa antes de escalar</div>
+      <ul>
+        <li><strong>Pausar adsets con frecuencia &gt;5</strong> (RMKT - omega: 13.9, etc.). Si dejarlos prendidos, gastas en gente que ya saturaste.</li>
+        <li><strong>Pausar campañas Sales con ROAS &lt;2x en últimas 4 semanas.</strong> Spring Sale, San Valentín y similares.</li>
+        <li><strong>Setear cap de frecuencia 3.5</strong> en todas las activas (Ad Set → Optimization → Frequency cap).</li>
+        <li><strong>Documentar baseline</strong>: ROAS, CPA, CTR, freq de cada campaña activa. Es tu punto cero.</li>
+        <li><strong>Identificar top 3 creatividades históricas</strong> con mejor CTR + ROAS. Esas son tu fundación.</li>
+        <li><strong>Bajar lista de SKUs top</strong> de Shopify (Vader MK2, Elite Mystery Box, Darksaber MK2, Graflex v2). Empezar a pensar catálogo dinámico.</li>
+      </ul>
+    </div>
+
+    <div class="tl-week">
+      <div class="tag"><div class="num">S2</div><div class="lbl">Semana 2</div></div>
+      <h4>Naming convention + estructura nueva</h4>
+      <div class="sub">Disciplina operativa para no repetir el desastre</div>
+      <ul>
+        <li><strong>Crear naming convention nuevo:</strong> <code>TIPO_OBJ_AUD_FECHA-vN</code> (ej. <code>CONV_ABO_LLA-CC1000_JUN26-v1</code>). Documentar en Notion/Google Doc.</li>
+        <li><strong>Crear estructura nueva:</strong> 1 campaña "TESTING" con $200/día tope, separada de "SCALING".</li>
+        <li><strong>Lanzar 3 creatividades nuevas por campaña activa.</strong> Variar formato (video, imagen, carrusel).</li>
+        <li><strong>Crear Lookalikes frescas</strong>: LLA 1% de compradores CC$1000+ últimos 90d, last 30d, last 180d.</li>
+        <li><strong>Setear exclusiones</strong>: que campañas RMKT no traslapen con prospecting.</li>
+        <li><strong>Subir spend a $2,500/día</strong> con la campaña reactivada.</li>
+      </ul>
+    </div>
+
+    <div class="tl-week">
+      <div class="tag"><div class="num">S3</div><div class="lbl">Semana 3</div></div>
+      <h4>Análisis de testing + escalar ganadores</h4>
+      <div class="sub">Sangre nueva al algoritmo</div>
+      <ul>
+        <li><strong>Revisar testing campaign:</strong> identificar 2-3 ganadores claros (ROAS &gt;3x, CTR &gt;2%).</li>
+        <li><strong>Graduar ganadores a SCALING</strong> con presupuesto inicial $500/día.</li>
+        <li><strong>Sunset definitivo</strong> de creatividades con freq &gt;4 o CTR &lt;1.2%.</li>
+        <li><strong>Dashboard semanal</strong>: snapshot de ROAS, CPA, freq, CTR por campaña activa. Compartir con el cliente cada lunes.</li>
+        <li><strong>Subir spend a $3,500/día.</strong> Cuenta debe estar metiendo ~$100K/mes a este punto.</li>
+      </ul>
+    </div>
+
+    <div class="tl-week">
+      <div class="tag"><div class="num">S4</div><div class="lbl">Semana 4</div></div>
+      <h4>Pre-prep Día del Padre + ramp-up verano</h4>
+      <div class="sub">Día del Padre MX es el 21 jun · sables = regalo evidente</div>
+      <ul>
+        <li><strong>Día del Padre 2026 (21 jun):</strong> campaña dedicada arrancando el 14 jun. Budget $30K (vs $1.4K que metieron en 2025).</li>
+        <li><strong>Creatividades temáticas:</strong> "Regálale el sable que siempre quiso ser Jedi". Carrusel con Vader, Yoda, Luke.</li>
+        <li><strong>Audiencias específicas:</strong> Lookalikes de hombres compradores 30-55, intereses Star Wars + regalos.</li>
+        <li><strong>Catálogo dinámico</strong>: feed con Top 10 productos de Shopify.</li>
+      </ul>
+    </div>
+
+    <div class="tl-week">
+      <div class="tag"><div class="num">M2</div><div class="lbl">Mes 2</div></div>
+      <h4>Verano sostenido + prep Halloween Q4</h4>
+      <div class="sub">No dejar enfriar la cuenta como pasó en jun-sep 2025</div>
+      <ul>
+        <li><strong>Mantener spend $50K/mes mínimo</strong> con creatividades refrescadas cada 2 semanas.</li>
+        <li><strong>Q4 prep:</strong> empezar a brief de creatividades Halloween. Sith Sale 2026 mejor que 2025. Octubre debe ser un mes monstruoso.</li>
+        <li><strong>Análisis de cohorts:</strong> usar data de Shopify (14% de clientes habituales) para crear audiencia de retención. Ofrecer producto premium a quienes ya compraron una vez.</li>
+        <li><strong>CRO ask al cliente:</strong> conversion rate 0.21% del sitio es BAJÍSIMO. Empujarlo a auditar checkout, payment options, mobile UX. Eso multiplica tu ROAS automático.</li>
+      </ul>
+    </div>
+
+    <div class="tl-week">
+      <div class="tag"><div class="num">M3</div><div class="lbl">Mes 3</div></div>
+      <h4>Launch oficial Q4 + dashboard estable</h4>
+      <div class="sub">Halloween, Buen Fin, BF, Cyber, Navidad — todo back-to-back</div>
+      <ul>
+        <li><strong>Calendario Q4 completo</strong>: Halloween (25-31 oct), Buen Fin (13-16 nov), Black Friday (27 nov), Cyber Monday (30 nov), Navidad (15-24 dic). Budget pre-asignado.</li>
+        <li><strong>Hot Sale 2026 fue $4K</strong> — Buen Fin 2026 debe ser $40K+. Black Friday 2025 fue $8K y rindió 2.14x — esa fecha debe ser $30K+ con ROAS &gt;4x.</li>
+        <li><strong>Forecast 2027:</strong> con base en performance de Q4 2026, proyectar growth realista. Si todo va bien, scaling a $1M anual de spend.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ============ PRESUPUESTO ============ -->
+  <h2 class="with-bar"><span class="bar yoda"></span>💰 Propuesta de presupuesto · 12 meses</h2>
+  <p style="color:var(--muted); margin: 0 0 18px 0; font-size:14px">Roadmap de inversión para los próximos 12 meses, basado en performance histórica + corrección de los huecos detectados. Espera ROAS realista por mes (no optimista — accionable).</p>
+
+  <div class="panel">
+    <div class="budget-row reactivation">
+      <div class="b-month">Jun 2026 (resto)</div>
+      <div class="b-tag">Reactivación gradual · post-arranque</div>
+      <div class="b-amt">$45,000</div>
+      <div class="b-roas">4.5x</div>
+      <div class="b-notes">Ramp up $1.5K → $3K/día. Reaprender al algoritmo.</div>
+    </div>
+<div class="budget-row reactivation">
+      <div class="b-month">Jul 2026</div>
+      <div class="b-tag">Verano · maintenance</div>
+      <div class="b-amt">$50,000</div>
+      <div class="b-roas">4.0x</div>
+      <div class="b-notes">Audiencias nuevas, refresh creativo.</div>
+    </div>
+<div class="budget-row reactivation">
+      <div class="b-month">Ago 2026</div>
+      <div class="b-tag">Verano · maintenance</div>
+      <div class="b-amt">$45,000</div>
+      <div class="b-roas">3.8x</div>
+      <div class="b-notes">Mes natural bajo. Mantener consistencia.</div>
+    </div>
+<div class="budget-row reactivation">
+      <div class="b-month">Sep 2026</div>
+      <div class="b-tag">Pre-temporada Q4</div>
+      <div class="b-amt">$55,000</div>
+      <div class="b-roas">4.2x</div>
+      <div class="b-notes">Empezar a calentar audiencias Halloween/BF.</div>
+    </div>
+<div class="budget-row peak">
+      <div class="b-month">Oct 2026</div>
+      <div class="b-tag">Halloween + Día Muertos</div>
+      <div class="b-amt">$90,000</div>
+      <div class="b-roas">5.5x</div>
+      <div class="b-notes">Sith Sale v2. Empujar fuerte el 25-31 oct.</div>
+    </div>
+<div class="budget-row peak">
+      <div class="b-month">Nov 2026</div>
+      <div class="b-tag">Buen Fin + Black Friday + Cyber</div>
+      <div class="b-amt">$140,000</div>
+      <div class="b-roas">5.0x</div>
+      <div class="b-notes">Mes más fuerte. 3 fechas back-to-back.</div>
+    </div>
+<div class="budget-row peak">
+      <div class="b-month">Dic 2026</div>
+      <div class="b-tag">Navidad + arranque Reyes</div>
+      <div class="b-amt">$110,000</div>
+      <div class="b-roas">4.5x</div>
+      <div class="b-notes">Frecuencia alta pero ROAS sano.</div>
+    </div>
+<div class="budget-row maintenance">
+      <div class="b-month">Ene 2027</div>
+      <div class="b-tag">Reyes Magos + post-fiestas</div>
+      <div class="b-amt">$60,000</div>
+      <div class="b-roas">4.5x</div>
+      <div class="b-notes">Reyes primera semana, después mantenimiento.</div>
+    </div>
+<div class="budget-row maintenance">
+      <div class="b-month">Feb 2027</div>
+      <div class="b-tag">San Valentín · evitar 2026</div>
+      <div class="b-amt">$50,000</div>
+      <div class="b-roas">3.8x</div>
+      <div class="b-notes">No repetir el ROAS 1.52x de feb 2026.</div>
+    </div>
+<div class="budget-row maintenance">
+      <div class="b-month">Mar 2027</div>
+      <div class="b-tag">Spring prep · evitar 2026</div>
+      <div class="b-amt">$60,000</div>
+      <div class="b-roas">4.0x</div>
+      <div class="b-notes">Setup completo del Spring Sale ANTES de marzo.</div>
+    </div>
+<div class="budget-row spring">
+      <div class="b-month">Abr 2027</div>
+      <div class="b-tag">Spring Sale + warm-up May 4th</div>
+      <div class="b-amt">$90,000</div>
+      <div class="b-roas">5.0x</div>
+      <div class="b-notes">Prep masivo para May the 4th.</div>
+    </div>
+<div class="budget-row spring">
+      <div class="b-month">May 2027</div>
+      <div class="b-tag">May 4th + Madres + Hot Sale</div>
+      <div class="b-amt">$180,000</div>
+      <div class="b-roas">6.0x</div>
+      <div class="b-notes">Replicar 2026 y subir 2x. Mes monstruoso.</div>
+    </div>
+    <div class="budget-totals">
+      <div class="budget-total-card spend">
+        <div class="lbl">Inversión anual proyectada</div>
+        <div class="val">$975,000</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:4px">vs $459,631 últimos 12 meses (112% scaling)</div>
+      </div>
+      <div class="budget-total-card rev">
+        <div class="lbl">Ventas Meta proyectadas</div>
+        <div class="val">$4,724,500</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:4px">ROAS ponderado proyectado: 4.85x</div>
+      </div>
+      <div class="budget-total-card margot">
+        <div class="lbl">Utilidad Meta (rev - spend)</div>
+        <div class="val">$3,749,500</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:4px">Base de cálculo para tu comisión</div>
+      </div>
+      <div class="budget-total-card">
+        <div class="lbl">Tu comisión al 15%</div>
+        <div class="val">$562,425</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:4px">≈ $46,869/mes promedio</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ SHOPIFY VALIDATION SECTION ============ -->
+  <h2 class="with-bar"><span class="bar yellow"></span>🛒 Validación con Shopify · Atribución, AOV y leakage</h2>
+  <p style="color:var(--muted); margin: 0 0 18px 0; font-size:14px">Cruce de datos de Meta Marketing API contra transacciones reales de Shopify (8.5 meses de data, 542 transacciones). Lo que el píxel atribuye vs lo que realmente vendió la tienda.</p>
+
+  <!-- Headline stats -->
+  <div class="windows" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">
+    <div class="window-card">
+      <div class="window-head" style="padding-bottom:8px;border:none;margin-bottom:8px">
+        <div><div class="window-title" style="font-size:15px">Atribución Meta</div></div>
+      </div>
+      <div style="font-family:'Orbitron',sans-serif;font-size:32px;font-weight:800;color:var(--yoda)">27584%</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:4px">del revenue real lo atribuye Meta (promedio). El píxel está sano.</div>
+    </div>
+    <div class="window-card">
+      <div class="window-head" style="padding-bottom:8px;border:none;margin-bottom:8px">
+        <div><div class="window-title" style="font-size:15px">Tasa de fallos pago</div></div>
+      </div>
+      <div style="font-family:'Orbitron',sans-serif;font-size:32px;font-weight:800;color:var(--sith)">10.3%</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:4px">56 pagos fallidos / 542 transacciones. Plata perdida.</div>
+    </div>
+    <div class="window-card">
+      <div class="window-head" style="padding-bottom:8px;border:none;margin-bottom:8px">
+        <div><div class="window-title" style="font-size:15px">AOV real</div></div>
+      </div>
+      <div style="font-family:'Orbitron',sans-serif;font-size:32px;font-weight:800;color:var(--jedi)">$5,153</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:4px">Ticket promedio. Permite CPA hasta $1,500 manteniendo margen.</div>
+    </div>
+    <div class="window-card">
+      <div class="window-head" style="padding-bottom:8px;border:none;margin-bottom:8px">
+        <div><div class="window-title" style="font-size:15px">Devoluciones</div></div>
+      </div>
+      <div style="font-family:'Orbitron',sans-serif;font-size:32px;font-weight:800;color:var(--yoda)">4</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:4px">Solo $5,026 en 8 meses. Producto sólido, baja queja.</div>
+    </div>
+  </div>
+
+  <!-- Attribution comparison table -->
+  <h3 class="section-title" style="margin-top:32px"><span class="dot" style="background:var(--mace)"></span>Atribución mes a mes — Shopify vs Meta-atribuido</h3>
+  <div class="table-panel">
+    <table>
+      <thead><tr>
+        <th>Mes</th>
+        <th class="num">Ventas Shopify (#)</th>
+        <th class="num">Ventas Shopify ($)</th>
+        <th class="num">Meta-atribuido ($)</th>
+        <th class="num">% atribuido</th>
+      </tr></thead>
       <tbody>
-        <tr>
-      <td class="m-cell">May 25</td>
-      <td class="num">$332,852</td>
-      <td class="num">$75,811</td>
-      <td class="num paid-light">$4,993</td>
-      <td class="num teal">$38,556</td>
-    </tr>
-<tr>
-      <td class="m-cell">Jun 25</td>
-      <td class="num">$83,335</td>
-      <td class="num">$26,783</td>
-      <td class="num red">$0</td>
-      <td class="num teal">$10,000</td>
-    </tr>
-<tr>
-      <td class="m-cell">Jul 25</td>
-      <td class="num">$56,284</td>
-      <td class="num">$18,367</td>
-      <td class="num red">$0</td>
-      <td class="num teal">$10,000</td>
-    </tr>
-<tr>
-      <td class="m-cell">Ago 25</td>
-      <td class="num">$35,032</td>
-      <td class="num">$14,001</td>
-      <td class="num red">$0</td>
-      <td class="num teal">$10,000</td>
-    </tr>
-<tr>
-      <td class="m-cell">Sep 25</td>
+        <tr class="kd-win">
+      <td><div class="name">Sep 25</div></td>
+      <td class="num">1</td>
+      <td class="num">$10</td>
       <td class="num">$27,512</td>
-      <td class="num">$11,980</td>
-      <td class="num red">$0</td>
-      <td class="num teal">$10,000</td>
+      <td class="num"><strong style="color:var(--yoda)">275122%</strong></td>
     </tr>
-<tr>
-      <td class="m-cell">Oct 25</td>
+<tr class="kd-win">
+      <td><div class="name">Oct 25</div></td>
+      <td class="num">64</td>
+      <td class="num">$279,194</td>
       <td class="num">$259,736</td>
-      <td class="num">$49,042</td>
-      <td class="num paid-light">$11,688</td>
-      <td class="num teal">$31,604</td>
+      <td class="num"><strong style="color:var(--yoda)">93%</strong></td>
     </tr>
-<tr>
-      <td class="m-cell">Nov 25</td>
+<tr class="kd-win">
+      <td><div class="name">Nov 25</div></td>
+      <td class="num">61</td>
+      <td class="num">$322,294</td>
       <td class="num">$280,256</td>
-      <td class="num">$62,843</td>
-      <td class="num paid-light">$2,803</td>
-      <td class="num teal">$32,612</td>
+      <td class="num"><strong style="color:var(--yoda)">87%</strong></td>
     </tr>
-<tr>
-      <td class="m-cell">Dic 25</td>
+<tr class="kd-win">
+      <td><div class="name">Dic 25</div></td>
+      <td class="num">59</td>
+      <td class="num">$298,639</td>
       <td class="num">$239,659</td>
-      <td class="num">$59,570</td>
-      <td class="num paid-light">$2,397</td>
-      <td class="num teal">$27,013</td>
+      <td class="num"><strong style="color:var(--yoda)">80%</strong></td>
     </tr>
-<tr>
-      <td class="m-cell">Ene 26</td>
+<tr class="kd-win">
+      <td><div class="name">Ene 26</div></td>
+      <td class="num">35</td>
+      <td class="num">$226,040</td>
       <td class="num">$193,703</td>
-      <td class="num">$41,191</td>
-      <td class="num red">$0</td>
-      <td class="num teal">$22,877</td>
+      <td class="num"><strong style="color:var(--yoda)">86%</strong></td>
     </tr>
-<tr>
-      <td class="m-cell">Feb 26</td>
+<tr class="kd-win">
+      <td><div class="name">Feb 26</div></td>
+      <td class="num">5</td>
+      <td class="num">$21,263</td>
       <td class="num">$19,326</td>
-      <td class="num">$12,750</td>
-      <td class="num red">$0</td>
-      <td class="num teal">$10,000</td>
+      <td class="num"><strong style="color:var(--yoda)">91%</strong></td>
     </tr>
-<tr>
-      <td class="m-cell">Mar 26</td>
+<tr class="kd-ok">
+      <td><div class="name">Mar 26</div></td>
+      <td class="num">16</td>
+      <td class="num">$88,436</td>
       <td class="num">$49,872</td>
-      <td class="num">$26,250</td>
-      <td class="num red">$0</td>
-      <td class="num teal">$10,000</td>
+      <td class="num"><strong style="color:var(--saber-yellow)">56%</strong></td>
     </tr>
-<tr>
-      <td class="m-cell">Abr 26</td>
+<tr class="kd-ok">
+      <td><div class="name">Abr 26</div></td>
+      <td class="num">69</td>
+      <td class="num">$364,643</td>
       <td class="num">$272,379</td>
-      <td class="num">$56,136</td>
-      <td class="num paid-light">$2,724</td>
-      <td class="num teal">$32,436</td>
+      <td class="num"><strong style="color:var(--saber-yellow)">75%</strong></td>
     </tr>
-<tr>
-      <td class="m-cell">May 26</td>
-      <td class="num">$606,565</td>
-      <td class="num">$78,337</td>
-      <td class="num paid-light">$24,263</td>
-      <td class="num teal">$79,234</td>
+<tr class="kd-win">
+      <td><div class="name">May 26</div></td>
+      <td class="num">151</td>
+      <td class="num">$785,203</td>
+      <td class="num">$643,819</td>
+      <td class="num"><strong style="color:var(--yoda)">82%</strong></td>
     </tr>
-        <tr class="totals-row">
-          <td>Total 13 meses</td>
-          <td class="num">$2,456,511</td>
-          <td class="num">$533,059</td>
-          <td class="num red">$48,866</td>
-          <td class="num teal">$324,333</td>
-        </tr>
+<tr class="kd-ok">
+      <td><div class="name">Jun 26</div></td>
+      <td class="num">14</td>
+      <td class="num">$62,064</td>
+      <td class="num">$40,226</td>
+      <td class="num"><strong style="color:var(--saber-yellow)">65%</strong></td>
+    </tr>
       </tbody>
     </table>
   </div>
 
-  <!-- ============ SECTION 5: WHY IT WORKS FOR BOTH ============ -->
-  <h2><span class="num">5</span>Por qué esta estructura te sirve a ti también</h2>
-  <p class="lead">Lo importante: no te estoy proponiendo algo "pro media buyer" — te estoy proponiendo algo donde a los dos nos conviene crecer la cuenta juntos. Estos son los argumentos del lado del cliente:</p>
-
-  <div class="why-grid">
-    <div class="why-card client">
-      <h4>Lo que ganas tú <span class="badge">Cliente</span></h4>
-      <ul>
-        <li><strong>Solo pagas cuando hay utilidad real.</strong> Si la pauta no genera más ventas que su propio costo, mi comisión es el piso ($10K) — no un porcentaje gordo sobre ventas inexistentes.</li>
-        <li><strong>Mi compromiso es 100% en escalar.</strong> No tengo ningún incentivo para "mantenerme chico" — entre más vendes con la pauta, más gano yo. Mismo equipo.</li>
-        <li><strong>Estructura simple y auditable.</strong> Una fórmula, dos números, cero ambigüedad. Cualquier discrepancia se resuelve abriendo Ads Manager.</li>
-        <li><strong>Sin sorpresas de fin de mes.</strong> Sabes exactamente qué vas a pagar antes de firmar el cierre.</li>
-      </ul>
+  <!-- Critical alert: Mercado Pago -->
+  <div class="emergency" style="margin-top:24px">
+    <div class="em-head">
+      <div class="em-icon">💸</div>
+      <div class="em-title">PLATA TIRADA · Mercado Pago tiene 10.5% de fallos</div>
     </div>
-    <div class="why-card me">
-      <h4>Lo que gano yo <span class="badge">Media buyer</span></h4>
-      <ul>
-        <li><strong>Estabilidad operativa.</strong> El piso me garantiza poder mantener la cuenta operando 365 días — refrescar creativos, ajustar audiencias, preparar temporadas — sin importar el ciclo.</li>
-        <li><strong>Upside real cuando la cuenta vuela.</strong> En meses como May the 4th, ambos celebramos. No me chocan techos artificiales.</li>
-        <li><strong>Motivación alineada a tu resultado.</strong> Mi trabajo se ve premiado en la misma moneda que tú lo mides: utilidad bruta de Meta.</li>
-        <li><strong>Cero meses en cero.</strong> No estoy trabajando gratis 7 meses al año.</li>
-      </ul>
+    <div class="em-body">
+      <strong>56 transacciones fallaron en 8 meses</strong> ($301,183 en intentos de pago no completados). El 88% de los pagos pasan por Mercado Pago — si su gateway truena, la cuenta se cae.
+      Cada fallo es: invertí en ads → cliente llegó al checkout → la compra murió ahí. **Tu ROAS efectivo está 10.3% más alto en realidad porque pagaste por estos clicks pero no cuentan como conversión.**
+      <br><br><strong>Ask urgente al cliente:</strong> auditar config de Mercado Pago, considerar agregar opción de Stripe / PayPal / OXXO Pay como respaldo. Es la palanca más fácil que tienen para subir conversion sin tocar el sitio.
     </div>
   </div>
 
-  <!-- ============ SECTION 6: TERMS ============ -->
-  <h2><span class="num">6</span>Los detalles operativos</h2>
-  <p class="lead">Para que esto funcione sin malentendidos, dejamos por escrito lo siguiente:</p>
+  <!-- ============ INTELIGENCIA DE TIENDA ============ -->
+  <h2 class="with-bar"><span class="bar yoda"></span>🏪 Inteligencia de tienda · Top SKUs, geo y promos</h2>
+  <p style="color:var(--muted); margin: 0 0 18px 0; font-size:14px">Data en vivo del Shopify Admin API (últimos 60 días, 214 órdenes). Lo que VENDE de verdad — base para targeting, catálogo dinámico y planning de campañas.</p>
 
-  <div class="terms">
-    <div class="term-row">
-      <div class="term-label">Comisión</div>
-      <div class="term-body"><strong>15%</strong> sobre (Ventas atribuidas a Meta − Gasto en pauta de Meta) del mes.</div>
+  <div class="duo">
+    <!-- Top SKUs -->
+    <div>
+      <h3 class="section-title" style="margin-top:0"><span class="dot" style="background:var(--yoda)"></span>Top 12 productos · Revenue 60 días</h3>
+      <div class="table-panel">
+        <table>
+          <thead><tr>
+            <th>#</th>
+            <th>SKU</th>
+            <th class="num">Revenue</th>
+            <th class="num">Units</th>
+          </tr></thead>
+          <tbody>
+            <tr><td><strong>1</strong></td><td><div class="name">MYSTERY BOX</div></td><td class="num">$238,800</td><td class="num">69</td></tr>
+<tr><td><strong>2</strong></td><td><div class="name">ELITE MYSTERY BOX</div></td><td class="num">$124,310</td><td class="num">18</td></tr>
+<tr><td><strong>3</strong></td><td><div class="name">GRAFLEX V2</div></td><td class="num">$103,942</td><td class="num">19</td></tr>
+<tr><td><strong>4</strong></td><td><div class="name">MAULER</div></td><td class="num">$103,150</td><td class="num">11</td></tr>
+<tr><td><strong>5</strong></td><td><div class="name">EXILE</div></td><td class="num">$96,250</td><td class="num">15</td></tr>
+<tr><td><strong>6</strong></td><td><div class="name">VADER MKII</div></td><td class="num">$86,300</td><td class="num">10</td></tr>
+<tr><td><strong>7</strong></td><td><div class="name">LIGHTSABER NECKLACE</div></td><td class="num">$83,500</td><td class="num">167</td></tr>
+<tr><td><strong>8</strong></td><td><div class="name">PREVENTA VELORIAN</div></td><td class="num">$50,960</td><td class="num">8</td></tr>
+<tr><td><strong>9</strong></td><td><div class="name">Vader V2</div></td><td class="num">$49,729</td><td class="num">9</td></tr>
+<tr><td><strong>10</strong></td><td><div class="name">PREVENTA BASTILA SHAN</div></td><td class="num">$41,590</td><td class="num">5</td></tr>
+<tr><td><strong>11</strong></td><td><div class="name">REVENGE</div></td><td class="num">$38,867</td><td class="num">9</td></tr>
+<tr><td><strong>12</strong></td><td><div class="name">DARKSABER MKII</div></td><td class="num">$35,880</td><td class="num">4</td></tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-    <div class="term-row">
-      <div class="term-label">Piso mensual</div>
-      <div class="term-body"><strong>$10,000 MXN</strong> garantizado al mes, independiente del resultado. Cubre operación, juntas, ajustes, reportes.</div>
-    </div>
-    <div class="term-row">
-      <div class="term-label">"Ventas atribuidas a Meta"</div>
-      <div class="term-body">Las que reporta el píxel/CAPI de Meta en ventana <strong>last-click 7 días</strong>. Verificación cruzada con Shopify mensual.</div>
-    </div>
-    <div class="term-row">
-      <div class="term-label">"Gasto en pauta"</div>
-      <div class="term-body">Lo invertido en plataformas Meta (Facebook + Instagram) según Ads Manager. <strong>No</strong> incluye costos de creatividad, herramientas o freelancers contratados por mi cuenta.</div>
-    </div>
-    <div class="term-row">
-      <div class="term-label">Mes con utilidad negativa</div>
-      <div class="term-body">Si en un mes el gasto supera las ventas, la comisión variable es $0 — aplica solo el piso. No pago al cliente.</div>
-    </div>
-    <div class="term-row">
-      <div class="term-label">Alcance del trabajo</div>
-      <div class="term-body">Gestión completa de Meta Ads: estrategia, estructura de campañas, audiencias, optimización diaria, reportería mensual, juntas quincenales de revisión. <strong>No</strong> incluye producción de creatividad (videos/fotos/copy en piezas finales) — se cotiza aparte si lo necesitas.</div>
-    </div>
-    <div class="term-row">
-      <div class="term-label">Periodo de gracia</div>
-      <div class="term-body">Primeros <strong>60 días</strong> el piso es el único pago — entiendo que estoy entrando a una cuenta nueva, limpiando audiencias y entendiendo la operación. Después, fórmula completa.</div>
-    </div>
-    <div class="term-row">
-      <div class="term-label">Aviso de salida</div>
-      <div class="term-body"><strong>30 días</strong> de aviso por cualquiera de las partes. Compromiso mínimo inicial: <strong>3 meses</strong>.</div>
-    </div>
-    <div class="term-row">
-      <div class="term-label">Cierre mensual</div>
-      <div class="term-body">Día <strong>5 de cada mes</strong> reporte de números del mes anterior + factura. Pago a 7 días.</div>
+
+    <!-- Geo + discounts -->
+    <div>
+      <h3 class="section-title" style="margin-top:0"><span class="dot" style="background:var(--jedi)"></span>Concentración geográfica · Top estados</h3>
+      <div class="table-panel">
+        <table>
+          <thead><tr>
+            <th>Estado</th>
+            <th class="num">Órdenes</th>
+            <th class="num">% del total</th>
+          </tr></thead>
+          <tbody>
+            <tr><td><div class="name">Ciudad de México</div></td><td class="num">62</td><td class="num">36.0%</td></tr>
+<tr><td><div class="name">México</div></td><td class="num">27</td><td class="num">15.7%</td></tr>
+<tr><td><div class="name">Querétaro</div></td><td class="num">15</td><td class="num">8.7%</td></tr>
+<tr><td><div class="name">Jalisco</div></td><td class="num">15</td><td class="num">8.7%</td></tr>
+<tr><td><div class="name">Nuevo León</div></td><td class="num">15</td><td class="num">8.7%</td></tr>
+<tr><td><div class="name">Guanajuato</div></td><td class="num">12</td><td class="num">7.0%</td></tr>
+<tr><td><div class="name">Baja California</div></td><td class="num">8</td><td class="num">4.7%</td></tr>
+<tr><td><div class="name">Coahuila</div></td><td class="num">6</td><td class="num">3.5%</td></tr>
+<tr><td><div class="name">Hidalgo</div></td><td class="num">6</td><td class="num">3.5%</td></tr>
+<tr><td><div class="name">Veracruz</div></td><td class="num">6</td><td class="num">3.5%</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="section-title" style="margin-top:28px"><span class="dot" style="background:var(--saber-yellow)"></span>Códigos de descuento usados</h3>
+      <div class="table-panel">
+        <table>
+          <thead><tr>
+            <th>Código</th>
+            <th class="num">Usos</th>
+            <th class="num">% del total</th>
+          </tr></thead>
+          <tbody>
+            <tr><td><strong>MAY4TH</strong></td><td class="num">103</td><td class="num">48.1%</td></tr>
+<tr><td><strong>JEDI10</strong></td><td class="num">39</td><td class="num">18.2%</td></tr>
+<tr><td><strong>HOTSALE</strong></td><td class="num">22</td><td class="num">10.3%</td></tr>
+<tr><td><strong>JEDI5</strong></td><td class="num">3</td><td class="num">1.4%</td></tr>
+<tr><td><strong>SLMX10OFF</strong></td><td class="num">1</td><td class="num">0.5%</td></tr>
+<tr><td><strong>Isaacvallejo</strong></td><td class="num">1</td><td class="num">0.5%</td></tr>
+<tr><td><strong>3TGB4TM4</strong></td><td class="num">1</td><td class="num">0.5%</td></tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 
-  <!-- ============ MORE REPORTS ============ -->
-  <div class="more-reports">
-    <h3>📊 Otros reportes de la cuenta</h3>
-    <div class="report-cards">
-      <a class="report-card" href="auditoria.html">
-        <div class="rc-eye">12 meses</div>
-        <div class="rc-title">Auditoría completa<br>de la cuenta</div>
-        <div class="rc-desc">Análisis forense: qué funcionó, qué no, performance en fechas clave, plan Keep / Change / Continue.</div>
-        <div class="rc-arrow">→</div>
-      </a>
-      <a class="report-card" href="may-the-4th.html">
-        <div class="rc-eye">Semana fuerte</div>
-        <div class="rc-title">Reporte May the 4th<br>2026</div>
-        <div class="rc-desc">$73K invertidos, $599K en ventas, ROAS 8.15x. Análisis de la mejor semana del año vs base.</div>
-        <div class="rc-arrow">→</div>
-      </a>
-      <a class="report-card" href="comparativa-30dias.html">
-        <div class="rc-eye">Últimos 30 días</div>
-        <div class="rc-title">Comparativa<br>30 días vs anteriores</div>
-        <div class="rc-desc">Performance por conjunto de anuncios, con banderas rojas en CTR caído &gt;15% o CPC subido &gt;20%.</div>
-        <div class="rc-arrow">→</div>
-      </a>
+  <!-- Customer stats -->
+  <h3 class="section-title" style="margin-top:32px"><span class="dot" style="background:var(--mace)"></span>Clientes — análisis de base instalada</h3>
+  <div class="windows" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))">
+    <div class="window-card">
+      <div class="window-head" style="padding-bottom:8px;border:none;margin-bottom:8px"><div><div class="window-title" style="font-size:15px">LTV promedio</div></div></div>
+      <div style="font-family:'Orbitron',sans-serif;font-size:28px;font-weight:800;color:var(--jedi)">$876</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:4px">Valor de vida cliente · primeros 250 customers</div>
+    </div>
+    <div class="window-card">
+      <div class="window-head" style="padding-bottom:8px;border:none;margin-bottom:8px"><div><div class="window-title" style="font-size:15px">% que repite</div></div></div>
+      <div style="font-family:'Orbitron',sans-serif;font-size:28px;font-weight:800;color:var(--sith)">0.4%</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:4px">Solo 1/250 hicieron 2+ órdenes. Oportunidad masiva de retención.</div>
+    </div>
+    <div class="window-card">
+      <div class="window-head" style="padding-bottom:8px;border:none;margin-bottom:8px"><div><div class="window-title" style="font-size:15px">Concentración geo</div></div></div>
+      <div style="font-family:'Orbitron',sans-serif;font-size:28px;font-weight:800;color:var(--saber-yellow)">68%</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:4px">Top 6 estados acumulan este %. Permite geo-targeting fino para reducir CPA.</div>
+    </div>
+    <div class="window-card">
+      <div class="window-head" style="padding-bottom:8px;border:none;margin-bottom:8px"><div><div class="window-title" style="font-size:15px">May 4th impact</div></div></div>
+      <div style="font-family:'Orbitron',sans-serif;font-size:28px;font-weight:800;color:var(--yoda)">48%</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:4px">De los pedidos usó código MAY4TH. Validación brutal de fechas pico Star Wars.</div>
     </div>
   </div>
 
-  <!-- ============ CLOSING ============ -->
-  <div class="close-cta">
-    <h3>¿Hacemos esto juntos?</h3>
-    <p>Si esta estructura te hace sentido, podemos arrancar en 7 días con un kick-off para alinear roadmap, accesos y prioridades de las próximas temporadas. Si tienes contraflechas a algún detalle, lo platicamos con calma — el objetivo es que ambos firmemos algo que se sostenga 12+ meses.</p>
+  <!-- Acciones derivadas -->
+  <div class="shopify-box" style="margin-top:28px">
+    <h4>🎯 Acciones de campaña derivadas de esta data</h4>
+    <p>
+      <strong>1. Catálogo dinámico priority order:</strong> MYSTERY BOX → ELITE MYSTERY BOX → GRAFLEX V2 → MAULER → EXILE → VADER MKII. Estos 6 son ~60% del revenue 60d.<br><br>
+      <strong>2. Audiencia LIGHTSABER NECKLACE separada:</strong> 167 unidades a $500 promedio = otro perfil de comprador (gift / impulso bajo). Vale campaña dedicada con targeting distinto al de sables.<br><br>
+      <strong>3. Geo-targeting Q4:</strong> escalar a CDMX + EdoMex + Querétaro + Jalisco + Nuevo León + Guanajuato como tier 1. Tier 2 (resto del país) con creatividades distintas si presupuesto lo permite.<br><br>
+      <strong>4. Retención = oportunidad masiva:</strong> solo 0.4% repite en muestra reciente vs 14.28% del Q1. Crear flow específico para compradores 30-60-90 días: ofrecer producto complementario (necklace post-saber, kit de mantenimiento, etc).<br><br>
+      <strong>5. Código MAY4TH funcionó como crack:</strong> 48% de los pedidos. Replicar mecánica: descuentos asociados a fechas temáticas con código memorable. JEDI10 y HOTSALE también validados.<br><br>
+      <strong>6. PREVENTAS validadas:</strong> Velorian ($51K) y Bastila Shan ($42K) en preventa. Producto que se vende ANTES de existir → muy buen indicador de demanda. Replicar mecánica.
+    </p>
   </div>
 
-  <footer>Propuesta basada en datos reales de Meta Marketing API · Cuenta Saber Legacy · Moneda MXN · 07/06/2026</footer>
+  <!-- Shopify insight box (refined) -->
+  <div class="shopify-box">
+    <h4>📦 Insights de Shopify para optimización de campañas</h4>
+    <div class="ship-grid">
+      <div class="ship-stat"><div class="lbl">Transacciones (8m)</div><div class="val">542</div></div>
+      <div class="ship-stat"><div class="lbl">Ventas exitosas</div><div class="val" style="color:var(--yoda)">479</div></div>
+      <div class="ship-stat"><div class="lbl">Pagos pendientes</div><div class="val" style="color:var(--saber-yellow)">7</div></div>
+      <div class="ship-stat"><div class="lbl">Tasa de conversión sitio</div><div class="val" style="color:var(--sith)">0.21%</div></div>
+      <div class="ship-stat"><div class="lbl">Clientes habituales</div><div class="val">14.28%</div></div>
+    </div>
+    <p>
+      <strong>Aplicado a estrategia de campañas:</strong><br>
+      • <strong>Catálogo dinámico</strong>: priorizar Vader MK2 (top seller), Elite Mystery Box, Darksaber MK2, Graflex v2.<br>
+      • <strong>CPA techo seguro: $1,500</strong> (AOV $5,200 × margen estimado 40-50%).<br>
+      • <strong>Audiencia de retención</strong>: 14.3% de clientes repiten. Crear segmento "compradores 30-90 días" para upsell/cross-sell.<br>
+      • <strong>Atribución sana (27584%)</strong>: el píxel está reportando bien. Tu comisión sobre Meta-attributed subreporta solo ~-27484% del revenue real. Negociable pero no fatal.<br>
+      • <strong>Conversion 0.21% es el problema central</strong>: mediana ecommerce MX es 0.4-0.6%. Doble palanca = arreglar Mercado Pago + auditar checkout/UX → ROAS efectivo se duplica sin tocar ads.
+    </p>
+  </div>
+
+  <footer>
+    <div class="quote">"Do or do not. There is no try." — Yoda</div>
+    Auditoría basada en datos de Meta Marketing API · Cuenta act_461452066012476 · Moneda MXN · Datos al 2026-06-11<br>
+    Conversiones medidas vía píxel de Meta (purchase / omni_purchase). Las ventas reales pueden diferir por atribución y compras fuera del píxel.
+  </footer>
 </div>
 
 <script>
-const labels = ["May 25", "Jun 25", "Jul 25", "Ago 25", "Sep 25", "Oct 25", "Nov 25", "Dic 25", "Ene 26", "Feb 26", "Mar 26", "Abr 26", "May 26"];
-const hisComm = [4993, 0, 0, 0, 0, 11688, 2803, 2397, 0, 0, 0, 2724, 24263];
-const myComm = [38556, 10000, 10000, 10000, 10000, 31604, 32612, 27013, 22877, 10000, 10000, 32436, 79234];
+const D = {"months": ["2024-06", "2024-07", "2024-08", "2024-09", "2024-10", "2024-11", "2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02", "2026-03", "2026-04", "2026-05", "2026-06"], "spend": [10805, 16441, 16654, 20998, 20070, 24409, 19991, 12400, 18662, 19111, 19789, 75811, 26783, 18367, 14001, 11980, 49042, 62843, 59570, 41191, 12750, 26250, 56136, 92621, 4156], "revenue": [57262, 76822, 55112, 71451, 122783, 41632, 130955, 87201, 55230, 77752, 187169, 332852, 83335, 56284, 35032, 27512, 259736, 280256, 239659, 193703, 19326, 49872, 272379, 643819, 40226], "roas": [5.3, 4.67, 3.31, 3.4, 6.12, 1.71, 6.55, 7.03, 2.96, 4.07, 9.46, 4.39, 3.11, 3.06, 2.5, 2.3, 5.3, 4.46, 4.02, 4.7, 1.52, 1.9, 4.85, 6.95, 9.68], "freq": [2.66, 3.36, 3.17, 3.02, 3.26, 2.16, 3.53, 3.25, 2.45, 3.51, 2.59, 3.79, 2.83, 2.99, 3.9, 3.38, 3.57, 3.96, 4.99, 3.68, 2.5, 2.65, 4.1, 3.07, 1.76], "ctr": [2.83, 3.43, 3.31, 3.57, 3.62, 2.11, 3.15, 4.69, 6.18, 5.21, 3.27, 3.51, 5.39, 5.0, 5.23, 3.74, 4.1, 2.83, 2.9, 3.06, 6.62, 7.66, 2.76, 3.24, 3.15], "key_dates": [{"label": "D\u00eda del Padre 2025", "start": "2025-06-09", "roas": 0.47, "spend": 798, "target": 4.0}, {"label": "Halloween 2025", "start": "2025-10-25", "roas": 5.58, "spend": 12521, "target": 5.0}, {"label": "Buen Fin 2025", "start": "2025-11-14", "roas": 8.21, "spend": 10335, "target": 5.0}, {"label": "Black Friday 2025", "start": "2025-11-27", "roas": 2.14, "spend": 8192, "target": 5.0}, {"label": "Navidad 2025", "start": "2025-12-15", "roas": 4.96, "spend": 17403, "target": 4.0}, {"label": "Reyes Magos 2026", "start": "2026-01-01", "roas": 5.23, "spend": 26018, "target": 5.0}, {"label": "San Valent\u00edn 2026", "start": "2026-02-10", "roas": 0.89, "spend": 1710, "target": 3.5}, {"label": "Spring Sale 2026", "start": "2026-03-26", "roas": 1.14, "spend": 9927, "target": 4.0}, {"label": "May 4th 2026", "start": "2026-05-01", "roas": 8.15, "spend": 73556, "target": 6.0}, {"label": "D\u00eda de las Madres 2026", "start": "2026-05-08", "roas": 2.38, "spend": 2980, "target": 5.0}, {"label": "Hot Sale 2026", "start": "2026-05-26", "roas": 4.2, "spend": 16699, "target": 5.0}]};
 
-Chart.defaults.color = '#6b6356';
-Chart.defaults.font.family = "'Plus Jakarta Sans', sans-serif";
-Chart.defaults.borderColor = '#e8dfcf';
+Chart.defaults.color = '#8898b8';
+Chart.defaults.font.family = "'Inter', -apple-system, sans-serif";
+Chart.defaults.borderColor = '#1e2a44';
 
-new Chart(document.getElementById('chartCompare').getContext('2d'), {
+const JEDI='#38bdf8', SITH='#ef4444', YODA='#10b981', YELLOW='#fbbf24', MACE='#a78bfa';
+
+new Chart(document.getElementById('chartMonthly').getContext('2d'), {
   type:'bar',
-  data:{
-    labels,
-    datasets:[
-      {label:'Modelo % por CPA', data:hisComm, backgroundColor:'#dc2626', borderRadius:6},
-      {label:'Mi propuesta (15% · piso $10K)', data:myComm, backgroundColor:'#0d9488', borderRadius:6}
-    ]
-  },
-  options:{
-    responsive:true, maintainAspectRatio:false,
-    plugins:{legend:{position:'top', align:'end'}, title:{display:true, text:'Comisión mes a mes (MXN) — mismos 13 meses, dos modelos', align:'start', font:{family:'Fraunces', size:16, weight:700}, color:'#1f1b16'},
-      tooltip:{callbacks:{label: ctx => `${ctx.dataset.label}: $${ctx.parsed.y.toLocaleString()}`}}},
+  data:{labels:D.months, datasets:[
+    {type:'bar', label:'Inversión $', data:D.spend, backgroundColor:'rgba(56,189,248,0.55)', borderColor:JEDI, borderWidth:1, yAxisID:'y', borderRadius:3, order:2},
+    {type:'bar', label:'Ventas $', data:D.revenue, backgroundColor:'rgba(167,139,250,0.55)', borderColor:MACE, borderWidth:1, yAxisID:'y', borderRadius:3, order:3},
+    {type:'line', label:'ROAS', data:D.roas, borderColor:YODA, backgroundColor:'rgba(16,185,129,0.1)', tension:0.3, borderWidth:2.5, pointRadius:3, pointBackgroundColor:YODA, yAxisID:'y1', fill:false, order:1},
+  ]},
+  options:{responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{position:'top', align:'end'}},
     scales:{
-      x:{grid:{display:false}},
-      y:{beginAtZero:true, grid:{color:'rgba(80,60,30,0.06)'}, ticks:{callback:v=>'$'+v.toLocaleString()}}
+      x:{grid:{display:false}, ticks:{maxTicksLimit:25, autoSkip:false, font:{size:10}}},
+      y:{position:'left', title:{display:true, text:'$ MXN'}, grid:{color:'rgba(56,189,248,0.06)'}},
+      y1:{position:'right', title:{display:true, text:'ROAS'}, grid:{display:false}, beginAtZero:true}
     }
+  }
+});
+
+new Chart(document.getElementById('chartRoas').getContext('2d'), {
+  type:'line',
+  data:{labels:D.months, datasets:[
+    {label:'ROAS mensual', data:D.roas, borderColor:MACE, backgroundColor:'rgba(167,139,250,0.18)', tension:0.35, fill:true, pointRadius:3, borderWidth:2.5},
+    {label:'Línea sana (3x)', data:D.months.map(()=>3), borderColor:'rgba(251,191,36,0.5)', borderDash:[6,4], borderWidth:1.5, pointRadius:0, fill:false}
+  ]},
+  options:{responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{position:'top', align:'end'}},
+    scales:{x:{grid:{display:false}, ticks:{font:{size:10}, autoSkip:false}}, y:{beginAtZero:true, grid:{color:'rgba(167,139,250,0.08)'}, title:{display:true, text:'ROAS (x)'}}}
+  }
+});
+
+new Chart(document.getElementById('chartFreq').getContext('2d'), {
+  type:'bar',
+  data:{labels:D.months, datasets:[
+    {label:'Frecuencia promedio', data:D.freq, backgroundColor:D.freq.map(f=>f>4 ? 'rgba(239,68,68,0.7)' : (f>3 ? 'rgba(251,191,36,0.7)' : 'rgba(16,185,129,0.7)')), borderRadius:3}
+  ]},
+  options:{responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{display:false}},
+    scales:{x:{grid:{display:false}, ticks:{font:{size:10}, autoSkip:false}}, y:{beginAtZero:true, grid:{color:'rgba(251,191,36,0.08)'}, title:{display:true, text:'Veces que cada persona vio el anuncio'}}}
+  }
+});
+
+new Chart(document.getElementById('chartKeyDates').getContext('2d'), {
+  type:'bar',
+  data:{labels:D.key_dates.map(d=>d.label), datasets:[
+    {label:'ROAS logrado', data:D.key_dates.map(d=>d.roas),
+      backgroundColor:D.key_dates.map(d=> d.roas>=d.target ? 'rgba(16,185,129,0.75)' : (d.roas>=d.target*0.7 ? 'rgba(251,191,36,0.75)' : 'rgba(239,68,68,0.75)')),
+      borderRadius:4},
+    {label:'Target', data:D.key_dates.map(d=>d.target), type:'line', borderColor:'rgba(255,255,255,0.5)', borderDash:[6,4], borderWidth:1.5, pointRadius:0, fill:false}
+  ]},
+  options:{responsive:true, maintainAspectRatio:false, indexAxis:'y',
+    plugins:{legend:{position:'top', align:'end'}},
+    scales:{x:{beginAtZero:true, grid:{color:'rgba(56,189,248,0.06)'}, title:{display:true, text:'ROAS (x)'}}, y:{grid:{display:false}}}
   }
 });
 </script>
