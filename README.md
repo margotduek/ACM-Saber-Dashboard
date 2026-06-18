@@ -10,8 +10,11 @@ Reportes y análisis de la cuenta de Meta Ads para Saber Legacy, por Al Chile Me
 
 ## 📊 [Datos en markdown](data/) — para copiar y pegar
 
-Tablas listas para Notion / Excel / Google Sheets, sin necesidad de tocar APIs:
+Tablas listas para Notion / Excel / Google Sheets, sin necesidad de tocar APIs.
 
+**⭐ Recomendado:** [Todos los datos en uno](data/00-todo-junto.md) — un solo archivo con las 9 tablas. Selecciona, copia, pega.
+
+O archivo por archivo:
 - [Evolución mensual Meta](data/01-meta-mensual.md)
 - [Top campañas 12m](data/02-meta-campañas.md)
 - [Fechas clave](data/03-meta-fechas-clave.md)
