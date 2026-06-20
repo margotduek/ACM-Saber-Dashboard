@@ -1,5 +1,5 @@
 # Propuesta de presupuesto · 12 meses
-_Actualizado: 18 de June de 2026 · Jun 2026 - May 2027_
+_Actualizado: 20 de June de 2026 · Jun 2026 - May 2027_
 
 Roadmap mensual de inversión propuesto, con ROAS esperado realista.
 

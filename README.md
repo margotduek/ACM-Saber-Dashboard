@@ -1,20 +1,17 @@
 # Saber Legacy — Dashboard de pauta
 
-Reportes y análisis de la cuenta de Meta Ads para Saber Legacy, por Al Chile Media.
+Plataforma de análisis y acción de la cuenta Meta Ads de Saber Legacy, por Al Chile Media.
 
 ## Páginas
 
-- [**Auditoría 12 meses**](https://margotduek.github.io/ACM-Saber-Dashboard/) — análisis forense + plan de acción + presupuesto
-- [**Dashboard visual**](https://margotduek.github.io/ACM-Saber-Dashboard/dashboard.html) — vista densa con todos los anuncios y métricas
-- [Reporte May the 4th](https://margotduek.github.io/ACM-Saber-Dashboard/may-the-4th.html) — performance de la semana fuerte
-- [Comparativa 30 días](https://margotduek.github.io/ACM-Saber-Dashboard/comparativa-30dias.html) — últimos 30 días vs anteriores
+- [**Analíticas Cliente**](https://margotduek.github.io/ACM-Saber-Dashboard/) — vista limpia para Iván (ventas, ROAS, top productos, evolución)
+- [**Analíticas Internas**](https://margotduek.github.io/ACM-Saber-Dashboard/internas.html) — dashboard operativo con filtros por período + YoY + ad-level
+- [**Recomendaciones**](https://margotduek.github.io/ACM-Saber-Dashboard/recomendaciones.html) — checklist accionable (las marcas se guardan en tu navegador)
 
 ## 📊 [Datos en markdown](data/) — para copiar y pegar
 
-Tablas listas para Notion / Excel / Google Sheets, sin necesidad de tocar APIs.
-
-**⭐ Recomendado:** [Todos los datos en uno](data/00-todo-junto.md) — un solo archivo con las 9 tablas.
+Tablas listas para Notion / Excel / Google Sheets. **⭐ [Todos los datos en uno](data/00-todo-junto.md)** es el más fácil.
 
 ---
 
-Generado con datos de Meta Marketing API y Shopify Admin API.
+Generado con Meta Marketing API + Shopify Admin API.

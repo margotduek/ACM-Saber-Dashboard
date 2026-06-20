@@ -1,5 +1,5 @@
 # Performance en fechas clave
-_Actualizado: 18 de June de 2026_
+_Actualizado: 20 de June de 2026_
 
 Cómo se ejecutaron las temporadas pico del calendario retail mexicano.
 

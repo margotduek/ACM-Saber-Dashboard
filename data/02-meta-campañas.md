@@ -1,5 +1,5 @@
 # Top campañas · 12 meses
-_Actualizado: 18 de June de 2026 · período 2026-06-14 - 365 días_
+_Actualizado: 20 de June de 2026 · período 2026-06-14 - 365 días_
 
 Todas las campañas con actividad en los últimos 12 meses, ordenadas por inversión.
 

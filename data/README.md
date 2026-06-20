@@ -1,5 +1,5 @@
 # Datos del dashboard · Saber Legacy
-_Actualizado: 18 de June de 2026_
+_Actualizado: 20 de June de 2026_
 
 Archivos con todos los datos del dashboard de auditoría, listos para copiar y pegar. Sin necesidad de tocar APIs.
 
@@ -30,4 +30,4 @@ Archivos con todos los datos del dashboard de auditoría, listos para copiar y p
 - GitHub renderiza las tablas automáticamente al abrirlas en el navegador.
 - Los datos se actualizan cuando Margot corre el refresh. Si necesitas la versión más reciente, pídeselo.
 
-**Fecha de actualización: 18 de June de 2026**
+**Fecha de actualización: 20 de June de 2026**

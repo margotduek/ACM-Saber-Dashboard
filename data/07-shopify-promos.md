@@ -1,5 +1,5 @@
 # Códigos de descuento usados · Shopify (últimos 60 días)
-_Actualizado: 18 de June de 2026 · 202 órdenes_
+_Actualizado: 20 de June de 2026 · 202 órdenes_
 
 Cuántas órdenes usaron cada código. Indicador de qué promos funcionaron.
 

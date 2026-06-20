@@ -1,5 +1,5 @@
 <!doctype html><html lang="es"><head>
-<meta charset="utf-8"><title>Saber Legacy · Cliente</title>
+<meta charset="utf-8"><title>Saber Legacy · Internas</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -192,74 +192,93 @@ footer { color:var(--muted); font-size:11px; margin-top:32px; padding-top:20px; 
 <div class="wrap">
 <nav class="topnav">
   <span class="brand">⚔ SABER LEGACY</span>
-  <div class="nav-links"><a href="index.html" class="current">Cliente</a><a href="internas.html">Internas</a><a href="recomendaciones.html">Recomendaciones</a></div>
+  <div class="nav-links"><a href="index.html">Cliente</a><a href="internas.html" class="current">Internas</a><a href="recomendaciones.html">Recomendaciones</a></div>
   <span class="meta">Actualizado <strong>20/06/2026 · 17:34</strong></span>
 </nav>
 
 <div class="hero">
-  <h1>📊 Analíticas · Para Iván</h1>
-  <div class="sub">Vista limpia del performance de Meta Ads. Los números importantes, sin ruido. <strong>Período por defecto: últimos 30 días.</strong></div>
+  <h1>⚙ Analíticas Internas</h1>
+  <div class="sub">Dashboard operativo · todos los anuncios, filtros por período, comparativas YoY. <strong>Para uso del equipo.</strong></div>
 </div>
 
 <div class="filter-bar">
   <span class="filter-label">Período</span>
   <div class="filter-buttons" id="periodButtons">
-    <button data-key="7d">7 días</button>
-    <button data-key="30d" class="active">30 días</button>
-    <button data-key="90d">Trimestre</button>
+    <button data-key="7d">Semana</button>
+    <button data-key="15d">15d</button>
+    <button data-key="30d">30d</button>
+    <button data-key="90d" class="active">Trimestre</button>
     <button data-key="365d">Año</button>
+    <button data-key="lifetime">Toda la vida</button>
+    <button data-key="custom">Custom</button>
+  </div>
+  <label class="yoy-toggle" id="yoyToggle"><input type="checkbox" id="yoyCheck"><span>vs Año anterior</span></label>
+  <div class="custom-range" id="customRange">
+    <input type="date" id="customStart" min="2024-06-20" max="2026-06-20">
+    <input type="date" id="customEnd" min="2024-06-20" max="2026-06-20">
+    <button id="customApply">Aplicar</button>
   </div>
 </div>
 
 <div class="period-info" id="periodInfo"></div>
 
 <div class="grid-4">
-  <div class="stat green"><div class="lbl">Ventas generadas</div><div class="val" id="kRev">—</div><div class="sub" id="kRevSub">—</div></div>
-  <div class="stat gold"><div class="lbl">Inversión</div><div class="val" id="kSpend">—</div><div class="sub" id="kSpendSub">—</div></div>
-  <div class="stat blue"><div class="lbl">Retorno por $1</div><div class="val" id="kRoas">—</div><div class="sub">por cada peso invertido</div></div>
-  <div class="stat magenta"><div class="lbl">Compras</div><div class="val" id="kPurch">—</div><div class="sub" id="kPurchSub">—</div></div>
+  <div class="stat gold"><div class="lbl">Inversión</div><div class="val" id="kSpend">—</div><div class="sub" id="kSpendSub">—</div><div class="delta muted" id="kSpendDelta"></div></div>
+  <div class="stat green"><div class="lbl">Ventas Meta</div><div class="val" id="kRev">—</div><div class="sub" id="kRevSub">—</div><div class="delta muted" id="kRevDelta"></div></div>
+  <div class="stat magenta"><div class="lbl">Compras</div><div class="val" id="kPurch">—</div><div class="sub" id="kPurchSub">—</div><div class="delta muted" id="kPurchDelta"></div></div>
+  <div class="stat blue"><div class="lbl">ROAS</div><div class="val" id="kRoas">—</div><div class="sub" id="kRoasSub">—</div><div class="delta muted" id="kRoasDelta"></div></div>
+</div>
+
+<div class="grid-5" style="margin-top:14px">
+  <div class="stat-mini"><div class="lbl">Impresiones</div><div class="val" id="kImp">—</div><div class="delta muted" id="kImpDelta"></div></div>
+  <div class="stat-mini"><div class="lbl">Clics</div><div class="val" id="kClk">—</div><div class="delta muted" id="kClkDelta"></div></div>
+  <div class="stat-mini"><div class="lbl">CTR</div><div class="val" id="kCtr">—</div><div class="delta muted" id="kCtrDelta"></div></div>
+  <div class="stat-mini"><div class="lbl">CPC</div><div class="val" id="kCpc">—</div><div class="delta muted" id="kCpcDelta"></div></div>
+  <div class="stat-mini"><div class="lbl">Frecuencia</div><div class="val" id="kFreq">—</div><div class="delta muted" id="kFreqDelta"></div></div>
 </div>
 
 <div class="section" style="margin-top:14px">
-  <h2>Performance Diaria <span class="hint">spend + ventas día por día</span></h2>
+  <h2>Performance Diaria <span class="hint">spend + ventas del período</span></h2>
   <div class="chart-wrap tall"><canvas id="chartDaily"></canvas></div>
 </div>
 
 <div class="grid-2">
+  <div class="section best"><h2>🏆 Mejor ROAS · Top 3</h2><div id="bestRoas"></div></div>
+  <div class="section worst"><h2>⚠ Peor ROAS · Bottom 3</h2><div id="worstRoas"></div></div>
+</div>
+
+<div class="grid-2">
+  <div class="section best"><h2>🏆 Mejor CTR · Top 3</h2><div id="bestCtr"></div></div>
+  <div class="section worst"><h2>⚠ Peor CTR · Bottom 3</h2><div id="worstCtr"></div></div>
+</div>
+
+<div class="section">
+  <h2>Evolución Mensual <span class="hint">24 meses · histórico fijo</span></h2>
+  <div class="chart-wrap"><canvas id="chartMonthly"></canvas></div>
+</div>
+
+<div class="grid-2">
   <div class="section">
-    <h2>Top Productos <span class="hint">Shopify · últimos 60 días</span></h2>
-    <div class="tbl-panel"><table><thead><tr><th>#</th><th>Producto</th><th class="num">Revenue</th><th class="num">Unidades</th></tr></thead><tbody><tr><td><strong>1</strong></td><td>MYSTERY BOX</td><td class="num">$233,160</td><td class="num">67</td></tr><tr><td><strong>2</strong></td><td>ELITE MYSTERY BOX</td><td class="num">$124,310</td><td class="num">18</td></tr><tr><td><strong>3</strong></td><td>MAULER</td><td class="num">$103,150</td><td class="num">11</td></tr><tr><td><strong>4</strong></td><td>GRAFLEX V2</td><td class="num">$94,510</td><td class="num">17</td></tr><tr><td><strong>5</strong></td><td>EXILE</td><td class="num">$83,850</td><td class="num">13</td></tr><tr><td><strong>6</strong></td><td>VADER MKII</td><td class="num">$78,510</td><td class="num">9</td></tr><tr><td><strong>7</strong></td><td>LIGHTSABER NECKLACE</td><td class="num">$78,500</td><td class="num">157</td></tr><tr><td><strong>8</strong></td><td>PREVENTA VELORIAN</td><td class="num">$50,960</td><td class="num">8</td></tr></tbody></table></div>
+    <h2>Geografía · Top 10 estados <span class="hint">Shopify 60d</span></h2>
+    <div class="geo-row"><div class="geo-name">Ciudad de México</div><div class="geo-bar-wrap"><div class="geo-bar" style="width:29%"></div></div><div class="geo-val">59 <span class="geo-pct">(29%)</span></div></div><div class="geo-row"><div class="geo-name">México</div><div class="geo-bar-wrap"><div class="geo-bar" style="width:13%"></div></div><div class="geo-val">26 <span class="geo-pct">(13%)</span></div></div><div class="geo-row"><div class="geo-name">Querétaro</div><div class="geo-bar-wrap"><div class="geo-bar" style="width:7%"></div></div><div class="geo-val">15 <span class="geo-pct">(7%)</span></div></div><div class="geo-row"><div class="geo-name">Jalisco</div><div class="geo-bar-wrap"><div class="geo-bar" style="width:7%"></div></div><div class="geo-val">15 <span class="geo-pct">(7%)</span></div></div><div class="geo-row"><div class="geo-name">Nuevo León</div><div class="geo-bar-wrap"><div class="geo-bar" style="width:6%"></div></div><div class="geo-val">13 <span class="geo-pct">(6%)</span></div></div><div class="geo-row"><div class="geo-name">Guanajuato</div><div class="geo-bar-wrap"><div class="geo-bar" style="width:6%"></div></div><div class="geo-val">12 <span class="geo-pct">(6%)</span></div></div><div class="geo-row"><div class="geo-name">Baja California</div><div class="geo-bar-wrap"><div class="geo-bar" style="width:4%"></div></div><div class="geo-val">8 <span class="geo-pct">(4%)</span></div></div><div class="geo-row"><div class="geo-name">Hidalgo</div><div class="geo-bar-wrap"><div class="geo-bar" style="width:3%"></div></div><div class="geo-val">6 <span class="geo-pct">(3%)</span></div></div><div class="geo-row"><div class="geo-name">Veracruz</div><div class="geo-bar-wrap"><div class="geo-bar" style="width:3%"></div></div><div class="geo-val">6 <span class="geo-pct">(3%)</span></div></div><div class="geo-row"><div class="geo-name">Coahuila</div><div class="geo-bar-wrap"><div class="geo-bar" style="width:2%"></div></div><div class="geo-val">5 <span class="geo-pct">(2%)</span></div></div>
   </div>
   <div class="section">
-    <h2>De Dónde Compran <span class="hint">top estados</span></h2>
-    <div class="geo-row"><div class="geo-name">Ciudad de México</div><div class="geo-bar-wrap"><div class="geo-bar" style="width:29%"></div></div><div class="geo-val">59 <span class="geo-pct">(29%)</span></div></div><div class="geo-row"><div class="geo-name">México</div><div class="geo-bar-wrap"><div class="geo-bar" style="width:13%"></div></div><div class="geo-val">26 <span class="geo-pct">(13%)</span></div></div><div class="geo-row"><div class="geo-name">Querétaro</div><div class="geo-bar-wrap"><div class="geo-bar" style="width:7%"></div></div><div class="geo-val">15 <span class="geo-pct">(7%)</span></div></div><div class="geo-row"><div class="geo-name">Jalisco</div><div class="geo-bar-wrap"><div class="geo-bar" style="width:7%"></div></div><div class="geo-val">15 <span class="geo-pct">(7%)</span></div></div><div class="geo-row"><div class="geo-name">Nuevo León</div><div class="geo-bar-wrap"><div class="geo-bar" style="width:6%"></div></div><div class="geo-val">13 <span class="geo-pct">(6%)</span></div></div><div class="geo-row"><div class="geo-name">Guanajuato</div><div class="geo-bar-wrap"><div class="geo-bar" style="width:6%"></div></div><div class="geo-val">12 <span class="geo-pct">(6%)</span></div></div>
+    <h2>Códigos de descuento <span class="hint">Shopify 60d</span></h2>
+    <div class="geo-row"><div class="geo-name">MAY4TH</div><div class="geo-bar-wrap"><div class="geo-bar" style="width:63%;background:var(--magenta)"></div></div><div class="geo-val">103 <span class="geo-pct">(63%)</span></div></div><div class="geo-row"><div class="geo-name">JEDI10</div><div class="geo-bar-wrap"><div class="geo-bar" style="width:22%;background:var(--magenta)"></div></div><div class="geo-val">36 <span class="geo-pct">(22%)</span></div></div><div class="geo-row"><div class="geo-name">HOTSALE</div><div class="geo-bar-wrap"><div class="geo-bar" style="width:13%;background:var(--magenta)"></div></div><div class="geo-val">22 <span class="geo-pct">(13%)</span></div></div><div class="geo-row"><div class="geo-name">SLMX10OFF</div><div class="geo-bar-wrap"><div class="geo-bar" style="width:1%;background:var(--magenta)"></div></div><div class="geo-val">1 <span class="geo-pct">(1%)</span></div></div><div class="geo-row"><div class="geo-name">Isaacvallejo</div><div class="geo-bar-wrap"><div class="geo-bar" style="width:1%;background:var(--magenta)"></div></div><div class="geo-val">1 <span class="geo-pct">(1%)</span></div></div>
   </div>
 </div>
 
 <div class="section">
-  <h2>Evolución Mensual <span class="hint">últimos 24 meses</span></h2>
-  <div class="chart-wrap"><canvas id="chartMonthly"></canvas></div>
-</div>
-
-<div class="section" style="border-left:4px solid var(--yoda);">
-  <h2>✓ Lo que estamos haciendo bien</h2>
-  <div style="font-size:14px;line-height:1.7;color:var(--text)">
-    <p style="margin:0 0 10px"><strong>ROAS sostenido arriba de 4x</strong> en los últimos 12 meses ($459K invertidos → $2.1M en ventas). Para ecommerce mexicano, 3x es sano y arriba de 4x es muy bueno.</p>
-    <p style="margin:0 0 10px"><strong>May the 4th 2026 fue una operación quirúrgica</strong>: $73K en 7 días con ROAS 8.15x = $599K en ventas. Saber para qué fecha empujar el budget.</p>
-    <p style="margin:0"><strong>Mayo 2026 entero fue el mes monstruoso</strong>: $92K invertidos con ROAS 6.95x = $643K en ventas. Mejor mes de los últimos 24.</p>
+  <h2>Anuncios del período · <span id="adsCount" style="color:var(--yoda)">0</span> con &gt; $100 spend</h2>
+  <div class="tbl-panel">
+    <table>
+      <thead><tr><th></th><th>Anuncio</th><th>Status</th><th class="num">Spend</th><th class="num">Ventas</th><th class="num">ROAS</th><th class="num">Compras</th><th class="num">Imp</th><th class="num">CTR</th><th class="num">Freq</th></tr></thead>
+      <tbody id="adsTableBody"></tbody>
+    </table>
   </div>
 </div>
 
-<div class="section" style="border-left:4px solid var(--gold);">
-  <h2>🎯 Lo que estamos atacando esta semana</h2>
-  <div style="font-size:14px;line-height:1.7;color:var(--text)">
-    <p style="margin:0 0 10px"><strong>Reactivar inversión gradual</strong> después del cool-down post-May 4th. Subiendo de $1.5K a $3K/día con creatividades refrescadas.</p>
-    <p style="margin:0 0 10px"><strong>Preparar Día del Padre 2026</strong> (21 jun) con presupuesto dedicado de $30K (vs $1.4K que se metió en 2025).</p>
-    <p style="margin:0"><strong>Audit de saturación de audiencias</strong>: refrescar creatividades en campañas con frecuencia &gt;4.</p>
-  </div>
-</div>
-
-<footer>SABER LEGACY · Al Chile Media · Datos de Meta Marketing API + Shopify Admin API · Generado 20/06/2026 · 17:34</footer>
+<footer>SABER LEGACY · ACM Internal · Generado 20/06/2026 · 17:34</footer>
 </div>
 
 <script>
@@ -268,45 +287,149 @@ const DAILY = [{"d": "2024-06-20", "s": 352.14, "i": 14212.0, "c": 396.0, "p": 0
 
 const fmtMoney = v => '$' + Math.round(v).toLocaleString('en-US');
 const fmtInt = v => Math.round(v).toLocaleString('en-US');
+const fmtPct = v => v.toFixed(2) + '%';
+const fmtRoas = v => v.toFixed(2) + 'x';
 
-let currentKey = '30d';
+function pctChg(a, b) { if (!b) return null; return (a - b) / b * 100; }
+function deltaHtml(curr, prev) {
+  if (!prev) return '';
+  const c = pctChg(curr, prev); if (c === null || !isFinite(c)) return '';
+  const sign = c >= 0 ? '+' : ''; const arrow = c >= 0 ? '↑' : '↓';
+  return `${arrow} ${sign}${c.toFixed(1)}% vs YoY`;
+}
+
+function aggregateDaily(from, to) {
+  const filtered = DAILY.filter(d => d.d >= from && d.d <= to);
+  if (!filtered.length) return null;
+  const s = filtered.reduce((acc, d) => {
+    acc.spend += d.s; acc.imp += d.i; acc.clk += d.c;
+    acc.purch += d.p; acc.rev += d.r; acc.freq_w += d.f * d.i;
+    return acc;
+  }, {spend:0,imp:0,clk:0,purch:0,rev:0,freq_w:0});
+  return {spend:s.spend,imp:s.imp,clk:s.clk,purch:s.purch,rev:s.rev,
+          roas:s.spend?s.rev/s.spend:0,cpa:s.purch?s.spend/s.purch:0,
+          ctr:s.imp?s.clk/s.imp*100:0,cpc:s.clk?s.spend/s.clk:0,
+          freq:s.imp?s.freq_w/s.imp:0};
+}
+
+function renderCampCards(arr, container, kind='roas') {
+  if (!arr || !arr.length) { container.innerHTML = '<div style="padding:14px;color:var(--muted);text-align:center;font-size:11px">Sin campañas con spend &gt;$500</div>'; return; }
+  container.innerHTML = arr.map(c => {
+    const val = kind === 'roas' ? c.roas.toFixed(2)+'x' : c.ctr.toFixed(2)+'%';
+    return `<div class="cw-card"><div><div class="cw-name">${c.name.length>45?c.name.slice(0,45)+'…':c.name}</div><div class="cw-metrics">Spend $${c.spend.toLocaleString()} · ROAS ${c.roas.toFixed(2)}x · CTR ${c.ctr.toFixed(2)}%</div></div><div class="cw-val">${val}</div></div>`;
+  }).join('');
+}
+
+function renderAds(ads) {
+  const tbody = document.getElementById('adsTableBody');
+  document.getElementById('adsCount').textContent = ads ? ads.length : 0;
+  if (!ads || !ads.length) { tbody.innerHTML = '<tr><td colspan="10" style="padding:20px;text-align:center;color:var(--muted)">Sin anuncios</td></tr>'; return; }
+  tbody.innerHTML = ads.map(ad => {
+    const roasCls = ad.roas >= 3 ? 'val-good' : (ad.roas >= 1.5 ? 'val-mid' : 'val-bad');
+    const thumb = ad.thumb ? `<img class="ad-thumb" src="${ad.thumb}" onerror="this.style.opacity=0.2">` : `<div class="ad-thumb"></div>`;
+    return `<tr><td>${thumb}</td><td><div class="ad-name">${ad.name.length>60?ad.name.slice(0,60)+'…':ad.name}</div><div class="ad-sub">${ad.campaign.slice(0,40)} · ${ad.adset.slice(0,30)}</div></td><td><span class="status-pill st-${ad.status}">${ad.status}</span></td><td class="num">$${ad.spend.toLocaleString()}</td><td class="num">$${ad.rev.toLocaleString()}</td><td class="num"><strong class="${roasCls}">${ad.roas.toFixed(2)}x</strong></td><td class="num">${ad.purch}</td><td class="num">${ad.imp.toLocaleString()}</td><td class="num">${ad.ctr.toFixed(2)}%</td><td class="num">${ad.freq.toFixed(1)}</td></tr>`;
+  }).join('');
+}
+
 let dailyChart = null;
-
-function renderDaily(from, to) {
+function renderDailyChart(from, to) {
   const filtered = DAILY.filter(d => d.d >= from && d.d <= to);
   const labels = filtered.map(d => d.d.slice(5));
-  const spends = filtered.map(d => d.s);
-  const revs = filtered.map(d => d.r);
   if (dailyChart) dailyChart.destroy();
   dailyChart = new Chart(document.getElementById('chartDaily').getContext('2d'), {
     type:'bar',
-    data:{ labels, datasets:[
-      {type:'bar',label:'Inversión',data:spends,backgroundColor:'rgba(251,191,36,0.55)',borderColor:'#fbbf24',borderWidth:1,order:2},
-      {type:'line',label:'Ventas',data:revs,borderColor:'#22c55e',backgroundColor:'rgba(34,197,94,0.15)',tension:0.3,borderWidth:2.5,pointRadius:0,fill:true,order:1}
+    data:{labels,datasets:[
+      {type:'bar',label:'Spend',data:filtered.map(d=>d.s),backgroundColor:'rgba(251,191,36,0.6)',borderColor:'#fbbf24',borderWidth:1,order:2},
+      {type:'line',label:'Ventas',data:filtered.map(d=>d.r),borderColor:'#22c55e',backgroundColor:'rgba(34,197,94,0.15)',tension:0.3,borderWidth:2,pointRadius:0,fill:true,order:1}
     ]},
     options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',align:'end',labels:{font:{size:10}}}},scales:{x:{grid:{display:false},ticks:{font:{size:9},maxTicksLimit:20}},y:{grid:{color:'rgba(251,191,36,0.05)'},ticks:{font:{size:9}}}}}
   });
 }
 
+let currentKey = '90d', yoyOn = false, customAgg = null, customRange = null;
+
 function render() {
-  const p = PERIOD_DATA[currentKey];
-  const agg = p.agg;
-  document.getElementById('periodInfo').innerHTML = `<strong>${p.label}</strong> · ${p.since} → ${p.until} · ${p.days} días`;
-  document.getElementById('kRev').textContent = fmtMoney(agg.rev);
-  document.getElementById('kRevSub').textContent = `${agg.purch} compras`;
-  document.getElementById('kSpend').textContent = fmtMoney(agg.spend);
-  document.getElementById('kSpendSub').textContent = `${Math.round(agg.spend/p.days).toLocaleString()} prom/día`;
-  document.getElementById('kRoas').textContent = '$' + agg.roas.toFixed(2);
-  document.getElementById('kPurch').textContent = fmtInt(agg.purch);
-  document.getElementById('kPurchSub').textContent = agg.cpa ? `CPA $${Math.round(agg.cpa).toLocaleString()}` : '—';
-  renderDaily(p.since, p.until);
+  let agg, prevAgg, label, since, until, days;
+  if (currentKey === 'custom') {
+    if (!customAgg) { document.getElementById('periodInfo').textContent = 'Selecciona rango custom arriba.'; return; }
+    agg = customAgg; label = 'Custom'; since = customRange.from; until = customRange.to;
+    days = Math.ceil((new Date(customRange.to) - new Date(customRange.from)) / 86400000) + 1;
+  } else {
+    const p = PERIOD_DATA[currentKey]; agg = p.agg; label = p.label;
+    since = p.since; until = p.until; days = p.days;
+    if (yoyOn && p.yoy) prevAgg = p.yoy.agg;
+  }
+  let info = `<strong>${label}</strong> · ${since} → ${until} · ${days} días`;
+  if (yoyOn && prevAgg) info += ` · vs año anterior`;
+  document.getElementById('periodInfo').innerHTML = info;
+
+  const updateKpi = (id, val, sub, delta, deltaCls) => {
+    document.getElementById(id).textContent = val;
+    if (sub !== undefined) document.getElementById(id+'Sub').textContent = sub;
+    if (delta !== undefined) { document.getElementById(id+'Delta').innerHTML = delta; document.getElementById(id+'Delta').className = 'delta ' + (deltaCls || 'muted'); }
+  };
+
+  updateKpi('kSpend', fmtMoney(agg.spend), `${Math.round(agg.spend/days).toLocaleString()} prom/día`,
+    prevAgg ? deltaHtml(agg.spend, prevAgg.spend) : '', prevAgg ? (agg.spend>=prevAgg.spend?'pos':'neg') : 'muted');
+  updateKpi('kRev', fmtMoney(agg.rev), `ROAS ${agg.roas.toFixed(2)}x`,
+    prevAgg ? deltaHtml(agg.rev, prevAgg.rev) : '', prevAgg ? (agg.rev>=prevAgg.rev?'pos':'neg') : 'muted');
+  updateKpi('kPurch', fmtInt(agg.purch), agg.cpa ? `CPA $${Math.round(agg.cpa).toLocaleString()}` : '—',
+    prevAgg ? deltaHtml(agg.purch, prevAgg.purch) : '', prevAgg ? (agg.purch>=prevAgg.purch?'pos':'neg') : 'muted');
+  updateKpi('kRoas', fmtRoas(agg.roas), `por cada $1 → $${agg.roas.toFixed(2)}`,
+    prevAgg ? deltaHtml(agg.roas, prevAgg.roas) : '', prevAgg ? (agg.roas>=prevAgg.roas?'pos':'neg') : 'muted');
+
+  document.getElementById('kImp').textContent = fmtInt(agg.imp);
+  document.getElementById('kClk').textContent = fmtInt(agg.clk);
+  document.getElementById('kCtr').textContent = fmtPct(agg.ctr);
+  document.getElementById('kCpc').textContent = '$' + agg.cpc.toFixed(2);
+  document.getElementById('kFreq').textContent = agg.freq.toFixed(1);
+
+  if (prevAgg) {
+    ['kImp','kClk','kCtr','kCpc','kFreq'].forEach((id,idx) => {
+      const keys = ['imp','clk','ctr','cpc','freq']; const k = keys[idx];
+      document.getElementById(id+'Delta').innerHTML = deltaHtml(agg[k], prevAgg[k]);
+      const goodUp = !['cpc','freq'].includes(k);
+      const isGood = goodUp ? agg[k] >= prevAgg[k] : agg[k] <= prevAgg[k];
+      document.getElementById(id+'Delta').className = 'delta ' + (isGood?'pos':'neg');
+    });
+  } else {
+    ['kImpDelta','kClkDelta','kCtrDelta','kCpcDelta','kFreqDelta'].forEach(id => document.getElementById(id).innerHTML = '');
+  }
+
+  renderDailyChart(since, until);
+
+  if (currentKey === 'custom') {
+    ['bestRoas','worstRoas','bestCtr','worstCtr'].forEach(id => document.getElementById(id).innerHTML = '<div style="padding:14px;color:var(--muted);text-align:center;font-size:11px">No disponible para custom</div>');
+    document.getElementById('adsTableBody').innerHTML = '<tr><td colspan="10" style="padding:20px;text-align:center;color:var(--muted)">No disponible para custom</td></tr>';
+    document.getElementById('adsCount').textContent = 0;
+  } else {
+    const p = PERIOD_DATA[currentKey];
+    renderCampCards(p.best_roas, document.getElementById('bestRoas'), 'roas');
+    renderCampCards(p.worst_roas, document.getElementById('worstRoas'), 'roas');
+    renderCampCards(p.best_ctr, document.getElementById('bestCtr'), 'ctr');
+    renderCampCards(p.worst_ctr, document.getElementById('worstCtr'), 'ctr');
+    renderAds(p.top_ads);
+  }
 }
 
 document.getElementById('periodButtons').addEventListener('click', e => {
   const btn = e.target.closest('button'); if (!btn) return;
   document.querySelectorAll('#periodButtons button').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  currentKey = btn.dataset.key;
+  btn.classList.add('active'); currentKey = btn.dataset.key;
+  document.getElementById('customRange').classList.toggle('visible', currentKey === 'custom');
+  render();
+});
+document.getElementById('yoyCheck').addEventListener('change', e => {
+  yoyOn = e.target.checked;
+  document.getElementById('yoyToggle').classList.toggle('on', yoyOn);
+  render();
+});
+document.getElementById('customApply').addEventListener('click', () => {
+  const s = document.getElementById('customStart').value, e = document.getElementById('customEnd').value;
+  if (!s || !e) { alert('Selecciona ambas fechas'); return; }
+  if (s > e) { alert('La fecha inicial debe ser anterior'); return; }
+  customAgg = aggregateDaily(s, e); customRange = {from:s, to:e};
+  if (!customAgg) { alert('No hay datos para ese rango'); return; }
   render();
 });
 
@@ -317,8 +440,8 @@ Chart.defaults.borderColor = '#232a37';
 new Chart(document.getElementById('chartMonthly').getContext('2d'), {
   type:'bar',
   data:{labels:["2024-06", "2024-07", "2024-08", "2024-09", "2024-10", "2024-11", "2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02", "2026-03", "2026-04", "2026-05", "2026-06"],datasets:[
-    {label:'Inversión',data:[3751, 16441, 16654, 20998, 20070, 24409, 19991, 12400, 18662, 19111, 19789, 75811, 26783, 18367, 14001, 11980, 49042, 62843, 59570, 41191, 12750, 26250, 56136, 92621, 7171],backgroundColor:'rgba(56,189,248,0.6)',borderColor:'#38bdf8',borderWidth:1},
-    {label:'Ventas',data:[26249, 76822, 55112, 71451, 122783, 41632, 130955, 87201, 55230, 77752, 187169, 332852, 83335, 56284, 35032, 27512, 259736, 280256, 239659, 193703, 19326, 49872, 272379, 643819, 41826],backgroundColor:'rgba(34,197,94,0.6)',borderColor:'#22c55e',borderWidth:1}
+    {label:'Spend',data:[3751, 16441, 16654, 20998, 20070, 24409, 19991, 12400, 18662, 19111, 19789, 75811, 26783, 18367, 14001, 11980, 49042, 62843, 59570, 41191, 12750, 26250, 56136, 92621, 7171],backgroundColor:'rgba(56,189,248,0.6)',borderColor:'#38bdf8',borderWidth:1},
+    {label:'Ventas',data:[26249, 76822, 55112, 71451, 122783, 41632, 130955, 87201, 55230, 77752, 187169, 332852, 83335, 56284, 35032, 27512, 259736, 280256, 239659, 193703, 19326, 49872, 272379, 643819, 41826],backgroundColor:'rgba(236,72,153,0.6)',borderColor:'#ec4899',borderWidth:1}
   ]},
   options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',align:'end',labels:{font:{size:10}}}},scales:{x:{grid:{display:false},ticks:{font:{size:9}}},y:{grid:{color:'rgba(56,189,248,0.05)'},ticks:{font:{size:9}}}}}
 });

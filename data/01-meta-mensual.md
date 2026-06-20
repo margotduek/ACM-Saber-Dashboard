@@ -1,5 +1,5 @@
 # Evolución mensual · Meta Ads
-_Actualizado: 18 de June de 2026_
+_Actualizado: 20 de June de 2026_
 
 Inversión, ventas y retorno por mes según el píxel de Meta.
 

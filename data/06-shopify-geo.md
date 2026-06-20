@@ -1,5 +1,5 @@
 # Distribución geográfica · Shopify (últimos 60 días)
-_Actualizado: 18 de June de 2026_
+_Actualizado: 20 de June de 2026_
 
 Estados de México donde se concentran los pedidos. Base para geo-targeting.
 

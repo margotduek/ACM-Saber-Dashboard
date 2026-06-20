@@ -1,5 +1,5 @@
 # Top productos · Shopify (últimos 60 días)
-_Actualizado: 18 de June de 2026 · 202 órdenes_
+_Actualizado: 20 de June de 2026 · 202 órdenes_
 
 Productos más vendidos por revenue. Base para catálogo dinámico y priorización de creatividades.
 

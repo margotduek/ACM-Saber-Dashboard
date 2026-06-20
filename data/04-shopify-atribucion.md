@@ -1,5 +1,5 @@
 # Ventas reales en Shopify · Atribución vs Meta
-_Actualizado: 18 de June de 2026 · 542 transacciones · 8.5 meses_
+_Actualizado: 20 de June de 2026 · 542 transacciones · 8.5 meses_
 
 ## Resumen de status
 | Status | Cantidad | % |

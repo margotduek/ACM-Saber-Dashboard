@@ -1,5 +1,5 @@
 # Saber Legacy · Todos los datos
-_Actualizado: 18 de June de 2026 · Documento único con todas las tablas para copiar y pegar_
+_Actualizado: 20 de June de 2026 · Documento único con todas las tablas para copiar y pegar_
 
 Todo en uno. No necesitas saltar entre archivos — selecciona la sección, copia, pega en Notion / Excel / Google Sheets.
 
@@ -261,4 +261,4 @@ Roadmap mensual de inversión propuesto, con ROAS esperado realista.
 ---
 
 
-_Fin del documento. Última actualización: 18 de June de 2026_
+_Fin del documento. Última actualización: 20 de June de 2026_

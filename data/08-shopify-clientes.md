@@ -1,5 +1,5 @@
 # Clientes · Shopify
-_Actualizado: 18 de June de 2026 · primeros 250 clientes_
+_Actualizado: 20 de June de 2026 · primeros 250 clientes_
 
 ## Stats generales
 
