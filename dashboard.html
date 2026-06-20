@@ -1,0 +1,1323 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Saber Legacy · DASHBOARD</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg: #050608;
+    --panel: #0d1015;
+    --panel-2: #131820;
+    --border: #1f2630;
+    --text: #e8edf5;
+    --muted: #6c7686;
+    --neon-blue: #38bdf8;
+    --neon-yellow: #fff200;
+    --neon-magenta: #ff2da4;
+    --neon-green: #00ff94;
+    --neon-red: #ff3a3a;
+    --neon-purple: #b794f6;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: 'Inter', -apple-system, sans-serif; font-size: 13px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  body {
+    background-image:
+      radial-gradient(ellipse at 0% 0%, rgba(56,189,248,0.05) 0%, transparent 50%),
+      radial-gradient(ellipse at 100% 30%, rgba(255,45,164,0.04) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 100%, rgba(0,255,148,0.03) 0%, transparent 50%);
+    background-attachment: fixed;
+  }
+  .wrap { max-width: 1500px; margin: 0 auto; padding: 24px; }
+
+  /* HERO */
+  .hero-bar { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; background: var(--panel); border: 1px solid var(--border); border-radius: 10px; margin-bottom: 18px; }
+  .hero-bar h1 { font-family: 'Orbitron', sans-serif; font-size: 22px; font-weight: 800; margin: 0; letter-spacing: 0.12em; color: var(--neon-yellow); text-shadow: 0 0 16px rgba(255,242,0,0.4); }
+  .hero-bar h1 .star { color: var(--neon-magenta); }
+  .hero-bar .meta { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); }
+  .hero-bar .meta strong { color: var(--neon-green); }
+
+  /* SECTION */
+  .section { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; margin-bottom: 12px; }
+  .section h3 { font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; margin: 0 0 10px; color: var(--neon-yellow); display: flex; align-items: center; gap: 8px; }
+  .section h3::before { content: '◆'; font-size: 8px; color: var(--neon-magenta); }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+  .grid-mixed { display: grid; grid-template-columns: 1.4fr 1fr; gap: 12px; }
+  @media (max-width: 1000px) { .grid-2, .grid-3, .grid-4, .grid-5, .grid-mixed { grid-template-columns: 1fr; } }
+
+  /* HERO STATS row (4 big numbers) */
+  .top-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 12px; }
+  .top-stat { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 16px 18px; position: relative; overflow: hidden; }
+  .top-stat::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--neon-yellow); }
+  .top-stat.green::before { background: var(--neon-green); }
+  .top-stat.magenta::before { background: var(--neon-magenta); }
+  .top-stat.blue::before { background: var(--neon-blue); }
+  .top-stat .lbl { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); font-weight: 700; }
+  .top-stat .val { font-family: 'Orbitron', sans-serif; font-size: 30px; font-weight: 800; margin: 6px 0 4px; letter-spacing: -0.01em; }
+  .top-stat.green .val { color: var(--neon-green); text-shadow: 0 0 14px rgba(0,255,148,0.25); }
+  .top-stat.magenta .val { color: var(--neon-magenta); text-shadow: 0 0 14px rgba(255,45,164,0.25); }
+  .top-stat.blue .val { color: var(--neon-blue); text-shadow: 0 0 14px rgba(56,189,248,0.25); }
+  .top-stat.yellow .val { color: var(--neon-yellow); text-shadow: 0 0 14px rgba(255,242,0,0.25); }
+  .top-stat .sub { font-size: 11px; color: var(--muted); }
+
+  /* mini stat (smaller) */
+  .mini-stat { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; text-align: left; }
+  .mini-stat .lbl { font-size: 9px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); font-weight: 700; margin-bottom: 6px; }
+  .mini-stat .val { font-family: 'Orbitron', sans-serif; font-size: 18px; font-weight: 700; color: var(--text); }
+  .mini-stat .delta { font-size: 10px; margin-top: 3px; color: var(--neon-green); }
+  .mini-stat .delta.neg { color: var(--neon-red); }
+
+  /* Chart wrap */
+  .chart-wrap { height: 220px; position: relative; }
+  .chart-wrap.tall { height: 280px; }
+  .chart-wrap.short { height: 160px; }
+
+  /* Best/worst cards */
+  .cw-card { background: var(--panel-2); border: 1px solid var(--border); border-radius: 6px; padding: 10px 12px; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .cw-card:last-child { margin-bottom: 0; }
+  .cw-name { font-weight: 700; font-size: 12px; }
+  .cw-metrics { font-size: 10px; color: var(--muted); margin-top: 2px; }
+  .cw-val { font-family: 'Orbitron', sans-serif; font-size: 18px; font-weight: 800; flex-shrink: 0; }
+  .best .cw-val { color: var(--neon-green); }
+  .worst .cw-val { color: var(--neon-red); }
+  .best h3::before { color: var(--neon-green); }
+  .worst h3::before { color: var(--neon-red); }
+
+  /* Geo bars */
+  .geo-row { display: grid; grid-template-columns: 130px 1fr 70px; gap: 10px; align-items: center; padding: 5px 0; font-size: 12px; }
+  .geo-name { color: var(--text); font-weight: 500; }
+  .geo-bar-wrap { height: 14px; background: var(--panel-2); border-radius: 2px; overflow: hidden; }
+  .geo-bar { height: 100%; background: var(--neon-yellow); border-radius: 2px; }
+  .geo-val { text-align: right; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); }
+  .geo-pct { color: var(--neon-green); }
+
+  /* Ad table */
+  .ad-table { overflow-x: auto; }
+  .ad-table table { width: 100%; border-collapse: collapse; font-size: 11px; }
+  .ad-table th { background: var(--panel-2); padding: 8px 8px; text-align: left; font-size: 9px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); font-weight: 700; border-bottom: 1px solid var(--border); font-family: 'Orbitron', sans-serif; }
+  .ad-table th.num { text-align: right; }
+  .ad-table td { padding: 6px 8px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+  .ad-table td.num { text-align: right; font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+  .ad-thumb { width: 44px; height: 44px; object-fit: cover; border-radius: 4px; border: 1px solid var(--border); display: block; background: var(--panel-2); }
+  .ad-name { font-weight: 600; font-size: 11px; line-height: 1.3; }
+  .ad-sub { font-size: 9px; color: var(--muted); margin-top: 2px; }
+  .status-pill { display: inline-block; padding: 2px 7px; border-radius: 999px; font-size: 9px; font-weight: 700; letter-spacing: 0.05em; }
+  .st-active { background: rgba(0,255,148,0.15); color: var(--neon-green); border: 1px solid rgba(0,255,148,0.3); }
+  .st-paused { background: rgba(108,118,134,0.15); color: var(--muted); border: 1px solid var(--border); }
+  .val-good { color: var(--neon-green); }
+  .val-mid { color: var(--neon-yellow); }
+  .val-bad { color: var(--neon-red); }
+
+  /* Nav */
+  .top-nav { display: flex; gap: 6px; padding: 10px 14px; margin-bottom: 16px; background: var(--panel); border: 1px solid var(--border); border-radius: 8px; flex-wrap: wrap; align-items: center; }
+  .top-nav .brand-tag { font-family: 'Orbitron', sans-serif; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.14em; color: var(--muted); margin-right: auto; }
+  .top-nav a { color: var(--muted); text-decoration: none; font-size: 11px; font-weight: 600; padding: 6px 12px; border-radius: 6px; transition: all 0.15s; text-transform: uppercase; letter-spacing: 0.06em; font-family: 'Orbitron', sans-serif; }
+  .top-nav a:hover { background: rgba(255,242,0,0.1); color: var(--neon-yellow); }
+  .top-nav a.current { background: var(--neon-yellow); color: var(--bg); }
+
+  footer { color: var(--muted); font-size: 11px; margin-top: 20px; padding-top: 14px; border-top: 1px solid var(--border); text-align: center; font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <nav class="top-nav">
+    <span class="brand-tag">Saber Legacy · Al Chile Media</span>
+    <a href="./">Auditoría</a>
+    <a href="dashboard.html" class="current">Dashboard</a>
+    <a href="may-the-4th.html">May the 4th</a>
+    <a href="comparativa-30dias.html">Comparativa 30d</a>
+  </nav>
+
+  <div class="hero-bar">
+    <h1>⚔ SABER LEGACY <span class="star">·</span> DASHBOARD</h1>
+    <div class="meta">Período: <strong>últimos 90 días</strong> · Actualizado 18/06/2026 · 21:08</div>
+  </div>
+
+  <!-- HERO STATS -->
+  <div class="top-stats">
+    <div class="top-stat yellow">
+      <div class="lbl">Inversión 90d</div>
+      <div class="val">$172,061</div>
+      <div class="sub">1,911 prom diario</div>
+    </div>
+    <div class="top-stat green">
+      <div class="lbl">Ventas Meta 90d</div>
+      <div class="val">$998,817</div>
+      <div class="sub">ROAS 5.81x</div>
+    </div>
+    <div class="top-stat magenta">
+      <div class="lbl">Compras Meta 90d</div>
+      <div class="val">192</div>
+      <div class="sub">CPA $896</div>
+    </div>
+    <div class="top-stat blue">
+      <div class="lbl">Órdenes Shopify (60d)</div>
+      <div class="val">202</div>
+      <div class="sub">cruzando atribución</div>
+    </div>
+  </div>
+
+  <!-- Stats secondary row -->
+  <div class="grid-5">
+    <div class="mini-stat"><div class="lbl">Impresiones</div><div class="val">4,363,729</div></div>
+    <div class="mini-stat"><div class="lbl">Clics</div><div class="val">155,029</div></div>
+    <div class="mini-stat"><div class="lbl">Link Clics</div><div class="val">71,478</div></div>
+    <div class="mini-stat"><div class="lbl">CTR</div><div class="val">3.55%</div></div>
+    <div class="mini-stat"><div class="lbl">CPC</div><div class="val">$1.11</div></div>
+  </div>
+
+  <!-- DAILY PERFORMANCE -->
+  <div class="section" style="margin-top:12px">
+    <h3>Performance Diaria · 90 Días</h3>
+    <div class="chart-wrap tall"><canvas id="chartDaily"></canvas></div>
+  </div>
+
+  <!-- BEST/WORST -->
+  <div class="grid-2">
+    <div class="section best">
+      <h3>Mejor Performance · ROAS Top 3 (90d, &gt;$1K spend)</h3>
+      <div class="cw-card">
+      <div class="cw-name">CONV v13</div>
+      <div class="cw-metrics"><span>Spend $11,648</span> · <span>ROAS 9.09x</span> · <span>CTR 3.55%</span></div>
+      <div class="cw-val">9.09x</div>
+    </div><div class="cw-card">
+      <div class="cw-name">MAY 4TH 2026</div>
+      <div class="cw-metrics"><span>Spend $54,488</span> · <span>ROAS 7.84x</span> · <span>CTR 2.73%</span></div>
+      <div class="cw-val">7.84x</div>
+    </div><div class="cw-card">
+      <div class="cw-name">RMKT v3 - Cat</div>
+      <div class="cw-metrics"><span>Spend $5,689</span> · <span>ROAS 6.00x</span> · <span>CTR 1.79%</span></div>
+      <div class="cw-val">6.00x</div>
+    </div>
+    </div>
+    <div class="section worst">
+      <h3>Peor Performance · ROAS Bottom 3 (90d, &gt;$1K spend)</h3>
+      <div class="cw-card">
+      <div class="cw-name">Traff</div>
+      <div class="cw-metrics"><span>Spend $5,825</span> · <span>ROAS 0.00x</span> · <span>CTR 7.41%</span></div>
+      <div class="cw-val">0.00x</div>
+    </div><div class="cw-card">
+      <div class="cw-name">[Spring Sale] — Roma</div>
+      <div class="cw-metrics"><span>Spend $1,794</span> · <span>ROAS 0.00x</span> · <span>CTR 1.39%</span></div>
+      <div class="cw-val">0.00x</div>
+    </div><div class="cw-card">
+      <div class="cw-name">CBO Bestt w/ LLAs BC</div>
+      <div class="cw-metrics"><span>Spend $1,150</span> · <span>ROAS 0.00x</span> · <span>CTR 14.98%</span></div>
+      <div class="cw-val">0.00x</div>
+    </div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="section best">
+      <h3>Mejor CTR · Top 3 (90d)</h3>
+      <div class="cw-card">
+      <div class="cw-name">CBO Bestt w/ LLAs BC</div>
+      <div class="cw-metrics"><span>Spend $1,150</span> · <span>ROAS 0.00x</span> · <span>CTR 14.98%</span></div>
+      <div class="cw-val">14.98%</div>
+    </div><div class="cw-card">
+      <div class="cw-name">CONV CBO - Personajes</div>
+      <div class="cw-metrics"><span>Spend $2,343</span> · <span>ROAS 3.80x</span> · <span>CTR 8.67%</span></div>
+      <div class="cw-val">8.67%</div>
+    </div><div class="cw-card">
+      <div class="cw-name">CONV ASC - Viena</div>
+      <div class="cw-metrics"><span>Spend $1,863</span> · <span>ROAS 2.48x</span> · <span>CTR 8.24%</span></div>
+      <div class="cw-val">8.24%</div>
+    </div>
+    </div>
+    <div class="section worst">
+      <h3>Peor CTR · Bottom 3 (90d)</h3>
+      <div class="cw-card">
+      <div class="cw-name">[Spring Sale] — Roma</div>
+      <div class="cw-metrics"><span>Spend $1,794</span> · <span>ROAS 0.00x</span> · <span>CTR 1.39%</span></div>
+      <div class="cw-val">1.39%</div>
+    </div><div class="cw-card">
+      <div class="cw-name">HOT SALE 2026</div>
+      <div class="cw-metrics"><span>Spend $15,893</span> · <span>ROAS 4.41x</span> · <span>CTR 1.71%</span></div>
+      <div class="cw-val">1.71%</div>
+    </div><div class="cw-card">
+      <div class="cw-name">RMKT v3 - Cat</div>
+      <div class="cw-metrics"><span>Spend $5,689</span> · <span>ROAS 6.00x</span> · <span>CTR 1.79%</span></div>
+      <div class="cw-val">1.79%</div>
+    </div>
+    </div>
+  </div>
+
+  <!-- EVOLUCIÓN MENSUAL -->
+  <div class="section">
+    <h3>Evolución Mensual · Inversión vs Ventas</h3>
+    <div class="chart-wrap"><canvas id="chartMonthly"></canvas></div>
+  </div>
+
+  <!-- DISTRIBUTION + GEO -->
+  <div class="grid-mixed">
+    <div class="section">
+      <h3>Geografía · Top 10 Estados (Shopify)</h3>
+      <div class="geo-row">
+      <div class="geo-name">Ciudad de México</div>
+      <div class="geo-bar-wrap"><div class="geo-bar" style="width:29%"></div></div>
+      <div class="geo-val">59 <span class="geo-pct">(29%)</span></div>
+    </div><div class="geo-row">
+      <div class="geo-name">México</div>
+      <div class="geo-bar-wrap"><div class="geo-bar" style="width:13%"></div></div>
+      <div class="geo-val">26 <span class="geo-pct">(13%)</span></div>
+    </div><div class="geo-row">
+      <div class="geo-name">Querétaro</div>
+      <div class="geo-bar-wrap"><div class="geo-bar" style="width:7%"></div></div>
+      <div class="geo-val">15 <span class="geo-pct">(7%)</span></div>
+    </div><div class="geo-row">
+      <div class="geo-name">Jalisco</div>
+      <div class="geo-bar-wrap"><div class="geo-bar" style="width:7%"></div></div>
+      <div class="geo-val">15 <span class="geo-pct">(7%)</span></div>
+    </div><div class="geo-row">
+      <div class="geo-name">Nuevo León</div>
+      <div class="geo-bar-wrap"><div class="geo-bar" style="width:6%"></div></div>
+      <div class="geo-val">13 <span class="geo-pct">(6%)</span></div>
+    </div><div class="geo-row">
+      <div class="geo-name">Guanajuato</div>
+      <div class="geo-bar-wrap"><div class="geo-bar" style="width:6%"></div></div>
+      <div class="geo-val">12 <span class="geo-pct">(6%)</span></div>
+    </div><div class="geo-row">
+      <div class="geo-name">Baja California</div>
+      <div class="geo-bar-wrap"><div class="geo-bar" style="width:4%"></div></div>
+      <div class="geo-val">8 <span class="geo-pct">(4%)</span></div>
+    </div><div class="geo-row">
+      <div class="geo-name">Hidalgo</div>
+      <div class="geo-bar-wrap"><div class="geo-bar" style="width:3%"></div></div>
+      <div class="geo-val">6 <span class="geo-pct">(3%)</span></div>
+    </div><div class="geo-row">
+      <div class="geo-name">Veracruz</div>
+      <div class="geo-bar-wrap"><div class="geo-bar" style="width:3%"></div></div>
+      <div class="geo-val">6 <span class="geo-pct">(3%)</span></div>
+    </div><div class="geo-row">
+      <div class="geo-name">Coahuila</div>
+      <div class="geo-bar-wrap"><div class="geo-bar" style="width:2%"></div></div>
+      <div class="geo-val">5 <span class="geo-pct">(2%)</span></div>
+    </div>
+    </div>
+    <div class="section">
+      <h3>Distribución de Spend por Objetivo</h3>
+      <div class="chart-wrap"><canvas id="chartObjective"></canvas></div>
+    </div>
+  </div>
+
+  <!-- DISCOUNT CODES + EVOLUCIÓN COMPRAS -->
+  <div class="grid-2">
+    <div class="section">
+      <h3>Códigos de Descuento Usados (60d)</h3>
+      <div class="geo-row">
+      <div class="geo-name">MAY4TH</div>
+      <div class="geo-bar-wrap"><div class="geo-bar" style="width:63%; background:var(--neon-magenta)"></div></div>
+      <div class="geo-val">103 <span class="geo-pct">(63%)</span></div>
+    </div><div class="geo-row">
+      <div class="geo-name">JEDI10</div>
+      <div class="geo-bar-wrap"><div class="geo-bar" style="width:22%; background:var(--neon-magenta)"></div></div>
+      <div class="geo-val">36 <span class="geo-pct">(22%)</span></div>
+    </div><div class="geo-row">
+      <div class="geo-name">HOTSALE</div>
+      <div class="geo-bar-wrap"><div class="geo-bar" style="width:13%; background:var(--neon-magenta)"></div></div>
+      <div class="geo-val">22 <span class="geo-pct">(13%)</span></div>
+    </div><div class="geo-row">
+      <div class="geo-name">SLMX10OFF</div>
+      <div class="geo-bar-wrap"><div class="geo-bar" style="width:1%; background:var(--neon-magenta)"></div></div>
+      <div class="geo-val">1 <span class="geo-pct">(1%)</span></div>
+    </div><div class="geo-row">
+      <div class="geo-name">Isaacvallejo</div>
+      <div class="geo-bar-wrap"><div class="geo-bar" style="width:1%; background:var(--neon-magenta)"></div></div>
+      <div class="geo-val">1 <span class="geo-pct">(1%)</span></div>
+    </div>
+    </div>
+    <div class="section">
+      <h3>Evolución de Compras Mensual</h3>
+      <div class="chart-wrap"><canvas id="chartPurch"></canvas></div>
+    </div>
+  </div>
+
+  <!-- ANUNCIOS - TODOS -->
+  <div class="section">
+    <h3>Anuncios · TODOS (top 80 por spend · últimos 90 días)</h3>
+    <div class="ad-table">
+      <table>
+        <thead>
+          <tr>
+            <th></th><th>Anuncio</th><th>Status</th>
+            <th class="num">Spend</th><th class="num">Ventas</th><th class="num">ROAS</th>
+            <th class="num">Compras</th><th class="num">Imp</th><th class="num">CTR</th><th class="num">Freq</th>
+          </tr>
+        </thead>
+        <tbody><tr>
+      <td><img class="ad-thumb" src="data:image/svg+xml;utf8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;60&quot; height=&quot;60&quot;&gt;&lt;rect width=&quot;60&quot; height=&quot;60&quot; fill=&quot;%23232a32&quot;/&gt;&lt;/svg&gt;" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">MAY4TH-V1-miri-1-stack</div><div class="ad-sub">MAY 4TH 2026 · UGC</div></td>
+      <td><span class="status-pill st-paused">?</span></td>
+      <td class="num">$23,513</td>
+      <td class="num">$141,016</td>
+      <td class="num"><strong class="val-good">6.00x</strong></td>
+      <td class="num">29</td>
+      <td class="num">723,032</td>
+      <td class="num">3.45%</td>
+      <td class="num">1.5</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="data:image/svg+xml;utf8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;60&quot; height=&quot;60&quot;&gt;&lt;rect width=&quot;60&quot; height=&quot;60&quot; fill=&quot;%23232a32&quot;/&gt;&lt;/svg&gt;" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Vid - TJ General v3</div><div class="ad-sub">[TJ] - ABO INICIAL · TJ - M4 - F1 - CC$1000 - Video</div></td>
+      <td><span class="status-pill st-paused">?</span></td>
+      <td class="num">$9,020</td>
+      <td class="num">$41,978</td>
+      <td class="num"><strong class="val-good">4.65x</strong></td>
+      <td class="num">10</td>
+      <td class="num">222,989</td>
+      <td class="num">2.62%</td>
+      <td class="num">2.0</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="data:image/svg+xml;utf8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;60&quot; height=&quot;60&quot;&gt;&lt;rect width=&quot;60&quot; height=&quot;60&quot; fill=&quot;%23232a32&quot;/&gt;&lt;/svg&gt;" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">MAY4TH-V3-promo-sorteo</div><div class="ad-sub">MAY 4TH 2026 · UGC</div></td>
+      <td><span class="status-pill st-paused">?</span></td>
+      <td class="num">$8,038</td>
+      <td class="num">$106,834</td>
+      <td class="num"><strong class="val-good">13.29x</strong></td>
+      <td class="num">20</td>
+      <td class="num">170,756</td>
+      <td class="num">2.34%</td>
+      <td class="num">2.3</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="https://external.fmex31-1.fna.fbcdn.net/emg1/v/t13/3533964875690645596?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQItauKm4ooxUK4lSx-TrGKVqhPVMi7MKue_th8q3n54n7uyy5SLUBdEIiLtwukPfNuG0v9rC_Ql0ERyoT_UXjh1L8_6_qjfKH_s7vvi3me6hVg9UHS6EUYzPbkSQdWldSHUmWYbtDH0ze4RfO_SW4aI&amp;fb_obo=1&amp;utld=facebook.com&amp;stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&amp;edm=AOgd6ZUEAAAA&amp;_nc_gid=zmulmcu6XFYBnO6EEAWV7A&amp;_nc_oc=Ado_67Js413hEkZ693tY0nsALDS_xAHhZTVd4tk50VqRoFl0p2ZH7KBOepI_MULlPIo&amp;ccb=13-1&amp;oh=06_Q3_AAfXx6e4UScGlsGYbPOoO54Estrv6nhvMYO3r41w7aOBb&amp;oe=6A361734&amp;_nc_sid=58080a" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Img - F2 Imperio - W1 minimalist white</div><div class="ad-sub">[TJ] - ABO INICIAL · TJ - E2 - F1 - CC$1000 - Imáge</div></td>
+      <td><span class="status-pill st-paused">PAUSED</span></td>
+      <td class="num">$6,118</td>
+      <td class="num">$29,736</td>
+      <td class="num"><strong class="val-good">4.86x</strong></td>
+      <td class="num">5</td>
+      <td class="num">211,871</td>
+      <td class="num">1.81%</td>
+      <td class="num">1.9</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="data:image/svg+xml;utf8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;60&quot; height=&quot;60&quot;&gt;&lt;rect width=&quot;60&quot; height=&quot;60&quot; fill=&quot;%23232a32&quot;/&gt;&lt;/svg&gt;" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">STATIC-V1-mauler-doble</div><div class="ad-sub">MAY 4TH 2026 · STATIC</div></td>
+      <td><span class="status-pill st-paused">?</span></td>
+      <td class="num">$5,903</td>
+      <td class="num">$40,716</td>
+      <td class="num"><strong class="val-good">6.90x</strong></td>
+      <td class="num">8</td>
+      <td class="num">130,805</td>
+      <td class="num">1.89%</td>
+      <td class="num">2.2</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="https://scontent.fmex26-1.fna.fbcdn.net/v/t51.71878-10/657796055_1687641315745347_5161194242070109688_n.jpg?_nc_cat=105&amp;ccb=1-7&amp;_nc_ohc=2Ih5esXDUu4Q7kNvwEy7XT4&amp;_nc_oc=AdpUykRYHiJIdx9WXxo5IyfbFqk-qohCIwxqrfEEd9MdzA1obB4-Qxs-pluty4SVcBQ&amp;_nc_zt=23&amp;_nc_ht=scontent.fmex26-1.fna&amp;edm=AOgd6ZUEAAAA&amp;_nc_gid=zmulmcu6XFYBnO6EEAWV7A&amp;_nc_tpa=Q5bMBQHtW3Hc_aReznUsMZwf1pO3V-hA1MYykksxl6UOKAL-LCKzOMYkCDujxdtJge6gTrl_iIzwLssBzA&amp;stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&amp;ur=33e7a6&amp;_nc_sid=58080a&amp;oh=00_Af8Npjqgm5JszteolQfBpODIaxhgJr1xbAPatYG1wEXhSA&amp;oe=6A3A1C13" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Vid - Miri</div><div class="ad-sub">Traff · Int + Money</div></td>
+      <td><span class="status-pill st-paused">ARCHIVED</span></td>
+      <td class="num">$5,825</td>
+      <td class="num">$0</td>
+      <td class="num"><strong class="val-bad">0.00x</strong></td>
+      <td class="num">0</td>
+      <td class="num">379,458</td>
+      <td class="num">7.41%</td>
+      <td class="num">1.4</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="https://scontent.fmex31-1.fna.fbcdn.net/v/t39.2147-6/75341531_494485104475166_2751028116179648512_n.png?_nc_cat=1&amp;ccb=1-7&amp;_nc_ohc=ArIcOTj8rfEQ7kNvwFy5gEV&amp;_nc_oc=AdpYp_Pv_0TfO424MR8jlwxQP8QX1kz_XWJiV4M61z8QEUAv2yWyx9Ho00FtdGmdJsA&amp;_nc_zt=14&amp;_nc_ht=scontent.fmex31-1.fna&amp;edm=AOgd6ZUEAAAA&amp;_nc_gid=zmulmcu6XFYBnO6EEAWV7A&amp;_nc_tpa=Q5bMBQHepSEwwJt8RKTqoYWbGDF254tEXkb6cADlN1jcNac_j3MaYsMfDHT-inXJzeo4YpZg8JoTvfxitw&amp;stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&amp;ur=39b8c1&amp;_nc_sid=58080a&amp;oh=00_Af_bmApmycKuJ9mxqMSUwPeGKybEeNXO_axj-5zXw-72gw&amp;oe=6A3A2384" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Cat  - empezaste coleccion?</div><div class="ad-sub">RMKT v3 - Cat · RMKT - 60 days - CC$500</div></td>
+      <td><span class="status-pill st-active">ACTIVE</span></td>
+      <td class="num">$5,689</td>
+      <td class="num">$34,161</td>
+      <td class="num"><strong class="val-good">6.00x</strong></td>
+      <td class="num">6</td>
+      <td class="num">155,819</td>
+      <td class="num">1.79%</td>
+      <td class="num">6.9</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="https://external.fmex31-1.fna.fbcdn.net/emg1/v/t13/5348517481527092711?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQLpqAJ1ghjKHbGwPwc_lgqXd-KhWOBJUlnSPEnwMkyWPNtZqavnIJrctagJL6r_EoBVn1O-mq3kgH7pGidggkvDjX0xQmzx5s8-GOAIrvx0FiA32Lc8CjanIpJ2gBsWUqnMWPL35zMMN1C-k7pTljM_&amp;fb_obo=1&amp;utld=facebook.com&amp;stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&amp;edm=AOgd6ZUEAAAA&amp;_nc_gid=zmulmcu6XFYBnO6EEAWV7A&amp;_nc_oc=Adq1NleQ5dP-Os5HCxXMP7LX0CXQ3ug9ggOLash9OtaCRDEzeUqB6IrddIGbkXdDsts&amp;ccb=13-1&amp;oh=06_Q3_AAWoUvEf-nw_KIoDpO_ZumD2ixRIvR0RrvyfIPFjrZ2vk&amp;oe=6A36188A&amp;_nc_sid=58080a" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Img - TJ - R04v5-edition-spotlight-row</div><div class="ad-sub">[TJ] - ABO INICIAL · TJ - M4 - F2 - CC$1000 - Imáge</div></td>
+      <td><span class="status-pill st-paused">PAUSED</span></td>
+      <td class="num">$5,223</td>
+      <td class="num">$47,857</td>
+      <td class="num"><strong class="val-good">9.16x</strong></td>
+      <td class="num">8</td>
+      <td class="num">138,812</td>
+      <td class="num">2.14%</td>
+      <td class="num">2.3</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="data:image/svg+xml;utf8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;60&quot; height=&quot;60&quot;&gt;&lt;rect width=&quot;60&quot; height=&quot;60&quot; fill=&quot;%23232a32&quot;/&gt;&lt;/svg&gt;" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">STATIC-V1-vader-mkii</div><div class="ad-sub">MAY 4TH 2026 · STATIC</div></td>
+      <td><span class="status-pill st-paused">?</span></td>
+      <td class="num">$4,417</td>
+      <td class="num">$60,842</td>
+      <td class="num"><strong class="val-good">13.77x</strong></td>
+      <td class="num">11</td>
+      <td class="num">123,713</td>
+      <td class="num">1.53%</td>
+      <td class="num">1.6</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="data:image/svg+xml;utf8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;60&quot; height=&quot;60&quot;&gt;&lt;rect width=&quot;60&quot; height=&quot;60&quot; fill=&quot;%23232a32&quot;/&gt;&lt;/svg&gt;" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Vid - Exile v2 - post</div><div class="ad-sub">ABO Bestt w/ LLAs · LLA+ CC$1500</div></td>
+      <td><span class="status-pill st-paused">?</span></td>
+      <td class="num">$3,987</td>
+      <td class="num">$13,740</td>
+      <td class="num"><strong class="val-good">3.45x</strong></td>
+      <td class="num">2</td>
+      <td class="num">58,450</td>
+      <td class="num">6.49%</td>
+      <td class="num">1.6</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="https://scontent.fmex28-1.fna.fbcdn.net/v/t15.5256-10/668197920_1614693049740875_1361515116566024258_n.jpg?_nc_cat=107&amp;ccb=1-7&amp;_nc_ohc=a4fsxfbcuWwQ7kNvwExp-ZF&amp;_nc_oc=Adq1PwsT90ZI1KRkabSfKV14MC6HOB6XMQjALB-n6kNFCEOncnDCu9rjfTMhjGNv1sA&amp;_nc_zt=23&amp;_nc_ht=scontent.fmex28-1.fna&amp;edm=AOgd6ZUEAAAA&amp;_nc_gid=zmulmcu6XFYBnO6EEAWV7A&amp;_nc_tpa=Q5bMBQFXbk6Gu61dnfWHwigcxU_n1HCww-A5rzd3boHPRzvZtYwOA3-kseDIiwQZdu5ZJICJVXVEmLBg1A&amp;stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&amp;ur=5fad0e&amp;_nc_sid=58080a&amp;oh=00_Af-vwkbJs9cU4vLa-segsH0m4MxbSaCsuNAW9r_ulTYZRw&amp;oe=6A3A1F94" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Vid - TJ General v5 - post</div><div class="ad-sub">[TJ] - ABO INICIAL · TJ - M4 - F2 - CC$1000 - Video</div></td>
+      <td><span class="status-pill st-paused">PAUSED</span></td>
+      <td class="num">$3,331</td>
+      <td class="num">$8,795</td>
+      <td class="num"><strong class="val-mid">2.64x</strong></td>
+      <td class="num">3</td>
+      <td class="num">53,857</td>
+      <td class="num">2.68%</td>
+      <td class="num">2.1</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="https://scontent.fmex22-1.fna.fbcdn.net/v/t15.13418-10/451540054_1014542036777212_5444891616850899420_n.jpg?_nc_cat=104&amp;ccb=1-7&amp;_nc_ohc=LSTAWeT4LP4Q7kNvwHqwUT3&amp;_nc_oc=AdoaO5-lFmCC9oQtpWj2mpJW7KcesYBcvSQJwc9PXsmqVjPJcXBuawynsGpeNVpinqo&amp;_nc_zt=23&amp;_nc_ht=scontent.fmex22-1.fna&amp;edm=AOgd6ZUEAAAA&amp;_nc_gid=zmulmcu6XFYBnO6EEAWV7A&amp;_nc_tpa=Q5bMBQElmBXwzYRolo5W41DfwSGGWYAQG98Ski0nRbJLAWvMbM2WvYoTfrYSWEcjUWH0p38lefFd4LkV7Q&amp;stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&amp;ur=aaa768&amp;_nc_sid=58080a&amp;oh=00_Af9ey9LiqU7_5guomhNWl4Zs1X2231YwxiqKufvE_yTPpQ&amp;oe=6A3A162A" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Vid - Exile Evergreen</div><div class="ad-sub">CONV v13 · Personajes Evergreen CC$1000</div></td>
+      <td><span class="status-pill st-active">ACTIVE</span></td>
+      <td class="num">$3,227</td>
+      <td class="num">$16,830</td>
+      <td class="num"><strong class="val-good">5.22x</strong></td>
+      <td class="num">3</td>
+      <td class="num">44,245</td>
+      <td class="num">3.75%</td>
+      <td class="num">1.9</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="https://external.fmex31-1.fna.fbcdn.net/emg1/v/t13/15273350807526943381?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQI0B8TrN38PNcm-L0Ntv67vLpsFUNhIUiXlHJnaLVugIUQc-gyiG-bQmh6JnSXSOjsTWmYcYeq5S37aEPLKG8D7Js-Z9xEikTL3VGFnn-xTcc2vgZcwGzbhoxyS_cdbMKcWx6_pXfyqybLLz7G-205a&amp;fb_obo=1&amp;utld=facebook.com&amp;stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&amp;edm=AOgd6ZUEAAAA&amp;_nc_gid=zmulmcu6XFYBnO6EEAWV7A&amp;_nc_oc=Ado58hTdwU5kCc3WVkDVH4sDM4hrItqfly_c6XgwY7EWohyN7pXIHPs84eRqYetq5Co&amp;ccb=13-1&amp;oh=06_Q3_AAYWE87cBSGK5yTbwZeAbMOF9-UZNGMQj-8XW3ruNceUa&amp;oe=6A363179&amp;_nc_sid=58080a" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">STATIC-V1-graflex-anakin</div><div class="ad-sub">MAY 4TH 2026 · STATIC</div></td>
+      <td><span class="status-pill st-paused">PAUSED</span></td>
+      <td class="num">$2,708</td>
+      <td class="num">$7,854</td>
+      <td class="num"><strong class="val-mid">2.90x</strong></td>
+      <td class="num">1</td>
+      <td class="num">60,107</td>
+      <td class="num">2.09%</td>
+      <td class="num">1.8</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="https://scontent.fmex5-1.fna.fbcdn.net/v/t15.5256-10/709635408_1411818030980020_7465688194450910578_n.jpg?_nc_cat=108&amp;ccb=1-7&amp;_nc_ohc=E9uTIkb1-7kQ7kNvwFrIWbG&amp;_nc_oc=Ado9vQ8eJQ946XHB_HtbbatT-NMKNz8sJh-gZWSWhTRI1Ltg6V7yPnsG_LxrbaeIekI&amp;_nc_zt=23&amp;_nc_ht=scontent.fmex5-1.fna&amp;edm=AOgd6ZUEAAAA&amp;_nc_gid=zmulmcu6XFYBnO6EEAWV7A&amp;_nc_tpa=Q5bMBQEvEuMA0ESXYCbH5GdTUQ4u3E3IZFhe2Bvu8ZsJNFctVwljVJ-icwTZtnmoWckEoEP6XTW77_x28g&amp;stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&amp;ur=d2b52d&amp;_nc_sid=58080a&amp;oh=00_Af-WbZBC220vGGd2nypMy4X6R7lDv76qbN9QeokiYGIDNQ&amp;oe=6A3A1630" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Vid - Kike MB 2</div><div class="ad-sub">HOT SALE 2026 · UGC</div></td>
+      <td><span class="status-pill st-paused">PAUSED</span></td>
+      <td class="num">$2,449</td>
+      <td class="num">$4,848</td>
+      <td class="num"><strong class="val-mid">1.98x</strong></td>
+      <td class="num">1</td>
+      <td class="num">41,225</td>
+      <td class="num">1.60%</td>
+      <td class="num">1.9</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="data:image/svg+xml;utf8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;60&quot; height=&quot;60&quot;&gt;&lt;rect width=&quot;60&quot; height=&quot;60&quot; fill=&quot;%23232a32&quot;/&gt;&lt;/svg&gt;" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Img - Temporada Jedi5  v6</div><div class="ad-sub">[TJ] - ABO INICIAL · TJ - E1 - F1 - Imágenes</div></td>
+      <td><span class="status-pill st-paused">?</span></td>
+      <td class="num">$2,238</td>
+      <td class="num">$8,949</td>
+      <td class="num"><strong class="val-good">4.00x</strong></td>
+      <td class="num">1</td>
+      <td class="num">74,541</td>
+      <td class="num">1.98%</td>
+      <td class="num">1.7</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="https://scontent.fmex36-1.fna.fbcdn.net/v/t15.5256-10/666656117_2171912523562567_2126078599044561815_n.jpg?_nc_cat=110&amp;ccb=1-7&amp;_nc_ohc=wNz5AQYYiSEQ7kNvwH4KB53&amp;_nc_oc=AdruKOlqlaZznDkG6ETtWN4gbyFAAL7ADKOynzVZJ8bhkOEgrynxPdggIJj8iJIKUgM&amp;_nc_zt=23&amp;_nc_ht=scontent.fmex36-1.fna&amp;edm=AOgd6ZUEAAAA&amp;_nc_gid=zmulmcu6XFYBnO6EEAWV7A&amp;_nc_tpa=Q5bMBQGB7UxK-Rz_utKJMRaqT9_CqbrURsAF-P3IByTHLw7b-S6mMb7mdCPo6hP_YbeHeicSvEwAMLhp-w&amp;stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&amp;ur=5fad0e&amp;_nc_sid=58080a&amp;oh=00_Af-tq7EtcYkHnbo4SVDWg6XTv4nk7hkEkJciswHL8LXsNA&amp;oe=6A3A2A7F" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Vid - TJ General v3 - post</div><div class="ad-sub">[TJ] - ABO INICIAL · TJ - M4 - F2 - CC$1000 - Video</div></td>
+      <td><span class="status-pill st-paused">PAUSED</span></td>
+      <td class="num">$2,143</td>
+      <td class="num">$9,540</td>
+      <td class="num"><strong class="val-good">4.45x</strong></td>
+      <td class="num">1</td>
+      <td class="num">41,331</td>
+      <td class="num">2.73%</td>
+      <td class="num">2.1</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="https://scontent.fmex28-1.fna.fbcdn.net/v/t15.5256-10/677508909_1849497965688900_7833036805610251491_n.jpg?_nc_cat=107&amp;ccb=1-7&amp;_nc_ohc=1vrLl6gsYRoQ7kNvwFuxBSe&amp;_nc_oc=AdocojjdtF_1gWrFer328HnZXOV0LcwljKRr6BxJjGfHfNtyMvDaWVbGBzp6kqsOjqs&amp;_nc_zt=23&amp;_nc_ht=scontent.fmex28-1.fna&amp;edm=AOgd6ZUEAAAA&amp;_nc_gid=zmulmcu6XFYBnO6EEAWV7A&amp;_nc_tpa=Q5bMBQHSwU8q1sxscAGKwPjHf1bui-Pj2KcR9LPbZG9d0gdo5Hip1MwFxSFYnojBheBWG6Mikqy2vAWX2w&amp;stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&amp;ur=a86139&amp;_nc_sid=58080a&amp;oh=00_Af9vyEq8iQqAr4aim4pTZRuQQ0FgqBUigz-iwhAbuZ6DTA&amp;oe=6A3A0937" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Vid - Darksaber Evergreen</div><div class="ad-sub">CONV v13 · Personajes Evergreen CC$1000</div></td>
+      <td><span class="status-pill st-active">ACTIVE</span></td>
+      <td class="num">$2,065</td>
+      <td class="num">$16,074</td>
+      <td class="num"><strong class="val-good">7.78x</strong></td>
+      <td class="num">3</td>
+      <td class="num">35,246</td>
+      <td class="num">4.30%</td>
+      <td class="num">1.9</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="https://scontent.fmex27-1.fna.fbcdn.net/v/t15.5256-10/682507788_1649546133027675_6239180417608612033_n.jpg?_nc_cat=111&amp;ccb=1-7&amp;_nc_ohc=u4Cn0DLvK2wQ7kNvwHae37O&amp;_nc_oc=AdpBtQbKEWDxPZ6QCkviL_2g-P22EhgC5R6ivNQWaQNg4eor_seI7ivpXAQ8qz4GKeY&amp;_nc_zt=23&amp;_nc_ht=scontent.fmex27-1.fna&amp;edm=AOgd6ZUEAAAA&amp;_nc_gid=zmulmcu6XFYBnO6EEAWV7A&amp;_nc_tpa=Q5bMBQF_7lCQjY6U6iyEhC7sipasL5m_DcMXtwY_aARPxcWlPgfzsidoIe4e1R-iisgiZ-tdabR0EseL5w&amp;stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&amp;ur=d2b52d&amp;_nc_sid=58080a&amp;oh=00_Af_bc2mj5wajRTuXC08ciItd2S57R3qTogGcmNU6znHeNA&amp;oe=6A39F5AF" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">MAY4TH-V1-intro-promo-1-stack</div><div class="ad-sub">MAY 4TH 2026 · UGC</div></td>
+      <td><span class="status-pill st-paused">PAUSED</span></td>
+      <td class="num">$2,037</td>
+      <td class="num">$22,767</td>
+      <td class="num"><strong class="val-good">11.18x</strong></td>
+      <td class="num">4</td>
+      <td class="num">39,750</td>
+      <td class="num">1.78%</td>
+      <td class="num">1.2</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="https://scontent.fmex31-1.fna.fbcdn.net/v/t15.13418-10/469463182_1577282242889446_3195846544509419127_n.jpg?_nc_cat=103&amp;ccb=1-7&amp;_nc_ohc=yfHzW96dyIUQ7kNvwEdmi-S&amp;_nc_oc=Adooz_HX-gWoMM7sQnlKicd1Ze_asn8PTGNZYuryMLFa8d3nmQkmSy3LmMtnvG5Wbvk&amp;_nc_zt=23&amp;_nc_ht=scontent.fmex31-1.fna&amp;edm=AOgd6ZUEAAAA&amp;_nc_gid=zmulmcu6XFYBnO6EEAWV7A&amp;_nc_tpa=Q5bMBQHu6rN7jp51Rl0jjbGCiFx_umw-nVv_4BflXrpPz2rftgl6IgqihhV1V2jtDdj1QKyI_UvTJ3YgHg&amp;stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&amp;ur=1d8b3b&amp;_nc_sid=58080a&amp;oh=00_Af_k0gTeqYbmgQhmOkmByKpJ7U0pY8VTzQjRdCEMQrCLsA&amp;oe=6A39F48D" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Vid - Xenopixel Evergreen</div><div class="ad-sub">CONV v13 · Personajes Evergreen CC$1000</div></td>
+      <td><span class="status-pill st-active">ACTIVE</span></td>
+      <td class="num">$1,894</td>
+      <td class="num">$15,487</td>
+      <td class="num"><strong class="val-good">8.18x</strong></td>
+      <td class="num">2</td>
+      <td class="num">33,833</td>
+      <td class="num">3.88%</td>
+      <td class="num">1.9</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="data:image/svg+xml;utf8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;60&quot; height=&quot;60&quot;&gt;&lt;rect width=&quot;60&quot; height=&quot;60&quot; fill=&quot;%23232a32&quot;/&gt;&lt;/svg&gt;" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Vid - Kike MB Valor</div><div class="ad-sub">HOT SALE 2026 · UGC</div></td>
+      <td><span class="status-pill st-paused">?</span></td>
+      <td class="num">$1,888</td>
+      <td class="num">$16,142</td>
+      <td class="num"><strong class="val-good">8.55x</strong></td>
+      <td class="num">4</td>
+      <td class="num">41,138</td>
+      <td class="num">1.96%</td>
+      <td class="num">1.9</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="https://scontent.fmex31-1.fna.fbcdn.net/v/t15.5256-10/682627983_4060437977581401_8467274658922100520_n.jpg?_nc_cat=109&amp;ccb=1-7&amp;_nc_ohc=w-h4s9hjsxgQ7kNvwHUcbQk&amp;_nc_oc=AdrZMXVcp7yVAu-oyer1j-DzOVOId3tcbwwxWm-UmDFVkmr6aUuPkfcqm4UsJbKDGwI&amp;_nc_zt=23&amp;_nc_ht=scontent.fmex31-1.fna&amp;edm=AOgd6ZUEAAAA&amp;_nc_gid=zmulmcu6XFYBnO6EEAWV7A&amp;_nc_tpa=Q5bMBQFgMzxxGA8s5Em5fqpXXM3CUbjF5zlid8mLHSwyhHLdgmuFWgmNAXlWvTMlwp2BRweEXxME-55eAg&amp;stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&amp;ur=d2b52d&amp;_nc_sid=58080a&amp;oh=00_Af_uIemFZo-5OlHh1iI-0CrY7LDfWF3PqE-psVnYzNZ1xw&amp;oe=6A3A115D" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">MAY4TH-V2-miri-2-fomo</div><div class="ad-sub">MAY 4TH 2026 · UGC</div></td>
+      <td><span class="status-pill st-paused">PAUSED</span></td>
+      <td class="num">$1,857</td>
+      <td class="num">$5,329</td>
+      <td class="num"><strong class="val-mid">2.87x</strong></td>
+      <td class="num">1</td>
+      <td class="num">46,708</td>
+      <td class="num">1.90%</td>
+      <td class="num">1.3</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="data:image/svg+xml;utf8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;60&quot; height=&quot;60&quot;&gt;&lt;rect width=&quot;60&quot; height=&quot;60&quot; fill=&quot;%23232a32&quot;/&gt;&lt;/svg&gt;" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Img - Temporada Jedi5  v6</div><div class="ad-sub">[TJ] - ABO INICIAL · TJ - E1 -  F2  - Imágenes</div></td>
+      <td><span class="status-pill st-paused">?</span></td>
+      <td class="num">$1,822</td>
+      <td class="num">$23,523</td>
+      <td class="num"><strong class="val-good">12.91x</strong></td>
+      <td class="num">5</td>
+      <td class="num">60,844</td>
+      <td class="num">2.05%</td>
+      <td class="num">2.6</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="https://scontent.fmex5-1.fna.fbcdn.net/v/t51.82787-10/583815414_18089871728509466_5905419639842031123_n.jpg?_nc_cat=102&amp;ccb=1-7&amp;_nc_ohc=WVa2kF2wJxoQ7kNvwF2Ls-l&amp;_nc_oc=Adrvzex9ujmBQQzR100rwFi1-RgDBrey8lPAWaGK2kHcxC4vsJV-WDzV8yo4D8hlt4c&amp;_nc_zt=23&amp;_nc_ht=scontent.fmex5-1.fna&amp;edm=AOgd6ZUEAAAA&amp;_nc_gid=zmulmcu6XFYBnO6EEAWV7A&amp;_nc_tpa=Q5bMBQHXIjlWeRXRoVMyWMQbe--3-nfhpoXWL_oEbHJhvEtXBKvSPdEUNb-hHuRmbEG3pcCU0UFDUMVafw&amp;stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&amp;ur=33e7a6&amp;_nc_sid=58080a&amp;oh=00_Af85VvYVQJEmyPhkXaDmA5IR-AG29q7zut3-p_uIIdK7kw&amp;oe=6A3A1708" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Vid - Demo Champion 1 - Copia</div><div class="ad-sub">ABO Bestt w/ LLAs · LLA+ CC$1500</div></td>
+      <td><span class="status-pill st-paused">PAUSED</span></td>
+      <td class="num">$1,811</td>
+      <td class="num">$4,630</td>
+      <td class="num"><strong class="val-mid">2.56x</strong></td>
+      <td class="num">1</td>
+      <td class="num">28,238</td>
+      <td class="num">6.41%</td>
+      <td class="num">1.8</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="https://scontent.fmex26-1.fna.fbcdn.net/v/t15.5256-10/450206661_1001651461666307_3659138220047266064_n.jpg?_nc_cat=100&amp;ccb=1-7&amp;_nc_ohc=c5g44ig3MQoQ7kNvwEYNvsP&amp;_nc_oc=AdrQZJijOayOFGg72MYQIRpjnoH2Wosi9uKjoROpdsiPSf98x19MfiRkmJ1iohgSoNY&amp;_nc_zt=23&amp;_nc_ht=scontent.fmex26-1.fna&amp;edm=AOgd6ZUEAAAA&amp;_nc_gid=zmulmcu6XFYBnO6EEAWV7A&amp;_nc_tpa=Q5bMBQEMmNpbQi0Q-Sr4ckZ_1clVD4YQRpdIov8iiYswaGbV5aoNtckKsJkxOMk8KUr8Ys_Zn5wsO3O87w&amp;stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&amp;ur=d440aa&amp;_nc_sid=58080a&amp;oh=00_Af-JslqKkKjzdgi7mWtw_QcP8rXUbGgU3cLzXvXJlBytdA&amp;oe=6A3A2139" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Vid - Adept Evergreen</div><div class="ad-sub">CONV v13 · Personajes Evergreen CC$1000</div></td>
+      <td><span class="status-pill st-active">ACTIVE</span></td>
+      <td class="num">$1,798</td>
+      <td class="num">$44,939</td>
+      <td class="num"><strong class="val-good">24.99x</strong></td>
+      <td class="num">7</td>
+      <td class="num">16,781</td>
+      <td class="num">2.99%</td>
+      <td class="num">2.3</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="https://external.fmex31-1.fna.fbcdn.net/emg1/v/t13/5348517481527092711?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQLpqAJ1ghjKHbGwPwc_lgqXd-KhWOBJUlnSPEnwMkyWPNtZqavnIJrctagJL6r_EoBVn1O-mq3kgH7pGidggkvDjX0xQmzx5s8-GOAIrvx0FiA32Lc8CjanIpJ2gBsWUqnMWPL35zMMN1C-k7pTljM_&amp;fb_obo=1&amp;utld=facebook.com&amp;stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&amp;edm=AOgd6ZUEAAAA&amp;_nc_gid=zmulmcu6XFYBnO6EEAWV7A&amp;_nc_oc=Adq1NleQ5dP-Os5HCxXMP7LX0CXQ3ug9ggOLash9OtaCRDEzeUqB6IrddIGbkXdDsts&amp;ccb=13-1&amp;oh=06_Q3_AAWoUvEf-nw_KIoDpO_ZumD2ixRIvR0RrvyfIPFjrZ2vk&amp;oe=6A36188A&amp;_nc_sid=58080a" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Img - TJ - Edición Limitada</div><div class="ad-sub">[TJ] - ABO INICIAL · TJ - E2 - F1 - CC$1000 - Imáge</div></td>
+      <td><span class="status-pill st-paused">PAUSED</span></td>
+      <td class="num">$1,749</td>
+      <td class="num">$0</td>
+      <td class="num"><strong class="val-bad">0.00x</strong></td>
+      <td class="num">0</td>
+      <td class="num">87,301</td>
+      <td class="num">2.78%</td>
+      <td class="num">1.3</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="data:image/svg+xml;utf8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;60&quot; height=&quot;60&quot;&gt;&lt;rect width=&quot;60&quot; height=&quot;60&quot; fill=&quot;%23232a32&quot;/&gt;&lt;/svg&gt;" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Vid - Showoff - post</div><div class="ad-sub">ABO Bestt w/ LLAs · LLA+ CC$1500</div></td>
+      <td><span class="status-pill st-paused">?</span></td>
+      <td class="num">$1,680</td>
+      <td class="num">$0</td>
+      <td class="num"><strong class="val-bad">0.00x</strong></td>
+      <td class="num">0</td>
+      <td class="num">42,087</td>
+      <td class="num">10.32%</td>
+      <td class="num">1.4</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="data:image/svg+xml;utf8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;60&quot; height=&quot;60&quot;&gt;&lt;rect width=&quot;60&quot; height=&quot;60&quot; fill=&quot;%23232a32&quot;/&gt;&lt;/svg&gt;" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Vid - Showoff - post</div><div class="ad-sub">SL RMKT v2 · RMKT</div></td>
+      <td><span class="status-pill st-paused">?</span></td>
+      <td class="num">$1,616</td>
+      <td class="num">$13,510</td>
+      <td class="num"><strong class="val-good">8.36x</strong></td>
+      <td class="num">2</td>
+      <td class="num">26,305</td>
+      <td class="num">3.85%</td>
+      <td class="num">2.2</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="data:image/svg+xml;utf8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;60&quot; height=&quot;60&quot;&gt;&lt;rect width=&quot;60&quot; height=&quot;60&quot; fill=&quot;%23232a32&quot;/&gt;&lt;/svg&gt;" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Vid - TJ General v5</div><div class="ad-sub">[TJ] - ABO INICIAL · TJ - M4 - F1 - CC$1000 - Video</div></td>
+      <td><span class="status-pill st-paused">?</span></td>
+      <td class="num">$1,583</td>
+      <td class="num">$2,822</td>
+      <td class="num"><strong class="val-mid">1.78x</strong></td>
+      <td class="num">1</td>
+      <td class="num">35,954</td>
+      <td class="num">2.21%</td>
+      <td class="num">1.5</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="data:image/svg+xml;utf8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;60&quot; height=&quot;60&quot;&gt;&lt;rect width=&quot;60&quot; height=&quot;60&quot; fill=&quot;%23232a32&quot;/&gt;&lt;/svg&gt;" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Img - Mystery Box - Evergreen - post</div><div class="ad-sub">SL RMKT v2 · RMKT</div></td>
+      <td><span class="status-pill st-paused">?</span></td>
+      <td class="num">$1,538</td>
+      <td class="num">$3,929</td>
+      <td class="num"><strong class="val-mid">2.55x</strong></td>
+      <td class="num">1</td>
+      <td class="num">34,452</td>
+      <td class="num">1.83%</td>
+      <td class="num">4.0</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="data:image/svg+xml;utf8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;60&quot; height=&quot;60&quot;&gt;&lt;rect width=&quot;60&quot; height=&quot;60&quot; fill=&quot;%23232a32&quot;/&gt;&lt;/svg&gt;" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">STATIC-V1-cat-vader</div><div class="ad-sub">HOT SALE 2026 · STATIC</div></td>
+      <td><span class="status-pill st-paused">?</span></td>
+      <td class="num">$1,532</td>
+      <td class="num">$18,809</td>
+      <td class="num"><strong class="val-good">12.27x</strong></td>
+      <td class="num">3</td>
+      <td class="num">34,394</td>
+      <td class="num">1.43%</td>
+      <td class="num">2.0</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="data:image/svg+xml;utf8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;60&quot; height=&quot;60&quot;&gt;&lt;rect width=&quot;60&quot; height=&quot;60&quot; fill=&quot;%23232a32&quot;/&gt;&lt;/svg&gt;" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Img - F2 Imperio - W3 retro painted</div><div class="ad-sub">[TJ] - ABO INICIAL · TJ - E2 - F1 - CC$1000 - Imáge</div></td>
+      <td><span class="status-pill st-paused">?</span></td>
+      <td class="num">$1,462</td>
+      <td class="num">$15,253</td>
+      <td class="num"><strong class="val-good">10.43x</strong></td>
+      <td class="num">4</td>
+      <td class="num">42,330</td>
+      <td class="num">1.36%</td>
+      <td class="num">1.6</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="https://scontent.fmex31-1.fna.fbcdn.net/v/t15.5256-10/686070282_1252483423537290_7920771895240969729_n.jpg?_nc_cat=109&amp;ccb=1-7&amp;_nc_ohc=dNcmCK-fS2QQ7kNvwGcnsNO&amp;_nc_oc=Adp_YBSapSf-_Tiqxiz_CnXluiqvjPkSU0xzHVT2DVa4jc74xjTAHWykh8z51gWOfBA&amp;_nc_zt=23&amp;_nc_ht=scontent.fmex31-1.fna&amp;edm=AOgd6ZUEAAAA&amp;_nc_gid=zmulmcu6XFYBnO6EEAWV7A&amp;_nc_tpa=Q5bMBQEYu-EHNNzcun4LPXPefzsDFGJp99yTkq5_8deXFbieXatsiUPMhZ5C3KApgpDrQiqP3ff_RA4XPg&amp;stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&amp;ur=d2b52d&amp;_nc_sid=58080a&amp;oh=00_Af8O7dJPV0nKL599kqsZSlhwHV_8DwwE3DIAYo8bSJ_qCA&amp;oe=6A3A1EF4" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">MAY4TH-V4-intro-promo-2-preventa</div><div class="ad-sub">MAY 4TH 2026 · UGC</div></td>
+      <td><span class="status-pill st-paused">PAUSED</span></td>
+      <td class="num">$1,452</td>
+      <td class="num">$5,416</td>
+      <td class="num"><strong class="val-good">3.73x</strong></td>
+      <td class="num">1</td>
+      <td class="num">23,227</td>
+      <td class="num">1.93%</td>
+      <td class="num">1.5</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="data:image/svg+xml;utf8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;60&quot; height=&quot;60&quot;&gt;&lt;rect width=&quot;60&quot; height=&quot;60&quot; fill=&quot;%23232a32&quot;/&gt;&lt;/svg&gt;" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Img - Graflex Review v3 - post</div><div class="ad-sub">SL RMKT v2 · RMKT</div></td>
+      <td><span class="status-pill st-paused">?</span></td>
+      <td class="num">$1,394</td>
+      <td class="num">$0</td>
+      <td class="num"><strong class="val-bad">0.00x</strong></td>
+      <td class="num">0</td>
+      <td class="num">29,731</td>
+      <td class="num">2.25%</td>
+      <td class="num">2.4</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="https://external.fmex31-1.fna.fbcdn.net/emg1/v/t13/17677442124010688846?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQK3F8JdpFYrGs0KmIYMJEXKNTgrYmy9mI9s7dnIYmVc-BGlqT8HCtXABns0BfIhQogK944fh7txCzIc8exDEabrVE2zLYxd5mhnE-mRSvbcPVxfm3rECl0e7y9n7DMkacKWgrsTAU75cm1CxVjAnsId&amp;fb_obo=1&amp;utld=facebook.com&amp;stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&amp;edm=AOgd6ZUEAAAA&amp;_nc_gid=zmulmcu6XFYBnO6EEAWV7A&amp;_nc_oc=AdrHGJ2bQZR7htpZg-VWeaA32FsHp0-40VsSFGOXJ5HDeoo_WzAe1aB1vNoi2-cxKRI&amp;ccb=13-1&amp;oh=06_Q3_AAZczpOGLEDDUOyyGK00vKYSU9PSfwht4Ky__EpQ3hj2F&amp;oe=6A3630F2&amp;_nc_sid=58080a" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">STATIC-V1-mb-precio-hero</div><div class="ad-sub">HOT SALE 2026 · STATIC</div></td>
+      <td><span class="status-pill st-paused">PAUSED</span></td>
+      <td class="num">$1,355</td>
+      <td class="num">$0</td>
+      <td class="num"><strong class="val-bad">0.00x</strong></td>
+      <td class="num">0</td>
+      <td class="num">29,357</td>
+      <td class="num">1.81%</td>
+      <td class="num">1.5</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="data:image/svg+xml;utf8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;60&quot; height=&quot;60&quot;&gt;&lt;rect width=&quot;60&quot; height=&quot;60&quot; fill=&quot;%23232a32&quot;/&gt;&lt;/svg&gt;" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">STATIC-V1-guardian-obi-wan</div><div class="ad-sub">MAY 4TH 2026 · STATIC</div></td>
+      <td><span class="status-pill st-paused">?</span></td>
+      <td class="num">$1,332</td>
+      <td class="num">$8,210</td>
+      <td class="num"><strong class="val-good">6.16x</strong></td>
+      <td class="num">2</td>
+      <td class="num">29,790</td>
+      <td class="num">1.45%</td>
+      <td class="num">1.4</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="data:image/svg+xml;utf8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;60&quot; height=&quot;60&quot;&gt;&lt;rect width=&quot;60&quot; height=&quot;60&quot; fill=&quot;%23232a32&quot;/&gt;&lt;/svg&gt;" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Img - TJ - R03v2-adept-clean-pedestal</div><div class="ad-sub">[TJ] - ABO INICIAL · TJ - M4 - F2 - CC$1000 - Imáge</div></td>
+      <td><span class="status-pill st-paused">?</span></td>
+      <td class="num">$1,244</td>
+      <td class="num">$10,354</td>
+      <td class="num"><strong class="val-good">8.33x</strong></td>
+      <td class="num">2</td>
+      <td class="num">21,443</td>
+      <td class="num">1.03%</td>
+      <td class="num">1.9</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="https://scontent.fmex22-1.fna.fbcdn.net/v/t15.5256-10/686899208_982711144564021_7728868004010495367_n.jpg?_nc_cat=104&amp;ccb=1-7&amp;_nc_ohc=fDtsSXts8sMQ7kNvwHBKrsU&amp;_nc_oc=AdrKo6dAD-hXP_wCDhov9hXw_UUqw6cfSrUTmX0B8ysQbAcw_pqy76uYXRzPZPrHBZM&amp;_nc_zt=23&amp;_nc_ht=scontent.fmex22-1.fna&amp;edm=AOgd6ZUEAAAA&amp;_nc_gid=zmulmcu6XFYBnO6EEAWV7A&amp;_nc_tpa=Q5bMBQG8zXjvn5ULrpLd5-WtDjidnQNN8iZduiR71ecov1WwZ8-4JrlPdLpRxxHjtIl3b74bpd06GtT9jg&amp;stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&amp;ur=d2b52d&amp;_nc_sid=58080a&amp;oh=00_Af9YSmiyUIiiex1iEZJmC1mSTOtZ4TdoOS2E78_oPUM64w&amp;oe=6A3A0D2C" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">MAY4TH-V2-old-teaser-1-leccion</div><div class="ad-sub">MAY 4TH 2026 · UGC</div></td>
+      <td><span class="status-pill st-paused">PAUSED</span></td>
+      <td class="num">$1,235</td>
+      <td class="num">$0</td>
+      <td class="num"><strong class="val-bad">0.00x</strong></td>
+      <td class="num">0</td>
+      <td class="num">36,429</td>
+      <td class="num">3.08%</td>
+      <td class="num">1.1</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="https://scontent.fmex31-1.fna.fbcdn.net/v/t15.5256-10/709548428_996469009913904_5741818490159857460_n.jpg?_nc_cat=109&amp;ccb=1-7&amp;_nc_ohc=lRHvNNM_xH8Q7kNvwEQ8HfP&amp;_nc_oc=AdrRF0xHMfN1SzxzmWhKmYz5XPt9-TWPtWaLYBV_u_H5b9NM5IALsiGmCFrqlyY0zkY&amp;_nc_zt=23&amp;_nc_ht=scontent.fmex31-1.fna&amp;edm=AOgd6ZUEAAAA&amp;_nc_gid=zmulmcu6XFYBnO6EEAWV7A&amp;_nc_tpa=Q5bMBQEjVCMI9FIZg1C3gVbmHMMTAUzuz0FeBLrv8AiEFhS7zq5r1qWmeCAyR56o3bhY-mBXu0nEP-_Ydw&amp;stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&amp;ur=d2b52d&amp;_nc_sid=58080a&amp;oh=00_Af_UolxXbhOAxhCuAQlWaOZ5DLaU9N0nEQDz-lZTGXfShg&amp;oe=6A3A113E" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Vid - Kike MB 1</div><div class="ad-sub">HOT SALE 2026 · UGC</div></td>
+      <td><span class="status-pill st-paused">PAUSED</span></td>
+      <td class="num">$1,210</td>
+      <td class="num">$0</td>
+      <td class="num"><strong class="val-bad">0.00x</strong></td>
+      <td class="num">0</td>
+      <td class="num">20,347</td>
+      <td class="num">2.36%</td>
+      <td class="num">1.4</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="https://scontent.fmex26-1.fna.fbcdn.net/v/t15.13418-10/458624816_1839182643272392_195451747847152507_n.jpg?_nc_cat=105&amp;ccb=1-7&amp;_nc_ohc=hgMRCmF0QCQQ7kNvwEmON5P&amp;_nc_oc=AdrsKFqj1MBjmmTouHl5H54KvHNyNFgxrgP15gr933qwIPWcSgMbVYCHlzvAyBv6j1I&amp;_nc_zt=23&amp;_nc_ht=scontent.fmex26-1.fna&amp;edm=AOgd6ZUEAAAA&amp;_nc_gid=zmulmcu6XFYBnO6EEAWV7A&amp;_nc_tpa=Q5bMBQFgzf4ZrQEz9zZuUgFWdK8q6ze0I8NIZIUf88ObXb5Ou7HJ04wf4_GnpAUrglGAZsFSMIGEugD-iw&amp;stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&amp;ur=c3b633&amp;_nc_sid=58080a&amp;oh=00_Af9e3gLwax16IghAtaLP6mdNDF01IsU1QE54XHNTCuCwzg&amp;oe=6A3A0172" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Vid - Defiance Evergreen</div><div class="ad-sub">CONV v13 · Personajes Evergreen CC$1000</div></td>
+      <td><span class="status-pill st-active">ACTIVE</span></td>
+      <td class="num">$1,181</td>
+      <td class="num">$4,940</td>
+      <td class="num"><strong class="val-good">4.18x</strong></td>
+      <td class="num">1</td>
+      <td class="num">15,983</td>
+      <td class="num">2.95%</td>
+      <td class="num">2.3</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="data:image/svg+xml;utf8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;60&quot; height=&quot;60&quot;&gt;&lt;rect width=&quot;60&quot; height=&quot;60&quot; fill=&quot;%23232a32&quot;/&gt;&lt;/svg&gt;" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Vid - TJ General v1</div><div class="ad-sub">[TJ] - ABO INICIAL · TJ - M4 - F1 - CC$1000 - Video</div></td>
+      <td><span class="status-pill st-paused">?</span></td>
+      <td class="num">$1,150</td>
+      <td class="num">$8,007</td>
+      <td class="num"><strong class="val-good">6.96x</strong></td>
+      <td class="num">1</td>
+      <td class="num">27,113</td>
+      <td class="num">1.79%</td>
+      <td class="num">1.4</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="data:image/svg+xml;utf8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;60&quot; height=&quot;60&quot;&gt;&lt;rect width=&quot;60&quot; height=&quot;60&quot; fill=&quot;%23232a32&quot;/&gt;&lt;/svg&gt;" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Cat - Dynamic - Jedi Sith Wookie - Copia</div><div class="ad-sub">ABO Bestt w/ LLAs · LLA+ CC$1500</div></td>
+      <td><span class="status-pill st-paused">?</span></td>
+      <td class="num">$1,147</td>
+      <td class="num">$10,776</td>
+      <td class="num"><strong class="val-good">9.39x</strong></td>
+      <td class="num">2</td>
+      <td class="num">32,324</td>
+      <td class="num">4.20%</td>
+      <td class="num">3.0</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="https://scontent.fmex36-1.fna.fbcdn.net/v/t15.5256-10/708414603_26835236139482152_4531781754135622488_n.jpg?_nc_cat=110&amp;ccb=1-7&amp;_nc_ohc=bBUGzpONn0IQ7kNvwHaWQF4&amp;_nc_oc=AdrvK_ZtMbeDgbvd-WOv3kDrRCmZGgHY7Tkz9EMiLCzkVlJvT6kO_3xLIptIxqD6748&amp;_nc_zt=23&amp;_nc_ht=scontent.fmex36-1.fna&amp;edm=AOgd6ZUEAAAA&amp;_nc_gid=zmulmcu6XFYBnO6EEAWV7A&amp;_nc_tpa=Q5bMBQFRLv70NiZN35BDknbJHx5tDVVdaVo7bjmEnj9yYtbZUApCspwoReVr9ypk4bW1Eivef2-kYv20Ig&amp;stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&amp;ur=d2b52d&amp;_nc_sid=58080a&amp;oh=00_Af8KrFE0w54W7GJDOdvQUt33DU_XNBjYB4jSFlOMXsSqKA&amp;oe=6A3A0707" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Vid - Transform DayNight Hotsale</div><div class="ad-sub">HOT SALE 2026 · REEDICIONES</div></td>
+      <td><span class="status-pill st-paused">PAUSED</span></td>
+      <td class="num">$1,137</td>
+      <td class="num">$0</td>
+      <td class="num"><strong class="val-bad">0.00x</strong></td>
+      <td class="num">0</td>
+      <td class="num">19,325</td>
+      <td class="num">2.17%</td>
+      <td class="num">1.6</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="data:image/svg+xml;utf8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;60&quot; height=&quot;60&quot;&gt;&lt;rect width=&quot;60&quot; height=&quot;60&quot; fill=&quot;%23232a32&quot;/&gt;&lt;/svg&gt;" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Vid -  graflex morra intro - post - Copia 2</div><div class="ad-sub">CBO Bestt w/ LLAs BC · LLA+ BC$1800</div></td>
+      <td><span class="status-pill st-paused">?</span></td>
+      <td class="num">$1,096</td>
+      <td class="num">$0</td>
+      <td class="num"><strong class="val-bad">0.00x</strong></td>
+      <td class="num">0</td>
+      <td class="num">29,939</td>
+      <td class="num">15.52%</td>
+      <td class="num">1.3</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="https://scontent.fmex23-1.fna.fbcdn.net/v/t15.5256-10/593207868_857483420066773_3850064714780118314_n.jpg?_nc_cat=101&amp;ccb=1-7&amp;_nc_ohc=DbaDvN_hdP8Q7kNvwEA8FkQ&amp;_nc_oc=AdpCkvspQyNk2qvbkluxKdio1CtM0xrnYuvNAthZ6_o9a7riCHevYVJCFlVAJEZBHwo&amp;_nc_zt=23&amp;_nc_ht=scontent.fmex23-1.fna&amp;edm=AOgd6ZUEAAAA&amp;_nc_gid=zmulmcu6XFYBnO6EEAWV7A&amp;_nc_tpa=Q5bMBQHJndRMEO8wpmoXdTG9Xw0o0ha2XyrTnuUZrcTcRxOJfGhLPJPqlfvzBXrwyB3fy_PWylqrQnQrJg&amp;stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&amp;ur=d2b52d&amp;_nc_sid=58080a&amp;oh=00_Af8qPiNQ6jI44vWseMnmm0Rp7Jqoesi855i7XCUMjdJDjg&amp;oe=6A3A25C6" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Vid -  VDR v2 rap - Copia</div><div class="ad-sub">ABO Bestt w/ LLAs · LLA+ CC$1500</div></td>
+      <td><span class="status-pill st-paused">PAUSED</span></td>
+      <td class="num">$1,053</td>
+      <td class="num">$0</td>
+      <td class="num"><strong class="val-bad">0.00x</strong></td>
+      <td class="num">0</td>
+      <td class="num">31,652</td>
+      <td class="num">9.05%</td>
+      <td class="num">1.5</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="data:image/svg+xml;utf8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;60&quot; height=&quot;60&quot;&gt;&lt;rect width=&quot;60&quot; height=&quot;60&quot; fill=&quot;%23232a32&quot;/&gt;&lt;/svg&gt;" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">STATIC-V5-may-the-4th-duo</div><div class="ad-sub">MAY 4TH 2026 · STATIC</div></td>
+      <td><span class="status-pill st-paused">?</span></td>
+      <td class="num">$968</td>
+      <td class="num">$18,766</td>
+      <td class="num"><strong class="val-good">19.39x</strong></td>
+      <td class="num">3</td>
+      <td class="num">17,288</td>
+      <td class="num">1.41%</td>
+      <td class="num">1.4</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="data:image/svg+xml;utf8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;60&quot; height=&quot;60&quot;&gt;&lt;rect width=&quot;60&quot; height=&quot;60&quot; fill=&quot;%23232a32&quot;/&gt;&lt;/svg&gt;" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Img - TJ - R02v3-elite-mystery-box</div><div class="ad-sub">[TJ] - ABO INICIAL · TJ - M4 - F2 - CC$1000 - Imáge</div></td>
+      <td><span class="status-pill st-paused">?</span></td>
+      <td class="num">$966</td>
+      <td class="num">$0</td>
+      <td class="num"><strong class="val-bad">0.00x</strong></td>
+      <td class="num">0</td>
+      <td class="num">17,268</td>
+      <td class="num">1.05%</td>
+      <td class="num">2.2</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="data:image/svg+xml;utf8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;60&quot; height=&quot;60&quot;&gt;&lt;rect width=&quot;60&quot; height=&quot;60&quot; fill=&quot;%23232a32&quot;/&gt;&lt;/svg&gt;" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Vid - TJ General v2</div><div class="ad-sub">[TJ] - ABO INICIAL · TJ - M4 - F1 - CC$1000 - Video</div></td>
+      <td><span class="status-pill st-paused">?</span></td>
+      <td class="num">$955</td>
+      <td class="num">$2,403</td>
+      <td class="num"><strong class="val-mid">2.52x</strong></td>
+      <td class="num">1</td>
+      <td class="num">21,509</td>
+      <td class="num">1.45%</td>
+      <td class="num">1.6</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="https://scontent.fmex23-1.fna.fbcdn.net/v/t15.5256-10/709547940_1328157862564891_7460498798800238356_n.jpg?_nc_cat=101&amp;ccb=1-7&amp;_nc_ohc=bFctDfqviD4Q7kNvwEMSm_x&amp;_nc_oc=AdpucXk5zM0YuLS4j1cs3SKOu9AA7K8W-N9SLQ1kCAAWqrqx_Wf637nFN-e3HebzG1I&amp;_nc_zt=23&amp;_nc_ht=scontent.fmex23-1.fna&amp;edm=AOgd6ZUEAAAA&amp;_nc_gid=zmulmcu6XFYBnO6EEAWV7A&amp;_nc_tpa=Q5bMBQE9WlMjgR3Bf0rbPp1wZQWcVmvro_6-E6DjjAOrpXc0hR8IyeU_NPMcFwy0mhlGoZy6zMsB5eDasA&amp;stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&amp;ur=d2b52d&amp;_nc_sid=58080a&amp;oh=00_Af_55baRWrOwNvcGpbdg9hoBq5qm_dHtfsxuXpBCpZ1K3A&amp;oe=6A3A179F" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Vid - Kike MB 3</div><div class="ad-sub">HOT SALE 2026 · UGC</div></td>
+      <td><span class="status-pill st-paused">PAUSED</span></td>
+      <td class="num">$917</td>
+      <td class="num">$0</td>
+      <td class="num"><strong class="val-bad">0.00x</strong></td>
+      <td class="num">0</td>
+      <td class="num">14,911</td>
+      <td class="num">1.67%</td>
+      <td class="num">1.5</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="data:image/svg+xml;utf8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;60&quot; height=&quot;60&quot;&gt;&lt;rect width=&quot;60&quot; height=&quot;60&quot; fill=&quot;%23232a32&quot;/&gt;&lt;/svg&gt;" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">STATIC-V1-mb-se-acaban</div><div class="ad-sub">HOT SALE 2026 · STATIC</div></td>
+      <td><span class="status-pill st-paused">?</span></td>
+      <td class="num">$901</td>
+      <td class="num">$3,272</td>
+      <td class="num"><strong class="val-good">3.63x</strong></td>
+      <td class="num">1</td>
+      <td class="num">13,504</td>
+      <td class="num">1.38%</td>
+      <td class="num">1.9</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="data:image/svg+xml;utf8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;60&quot; height=&quot;60&quot;&gt;&lt;rect width=&quot;60&quot; height=&quot;60&quot; fill=&quot;%23232a32&quot;/&gt;&lt;/svg&gt;" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Img - Temporada Jedi5  v7</div><div class="ad-sub">[TJ] - ABO INICIAL · TJ - E1 -  F2  - Imágenes</div></td>
+      <td><span class="status-pill st-paused">?</span></td>
+      <td class="num">$892</td>
+      <td class="num">$9,756</td>
+      <td class="num"><strong class="val-good">10.94x</strong></td>
+      <td class="num">1</td>
+      <td class="num">25,241</td>
+      <td class="num">2.03%</td>
+      <td class="num">2.4</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="data:image/svg+xml;utf8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;60&quot; height=&quot;60&quot;&gt;&lt;rect width=&quot;60&quot; height=&quot;60&quot; fill=&quot;%23232a32&quot;/&gt;&lt;/svg&gt;" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Cat - Ofertas</div><div class="ad-sub">SL-TESTING · Catálogo - Free</div></td>
+      <td><span class="status-pill st-paused">?</span></td>
+      <td class="num">$882</td>
+      <td class="num">$2,403</td>
+      <td class="num"><strong class="val-mid">2.72x</strong></td>
+      <td class="num">1</td>
+      <td class="num">17,694</td>
+      <td class="num">2.14%</td>
+      <td class="num">2.6</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="data:image/svg+xml;utf8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;60&quot; height=&quot;60&quot;&gt;&lt;rect width=&quot;60&quot; height=&quot;60&quot; fill=&quot;%23232a32&quot;/&gt;&lt;/svg&gt;" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Vid - Miri - post</div><div class="ad-sub">SL RMKT v2 · RMKT</div></td>
+      <td><span class="status-pill st-paused">?</span></td>
+      <td class="num">$868</td>
+      <td class="num">$4,990</td>
+      <td class="num"><strong class="val-good">5.75x</strong></td>
+      <td class="num">1</td>
+      <td class="num">10,332</td>
+      <td class="num">4.49%</td>
+      <td class="num">1.4</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="https://scontent.fmex27-1.fna.fbcdn.net/v/t15.5256-10/580508568_1498767338023906_7949589706968662229_n.jpg?_nc_cat=111&amp;ccb=1-7&amp;_nc_ohc=detExjpEOyYQ7kNvwEhfwla&amp;_nc_oc=Adq7i77Ase6mlz16T9KsanzXDyQI7eS11iPOZRY1Vb5olae-eXjuT47agOBk_YouURg&amp;_nc_zt=23&amp;_nc_ht=scontent.fmex27-1.fna&amp;edm=AOgd6ZUEAAAA&amp;_nc_gid=zmulmcu6XFYBnO6EEAWV7A&amp;_nc_tpa=Q5bMBQE8kqcyU6Q9GTNsM9Ev-8kd0cetC-5UEiI6IiOW3BLZOGH0p9pjUXcifDfU8wVCg_XxEgQeuGcxAg&amp;stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&amp;ur=d2b52d&amp;_nc_sid=58080a&amp;oh=00_Af97xMbRwxhB0ZtXNSHViDRrjZdREv8lIuBjo-MaAe2BrA&amp;oe=6A39F6B0" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Vid - Review Galeazzi - post</div><div class="ad-sub">SL RMKT v2 · RMKT</div></td>
+      <td><span class="status-pill st-paused">PAUSED</span></td>
+      <td class="num">$823</td>
+      <td class="num">$0</td>
+      <td class="num"><strong class="val-bad">0.00x</strong></td>
+      <td class="num">0</td>
+      <td class="num">15,001</td>
+      <td class="num">3.86%</td>
+      <td class="num">2.0</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="data:image/svg+xml;utf8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;60&quot; height=&quot;60&quot;&gt;&lt;rect width=&quot;60&quot; height=&quot;60&quot; fill=&quot;%23232a32&quot;/&gt;&lt;/svg&gt;" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Vid - Adept Aquí - Copia</div><div class="ad-sub">CONV CBO - Personajes · FREE</div></td>
+      <td><span class="status-pill st-paused">?</span></td>
+      <td class="num">$810</td>
+      <td class="num">$0</td>
+      <td class="num"><strong class="val-bad">0.00x</strong></td>
+      <td class="num">0</td>
+      <td class="num">20,813</td>
+      <td class="num">5.22%</td>
+      <td class="num">1.5</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="https://scontent.fmex5-1.fna.fbcdn.net/v/t15.5256-10/569959787_832447316068903_3228679949250453950_n.jpg?_nc_cat=102&amp;ccb=1-7&amp;_nc_ohc=oWymSrKBPTEQ7kNvwGj7qXj&amp;_nc_oc=AdqeeztqzGycXRi7IOU9uqRYaUYDI3T8tlN5Sar4vuYmpjH9g00yzYmzMrgWUqiX6LI&amp;_nc_zt=23&amp;_nc_ht=scontent.fmex5-1.fna&amp;edm=AOgd6ZUEAAAA&amp;_nc_gid=zmulmcu6XFYBnO6EEAWV7A&amp;_nc_tpa=Q5bMBQGLD_a7PnornWDpjjVNrg4U2jC9XrJLEQ_Ync1ifRaVnnzETbZrz2fiWb3xxloSPh9TVt4UySbaNA&amp;stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&amp;ur=d2b52d&amp;_nc_sid=58080a&amp;oh=00_Af8hTMWJ5ImaYOaum8OQpwqFDi5S-zwhiHk1dqXhuIS4xw&amp;oe=6A3A15A3" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Vid - SL - Transform DayNight + Fight Subs - Copia</div><div class="ad-sub">ABO Bestt w/ LLAs · LLA+ CC$1500</div></td>
+      <td><span class="status-pill st-paused">PAUSED</span></td>
+      <td class="num">$772</td>
+      <td class="num">$0</td>
+      <td class="num"><strong class="val-bad">0.00x</strong></td>
+      <td class="num">0</td>
+      <td class="num">17,028</td>
+      <td class="num">8.62%</td>
+      <td class="num">1.3</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="https://external.fmex31-1.fna.fbcdn.net/emg1/v/t13/8281117851957269896?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQKvwdlDC5D6EsWm7B1OFH_CjfVnRGgY-QnrLr6DfhxJZQjzBNUs76niVfUGLVxQaaB90m9Bs2WNhfNX5rESt8WnttKhdmvu4QBmlgoe1Bidwlz-Zlh-96UQ6mnsByQdQEYOqboX3IEfwxNzgU-wfkke&amp;fb_obo=1&amp;utld=facebook.com&amp;stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&amp;edm=AOgd6ZUEAAAA&amp;_nc_gid=zmulmcu6XFYBnO6EEAWV7A&amp;_nc_oc=AdpSsAO_PwuLmpJeBw-xsR4YIhnJTz_FO8iPvl_QalszpZRO_fmsrqLqhpVNZRGk7Ho&amp;ccb=13-1&amp;oh=06_Q3_AASFk6l0bkRdyqEC_rGOdyzkozGhJYDlb_wGXU_vNiFQZ&amp;oe=6A362E3E&amp;_nc_sid=58080a" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Img - TJ - R05v6-adept-spotlight-retro</div><div class="ad-sub">[TJ] - ABO INICIAL · TJ - M4 - F2 - CC$1000 - Imáge</div></td>
+      <td><span class="status-pill st-paused">PAUSED</span></td>
+      <td class="num">$748</td>
+      <td class="num">$0</td>
+      <td class="num"><strong class="val-bad">0.00x</strong></td>
+      <td class="num">0</td>
+      <td class="num">14,470</td>
+      <td class="num">1.29%</td>
+      <td class="num">1.8</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="data:image/svg+xml;utf8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;60&quot; height=&quot;60&quot;&gt;&lt;rect width=&quot;60&quot; height=&quot;60&quot; fill=&quot;%23232a32&quot;/&gt;&lt;/svg&gt;" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Img - Temporada Jedi5  v7</div><div class="ad-sub">[TJ] - ABO INICIAL · TJ - E1 - F1 - Imágenes</div></td>
+      <td><span class="status-pill st-paused">?</span></td>
+      <td class="num">$698</td>
+      <td class="num">$4,114</td>
+      <td class="num"><strong class="val-good">5.90x</strong></td>
+      <td class="num">1</td>
+      <td class="num">22,174</td>
+      <td class="num">2.28%</td>
+      <td class="num">1.7</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="data:image/svg+xml;utf8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;60&quot; height=&quot;60&quot;&gt;&lt;rect width=&quot;60&quot; height=&quot;60&quot; fill=&quot;%23232a32&quot;/&gt;&lt;/svg&gt;" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Vid - Rotate Phone - post</div><div class="ad-sub">SL RMKT v2 · RMKT</div></td>
+      <td><span class="status-pill st-paused">?</span></td>
+      <td class="num">$684</td>
+      <td class="num">$2,524</td>
+      <td class="num"><strong class="val-good">3.69x</strong></td>
+      <td class="num">1</td>
+      <td class="num">7,513</td>
+      <td class="num">2.93%</td>
+      <td class="num">2.4</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="data:image/svg+xml;utf8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;60&quot; height=&quot;60&quot;&gt;&lt;rect width=&quot;60&quot; height=&quot;60&quot; fill=&quot;%23232a32&quot;/&gt;&lt;/svg&gt;" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Vid - Kike MB Urgencia</div><div class="ad-sub">HOT SALE 2026 · UGC</div></td>
+      <td><span class="status-pill st-paused">?</span></td>
+      <td class="num">$674</td>
+      <td class="num">$9,348</td>
+      <td class="num"><strong class="val-good">13.86x</strong></td>
+      <td class="num">3</td>
+      <td class="num">9,222</td>
+      <td class="num">1.43%</td>
+      <td class="num">2.0</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="data:image/svg+xml;utf8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;60&quot; height=&quot;60&quot;&gt;&lt;rect width=&quot;60&quot; height=&quot;60&quot; fill=&quot;%23232a32&quot;/&gt;&lt;/svg&gt;" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Vid - TJ General v1 - post</div><div class="ad-sub">[TJ] - ABO INICIAL · TJ - M4 - F2 - CC$1000 - Video</div></td>
+      <td><span class="status-pill st-paused">?</span></td>
+      <td class="num">$663</td>
+      <td class="num">$6,090</td>
+      <td class="num"><strong class="val-good">9.19x</strong></td>
+      <td class="num">1</td>
+      <td class="num">12,526</td>
+      <td class="num">1.85%</td>
+      <td class="num">1.8</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="https://scontent.fmex36-1.fna.fbcdn.net/v/t15.13418-10/476520335_1210327470666487_6549054566766150759_n.jpg?_nc_cat=106&amp;ccb=1-7&amp;_nc_ohc=zuo2BghzTe8Q7kNvwE-k-Fl&amp;_nc_oc=Adr_m4ZPWoxZgvt6NFHgaVd1iDbpx3Mta_t4mZbZdFXOyH_nS67txXSOgs06vSd3sZU&amp;_nc_zt=23&amp;_nc_ht=scontent.fmex36-1.fna&amp;edm=AOgd6ZUEAAAA&amp;_nc_gid=zmulmcu6XFYBnO6EEAWV7A&amp;_nc_tpa=Q5bMBQFmavuTTAr4aZpedRturgy7u7pqCG100sYz4T4qQTLuUsaB7HZdZVlvpmeDkD5xuOaDezAw5FwYZA&amp;stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&amp;ur=c3b633&amp;_nc_sid=58080a&amp;oh=00_Af8fIQhkxeISfy8DEtM1-yYEYw5Q6UB0QeFTugqgdFx_Kw&amp;oe=6A39FB7E" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Vid - Graflex MII Evergreen</div><div class="ad-sub">CONV v13 · Personajes Evergreen CC$1000</div></td>
+      <td><span class="status-pill st-active">ACTIVE</span></td>
+      <td class="num">$645</td>
+      <td class="num">$7,656</td>
+      <td class="num"><strong class="val-good">11.86x</strong></td>
+      <td class="num">1</td>
+      <td class="num">6,949</td>
+      <td class="num">2.23%</td>
+      <td class="num">2.3</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="data:image/svg+xml;utf8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;60&quot; height=&quot;60&quot;&gt;&lt;rect width=&quot;60&quot; height=&quot;60&quot; fill=&quot;%23232a32&quot;/&gt;&lt;/svg&gt;" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Vid - Review Galeazzi - post</div><div class="ad-sub">SL-TESTING · UGC - Free</div></td>
+      <td><span class="status-pill st-paused">?</span></td>
+      <td class="num">$643</td>
+      <td class="num">$0</td>
+      <td class="num"><strong class="val-bad">0.00x</strong></td>
+      <td class="num">0</td>
+      <td class="num">12,611</td>
+      <td class="num">6.38%</td>
+      <td class="num">1.3</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="data:image/svg+xml;utf8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;60&quot; height=&quot;60&quot;&gt;&lt;rect width=&quot;60&quot; height=&quot;60&quot; fill=&quot;%23232a32&quot;/&gt;&lt;/svg&gt;" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Img - F2 Imperio - W2 split duel</div><div class="ad-sub">[TJ] - ABO INICIAL · TJ - E2 - F1 - CC$1000 - Imáge</div></td>
+      <td><span class="status-pill st-paused">?</span></td>
+      <td class="num">$642</td>
+      <td class="num">$7,790</td>
+      <td class="num"><strong class="val-good">12.13x</strong></td>
+      <td class="num">1</td>
+      <td class="num">12,782</td>
+      <td class="num">1.46%</td>
+      <td class="num">1.8</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="data:image/svg+xml;utf8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;60&quot; height=&quot;60&quot;&gt;&lt;rect width=&quot;60&quot; height=&quot;60&quot; fill=&quot;%23232a32&quot;/&gt;&lt;/svg&gt;" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Img - Kylo Review v1 - post</div><div class="ad-sub">SL-TESTING · Experiencia - Free</div></td>
+      <td><span class="status-pill st-paused">?</span></td>
+      <td class="num">$610</td>
+      <td class="num">$0</td>
+      <td class="num"><strong class="val-bad">0.00x</strong></td>
+      <td class="num">0</td>
+      <td class="num">17,292</td>
+      <td class="num">2.30%</td>
+      <td class="num">1.6</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="data:image/svg+xml;utf8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;60&quot; height=&quot;60&quot;&gt;&lt;rect width=&quot;60&quot; height=&quot;60&quot; fill=&quot;%23232a32&quot;/&gt;&lt;/svg&gt;" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">STATIC-V3-sorteo-15k</div><div class="ad-sub">MAY 4TH 2026 · STATIC</div></td>
+      <td><span class="status-pill st-paused">?</span></td>
+      <td class="num">$583</td>
+      <td class="num">$9,648</td>
+      <td class="num"><strong class="val-good">16.56x</strong></td>
+      <td class="num">2</td>
+      <td class="num">7,954</td>
+      <td class="num">1.55%</td>
+      <td class="num">1.9</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="data:image/svg+xml;utf8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;60&quot; height=&quot;60&quot;&gt;&lt;rect width=&quot;60&quot; height=&quot;60&quot; fill=&quot;%23232a32&quot;/&gt;&lt;/svg&gt;" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Vid - VDR v2 Rap - post</div><div class="ad-sub">SL-TESTING · Personajes - Free</div></td>
+      <td><span class="status-pill st-paused">?</span></td>
+      <td class="num">$550</td>
+      <td class="num">$0</td>
+      <td class="num"><strong class="val-bad">0.00x</strong></td>
+      <td class="num">0</td>
+      <td class="num">17,690</td>
+      <td class="num">11.94%</td>
+      <td class="num">1.2</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="data:image/svg+xml;utf8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;60&quot; height=&quot;60&quot;&gt;&lt;rect width=&quot;60&quot; height=&quot;60&quot; fill=&quot;%23232a32&quot;/&gt;&lt;/svg&gt;" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Vid - Exile v2 - post</div><div class="ad-sub">CONV ASC - Viena · Winners - broad MX A</div></td>
+      <td><span class="status-pill st-paused">?</span></td>
+      <td class="num">$547</td>
+      <td class="num">$0</td>
+      <td class="num"><strong class="val-bad">0.00x</strong></td>
+      <td class="num">0</td>
+      <td class="num">6,169</td>
+      <td class="num">6.74%</td>
+      <td class="num">1.1</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="data:image/svg+xml;utf8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;60&quot; height=&quot;60&quot;&gt;&lt;rect width=&quot;60&quot; height=&quot;60&quot; fill=&quot;%23232a32&quot;/&gt;&lt;/svg&gt;" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Vid - Graflex MII v2 - Copia</div><div class="ad-sub">CONV CBO - Personajes · FREE</div></td>
+      <td><span class="status-pill st-paused">?</span></td>
+      <td class="num">$525</td>
+      <td class="num">$8,900</td>
+      <td class="num"><strong class="val-good">16.96x</strong></td>
+      <td class="num">1</td>
+      <td class="num">7,876</td>
+      <td class="num">2.92%</td>
+      <td class="num">1.6</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="data:image/svg+xml;utf8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;60&quot; height=&quot;60&quot;&gt;&lt;rect width=&quot;60&quot; height=&quot;60&quot; fill=&quot;%23232a32&quot;/&gt;&lt;/svg&gt;" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Img - Mystery Box - Evergreen</div><div class="ad-sub">CONV ASC - Viena · Winners - broad MX A</div></td>
+      <td><span class="status-pill st-paused">?</span></td>
+      <td class="num">$507</td>
+      <td class="num">$4,617</td>
+      <td class="num"><strong class="val-good">9.11x</strong></td>
+      <td class="num">1</td>
+      <td class="num">17,884</td>
+      <td class="num">1.22%</td>
+      <td class="num">1.9</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="data:image/svg+xml;utf8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;60&quot; height=&quot;60&quot;&gt;&lt;rect width=&quot;60&quot; height=&quot;60&quot; fill=&quot;%23232a32&quot;/&gt;&lt;/svg&gt;" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Vid - Demo Champion 1 - post</div><div class="ad-sub">SL RMKT v2 · RMKT</div></td>
+      <td><span class="status-pill st-paused">?</span></td>
+      <td class="num">$506</td>
+      <td class="num">$17,575</td>
+      <td class="num"><strong class="val-good">34.70x</strong></td>
+      <td class="num">4</td>
+      <td class="num">6,352</td>
+      <td class="num">3.84%</td>
+      <td class="num">2.0</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="data:image/svg+xml;utf8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;60&quot; height=&quot;60&quot;&gt;&lt;rect width=&quot;60&quot; height=&quot;60&quot; fill=&quot;%23232a32&quot;/&gt;&lt;/svg&gt;" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Img - Graflex Review v3 - post</div><div class="ad-sub">SL-TESTING · Experiencia - Free</div></td>
+      <td><span class="status-pill st-paused">?</span></td>
+      <td class="num">$488</td>
+      <td class="num">$0</td>
+      <td class="num"><strong class="val-bad">0.00x</strong></td>
+      <td class="num">0</td>
+      <td class="num">10,724</td>
+      <td class="num">3.28%</td>
+      <td class="num">1.4</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="https://scontent.fmex26-1.fna.fbcdn.net/v/t15.13418-10/442098773_335329382951927_7713203974583099996_n.jpg?_nc_cat=100&amp;ccb=1-7&amp;_nc_ohc=7etTljHIK78Q7kNvwFdYRGV&amp;_nc_oc=Adqd8rrm9dSR9JL2aXT5u2k9HlSR-KBHpce45S6Cenl8rliLhHivcJ9_xydXp4K5sng&amp;_nc_zt=23&amp;_nc_ht=scontent.fmex26-1.fna&amp;edm=AOgd6ZUEAAAA&amp;_nc_gid=zmulmcu6XFYBnO6EEAWV7A&amp;_nc_tpa=Q5bMBQFrZ9NeDjFIte8Id9XMwWA6cqzMv50YtmTuRxMGE_W-AdLiqJc4kqwusoNkZzc4Kg_l_dQI52HV4g&amp;stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&amp;ur=ac5893&amp;_nc_sid=58080a&amp;oh=00_Af_v6SWnifhn-AoSnkUF2tsiM3b9-jBaLo0Dec9WJXa60A&amp;oe=6A3A1296" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Vid - Darksaber</div><div class="ad-sub">CONV CBO - Personajes · FREE</div></td>
+      <td><span class="status-pill st-paused">PAUSED</span></td>
+      <td class="num">$483</td>
+      <td class="num">$0</td>
+      <td class="num"><strong class="val-bad">0.00x</strong></td>
+      <td class="num">0</td>
+      <td class="num">30,568</td>
+      <td class="num">11.25%</td>
+      <td class="num">1.1</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="data:image/svg+xml;utf8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;60&quot; height=&quot;60&quot;&gt;&lt;rect width=&quot;60&quot; height=&quot;60&quot; fill=&quot;%23232a32&quot;/&gt;&lt;/svg&gt;" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Vid - Choose Subs Hotsale</div><div class="ad-sub">HOT SALE 2026 · REEDICIONES</div></td>
+      <td><span class="status-pill st-paused">?</span></td>
+      <td class="num">$478</td>
+      <td class="num">$0</td>
+      <td class="num"><strong class="val-bad">0.00x</strong></td>
+      <td class="num">0</td>
+      <td class="num">8,513</td>
+      <td class="num">1.90%</td>
+      <td class="num">1.4</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="https://external.fmex31-1.fna.fbcdn.net/emg1/v/t13/17731151143301072041?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQJ9potOBVB2bYmmzZh_6Z30CB91y0-9F-KQQodD0HDbdMJ_jTZjVJVXXVCAjsAiOiYcuBmDsqLGiWsAPT_dzEXHLvy7ZDD8Qxm8-pwuJgLRSvKU54zRzbeLtPBGo9rez8GolgsvOfRyYU4fwIEfRIWt&amp;fb_obo=1&amp;utld=facebook.com&amp;stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&amp;edm=AOgd6ZUEAAAA&amp;_nc_gid=zmulmcu6XFYBnO6EEAWV7A&amp;_nc_oc=AdoDExtr4sI6ZcUwzAufXsOBY_I8muaLJ4paC1cYkTP7468a4raPWUZasHskNzUnasc&amp;ccb=13-1&amp;oh=06_Q3_AARJ45AOdQWMCKkSbcPddl8MWSfyN7WxJUebR41rvs0P8&amp;oe=6A361F2F&amp;_nc_sid=58080a" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">STATIC-V1-exile-luke</div><div class="ad-sub">MAY 4TH 2026 · STATIC</div></td>
+      <td><span class="status-pill st-paused">PAUSED</span></td>
+      <td class="num">$446</td>
+      <td class="num">$0</td>
+      <td class="num"><strong class="val-bad">0.00x</strong></td>
+      <td class="num">0</td>
+      <td class="num">6,812</td>
+      <td class="num">1.51%</td>
+      <td class="num">1.5</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="data:image/svg+xml;utf8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;60&quot; height=&quot;60&quot;&gt;&lt;rect width=&quot;60&quot; height=&quot;60&quot; fill=&quot;%23232a32&quot;/&gt;&lt;/svg&gt;" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">STATIC-V1-mb-abre-riesgo</div><div class="ad-sub">HOT SALE 2026 · STATIC</div></td>
+      <td><span class="status-pill st-paused">?</span></td>
+      <td class="num">$445</td>
+      <td class="num">$4,090</td>
+      <td class="num"><strong class="val-good">9.20x</strong></td>
+      <td class="num">1</td>
+      <td class="num">5,851</td>
+      <td class="num">1.54%</td>
+      <td class="num">1.8</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="data:image/svg+xml;utf8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;60&quot; height=&quot;60&quot;&gt;&lt;rect width=&quot;60&quot; height=&quot;60&quot; fill=&quot;%23232a32&quot;/&gt;&lt;/svg&gt;" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Vid - Graflex Hotsale</div><div class="ad-sub">HOT SALE 2026 · REEDICIONES</div></td>
+      <td><span class="status-pill st-paused">?</span></td>
+      <td class="num">$429</td>
+      <td class="num">$0</td>
+      <td class="num"><strong class="val-bad">0.00x</strong></td>
+      <td class="num">0</td>
+      <td class="num">7,240</td>
+      <td class="num">1.33%</td>
+      <td class="num">1.3</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="data:image/svg+xml;utf8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;60&quot; height=&quot;60&quot;&gt;&lt;rect width=&quot;60&quot; height=&quot;60&quot; fill=&quot;%23232a32&quot;/&gt;&lt;/svg&gt;" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Vid - TJ General v2 - post</div><div class="ad-sub">[TJ] - ABO INICIAL · TJ - M4 - F2 - CC$1000 - Video</div></td>
+      <td><span class="status-pill st-paused">?</span></td>
+      <td class="num">$429</td>
+      <td class="num">$5,176</td>
+      <td class="num"><strong class="val-good">12.06x</strong></td>
+      <td class="num">1</td>
+      <td class="num">4,710</td>
+      <td class="num">2.51%</td>
+      <td class="num">1.5</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="data:image/svg+xml;utf8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;60&quot; height=&quot;60&quot;&gt;&lt;rect width=&quot;60&quot; height=&quot;60&quot; fill=&quot;%23232a32&quot;/&gt;&lt;/svg&gt;" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Vid - TJ General v4 - post</div><div class="ad-sub">[TJ] - ABO INICIAL · TJ - M4 - F2 - CC$1000 - Video</div></td>
+      <td><span class="status-pill st-paused">?</span></td>
+      <td class="num">$418</td>
+      <td class="num">$5,966</td>
+      <td class="num"><strong class="val-good">14.27x</strong></td>
+      <td class="num">1</td>
+      <td class="num">3,968</td>
+      <td class="num">2.27%</td>
+      <td class="num">1.8</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="data:image/svg+xml;utf8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;60&quot; height=&quot;60&quot;&gt;&lt;rect width=&quot;60&quot; height=&quot;60&quot; fill=&quot;%23232a32&quot;/&gt;&lt;/svg&gt;" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">Img - Hero Exile Spring10</div><div class="ad-sub">[Spring Sale] — Roma · F1 - Imágenes</div></td>
+      <td><span class="status-pill st-paused">?</span></td>
+      <td class="num">$402</td>
+      <td class="num">$0</td>
+      <td class="num"><strong class="val-bad">0.00x</strong></td>
+      <td class="num">0</td>
+      <td class="num">13,648</td>
+      <td class="num">1.67%</td>
+      <td class="num">1.5</td>
+    </tr><tr>
+      <td><img class="ad-thumb" src="data:image/svg+xml;utf8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;60&quot; height=&quot;60&quot;&gt;&lt;rect width=&quot;60&quot; height=&quot;60&quot; fill=&quot;%23232a32&quot;/&gt;&lt;/svg&gt;" alt="" onerror="this.style.opacity=0.2"></td>
+      <td><div class="ad-name">STATIC-V1-mb-mas-4500</div><div class="ad-sub">HOT SALE 2026 · STATIC</div></td>
+      <td><span class="status-pill st-paused">?</span></td>
+      <td class="num">$392</td>
+      <td class="num">$3,272</td>
+      <td class="num"><strong class="val-good">8.34x</strong></td>
+      <td class="num">1</td>
+      <td class="num">5,188</td>
+      <td class="num">1.18%</td>
+      <td class="num">1.6</td>
+    </tr></tbody>
+      </table>
+    </div>
+  </div>
+
+  <footer>SABER LEGACY · ACM · Generado 18/06/2026 · 21:08 · 130 anuncios con spend &gt; $100 MXN en últimos 90 días</footer>
+</div>
+
+<script>
+Chart.defaults.color = '#6c7686';
+Chart.defaults.font.family = "'Inter', sans-serif";
+Chart.defaults.borderColor = '#1f2630';
+
+const YEL = '#fff200', GRN = '#00ff94', MAG = '#ff2da4', BLU = '#38bdf8', PUR = '#b794f6';
+
+// Daily chart
+new Chart(document.getElementById('chartDaily').getContext('2d'), {
+  type: 'bar',
+  data: {
+    labels: ["03-17", "03-18", "03-19", "03-20", "03-21", "03-22", "03-23", "03-24", "03-25", "03-26", "03-27", "03-28", "03-29", "03-30", "03-31", "04-01", "04-02", "04-03", "04-04", "04-05", "04-06", "04-07", "04-08", "04-09", "04-10", "04-11", "04-12", "04-13", "04-14", "04-15", "04-16", "04-17", "04-18", "04-19", "04-20", "04-21", "04-22", "04-23", "04-24", "04-25", "04-26", "04-27", "04-28", "04-29", "04-30", "05-01", "05-02", "05-03", "05-04", "05-05", "05-06", "05-07", "05-08", "05-09", "05-10", "05-11", "05-12", "05-13", "05-14", "05-15", "05-16", "05-17", "05-18", "05-19", "05-20", "05-21", "05-22", "05-23", "05-24", "05-25", "05-26", "05-27", "05-28", "05-29", "05-30", "05-31", "06-01", "06-02", "06-03", "06-04", "06-05", "06-06", "06-07", "06-08", "06-09", "06-10"],
+    datasets: [
+      {type:'bar', label:'Spend', data: [1111, 1212, 949, 1320, 1078, 1490, 1289, 1233, 1507, 1090, 1201, 1136, 1735, 1316, 1479, 1089, 881, 1040, 806, 1219, 1193, 1093, 1043, 1320, 1246, 977, 1236, 1185, 1080, 1127, 207, 708, 766, 203, 903, 1704, 2861, 3526, 3209, 3373, 5272, 4467, 4231, 4066, 4104, 10883, 14288, 16347, 27964, 2026, 1024, 1025, 1027, 990, 963, 573, 610, 618, 527, 77, 0, 0, 57, 132, 127, 118, 129, 136, 98, 102, 97, 97, 1311, 6721, 3156, 1399, 1614, 2305, 105, 41, 19, 22, 22, 21, 8, 0], backgroundColor: 'rgba(255,242,0,0.6)', borderColor: YEL, borderWidth:1, yAxisID:'y', order:2},
+      {type:'line', label:'Ventas', data: [0, 4570, 7476, 5244, 0, 0, 4630, 0, 9170, 0, 2403, 8900, 0, 0, 0, 0, 0, 13990, 3300, 2970, 5790, 5348, 0, 8337, 2970, 11919, 5643, 0, 9120, 6370, 0, 17546, 0, 7776, 13620, 8919, 19953, 17358, 4544, 14976, 13389, 37577, 8879, 5733, 26351, 89375, 144671, 110740, 241993, 7939, 4752, 0, 7097, 0, 0, 0, 0, 0, 7378, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4848, 7347, 0, 17680, 36954, 3272, 0, 0, 0, 0, 0, 0, 0, 0], borderColor: GRN, backgroundColor: 'rgba(0,255,148,0.15)', tension: 0.3, borderWidth: 2, pointRadius:0, yAxisID:'y', fill:true, order:1}
+    ]
+  },
+  options: {
+    responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{position:'top',align:'end',labels:{font:{size:10}}}},
+    scales:{
+      x:{grid:{display:false}, ticks:{font:{size:9}, maxTicksLimit:18}},
+      y:{grid:{color:'rgba(255,242,0,0.05)'}, ticks:{font:{size:9}}}
+    }
+  }
+});
+
+// Monthly chart
+new Chart(document.getElementById('chartMonthly').getContext('2d'), {
+  type: 'bar',
+  data: {
+    labels: ["2024-06", "2024-07", "2024-08", "2024-09", "2024-10", "2024-11", "2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02", "2026-03", "2026-04", "2026-05", "2026-06"],
+    datasets: [
+      {label:'Spend', data: [10805, 16441, 16654, 20998, 20070, 24409, 19991, 12400, 18662, 19111, 19789, 75811, 26783, 18367, 14001, 11980, 49042, 62843, 59570, 41191, 12750, 26250, 56136, 92621, 4156], backgroundColor: 'rgba(56,189,248,0.6)', borderColor: BLU, borderWidth:1},
+      {label:'Ventas', data: [57262, 76822, 55112, 71451, 122783, 41632, 130955, 87201, 55230, 77752, 187169, 332852, 83335, 56284, 35032, 27512, 259736, 280256, 239659, 193703, 19326, 49872, 272379, 643819, 40226], backgroundColor: 'rgba(255,45,164,0.6)', borderColor: MAG, borderWidth:1}
+    ]
+  },
+  options: {
+    responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{position:'top',align:'end',labels:{font:{size:10}}}},
+    scales:{
+      x:{grid:{display:false}, ticks:{font:{size:9}}},
+      y:{grid:{color:'rgba(56,189,248,0.05)'}, ticks:{font:{size:9}}}
+    }
+  }
+});
+
+// Objective donut
+new Chart(document.getElementById('chartObjective').getContext('2d'), {
+  type: 'doughnut',
+  data: {
+    labels: ["OTHER"],
+    datasets:[{data: [172061], backgroundColor:[YEL, GRN, MAG, BLU, PUR], borderColor:'#0d1015', borderWidth:2}]
+  },
+  options: {
+    responsive:true, maintainAspectRatio:false, cutout:'62%',
+    plugins:{legend:{position:'right',labels:{font:{size:10}, color:'#e8edf5', boxWidth:10}}}
+  }
+});
+
+// Purchases evolution
+new Chart(document.getElementById('chartPurch').getContext('2d'), {
+  type: 'line',
+  data: {
+    labels: ["2024-06", "2024-07", "2024-08", "2024-09", "2024-10", "2024-11", "2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02", "2026-03", "2026-04", "2026-05", "2026-06"],
+    datasets:[{label:'Compras', data: [14, 17, 6, 20, 26, 10, 22, 16, 7, 13, 43, 84, 21, 12, 8, 5, 62, 55, 50, 30, 4, 11, 54, 122, 8], borderColor: GRN, backgroundColor: 'rgba(0,255,148,0.2)', tension: 0.3, borderWidth: 2.5, pointRadius: 3, pointBackgroundColor: GRN, fill: true}]
+  },
+  options: {
+    responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{display:false}},
+    scales:{
+      x:{grid:{display:false}, ticks:{font:{size:9}}},
+      y:{beginAtZero:true, grid:{color:'rgba(0,255,148,0.05)'}, ticks:{font:{size:9}}}
+    }
+  }
+});
+</script>
+</body>
+</html>
