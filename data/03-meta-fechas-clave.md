@@ -1,11 +1,9 @@
 # Performance en fechas clave
-_Actualizado: 20 de June de 2026_
-
-Cómo se ejecutaron las temporadas pico del calendario retail mexicano.
+_Actualizado: 23/06/2026_
 
 | Fecha | Rango | Inversión | Ventas | ROAS | Compras |
 |---|---|---:|---:|---:|---:|
-| Día del Padre 2025 | 2025-06-09 → 2025-06-15 (1d) | $234 | $379 | 1.62x | 1 |
+| Día del Padre 2025 | 2025-06-09 → 2025-06-15 (0d) | $0 | $0 | 0.00x | 0 |
 | Halloween 2025 | 2025-10-25 → 2025-10-31 (7d) | $12,521 | $69,860 | 5.58x | 17 |
 | Buen Fin 2025 | 2025-11-14 → 2025-11-17 (4d) | $10,335 | $84,872 | 8.21x | 16 |
 | Black Friday 2025 | 2025-11-27 → 2025-11-29 (3d) | $8,192 | $17,541 | 2.14x | 4 |
@@ -16,3 +14,4 @@ Cómo se ejecutaron las temporadas pico del calendario retail mexicano.
 | May 4th 2026 | 2026-05-01 → 2026-05-07 (7d) | $73,556 | $599,468 | 8.15x | 111 |
 | Día de las Madres 2026 | 2026-05-08 → 2026-05-10 (3d) | $2,980 | $7,097 | 2.38x | 2 |
 | Hot Sale 2026 | 2026-05-26 → 2026-06-02 (8d) | $16,699 | $70,101 | 4.20x | 16 |
+| Día del Padre 2026 | 2026-06-14 → 2026-06-21 (6d) | $3,547 | $1,600 | 0.45x | 2 |

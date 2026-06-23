@@ -1,11 +1,9 @@
 # Evolución mensual · Meta Ads
-_Actualizado: 20 de June de 2026_
-
-Inversión, ventas y retorno por mes según el píxel de Meta.
+_Actualizado: 23/06/2026_
 
 | Mes | Inversión | Ventas | ROAS | Compras | CPA | CPC | Frecuencia |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| Jun 24 | $10,805 | $57,262 | 5.30x | 14 | $772 | $0.79 | 2.7 |
+| Jun 24 | $3,399 | $26,249 | 7.72x | 7 | $486 | $0.92 | 2.1 |
 | Jul 24 | $16,441 | $76,822 | 4.67x | 17 | $967 | $0.74 | 3.4 |
 | Ago 24 | $16,654 | $55,112 | 3.31x | 6 | $2,776 | $0.83 | 3.2 |
 | Sep 24 | $20,998 | $71,451 | 3.40x | 20 | $1,050 | $0.98 | 3.0 |
@@ -29,6 +27,4 @@ Inversión, ventas y retorno por mes según el píxel de Meta.
 | Mar 26 | $26,250 | $49,872 | 1.90x | 11 | $2,386 | $0.48 | 2.6 |
 | Abr 26 | $56,136 | $272,379 | 4.85x | 54 | $1,040 | $1.44 | 4.1 |
 | May 26 | $92,621 | $643,819 | 6.95x | 122 | $759 | $1.21 | 3.1 |
-| Jun 26 | $4,156 | $40,226 | 9.68x | 8 | $520 | $1.26 | 1.8 |
-
-> Datos en MXN. ROAS = ventas / inversión.
+| Jun 26 | $7,703 | $41,826 | 5.43x | 10 | $770 | $1.36 | 2.8 |

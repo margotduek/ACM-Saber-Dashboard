@@ -1,15 +1,14 @@
 # Ventas reales en Shopify · Atribución vs Meta
-_Actualizado: 20 de June de 2026 · 542 transacciones · 8.5 meses_
+_Actualizado: 23/06/2026 · 542 transacciones · histórico_
 
-## Resumen de status
+## Status
 | Status | Cantidad | % |
 |---|---:|---:|
 | success | 479 | 88.4% |
 | failure | 56 | 10.3% |
 | pending | 7 | 1.3% |
 
-
-**🚨 Tasa de fallos de pago: 10.3%** — $301,183 en intentos no completados. Casi todo pasa por Mercado Pago.
+**🚨 Tasa de fallos de pago: 10.3%** — $301,183 en intentos no completados.
 
 ## Mes a mes: Shopify real vs Meta-atribuido
 
@@ -24,4 +23,4 @@ _Actualizado: 20 de June de 2026 · 542 transacciones · 8.5 meses_
 | Mar 26 | 16 | $88,436 | $49,872 | 56% |
 | Abr 26 | 69 | $364,643 | $272,379 | 75% |
 | May 26 | 151 | $785,203 | $643,819 | 82% |
-| Jun 26 | 14 | $62,064 | $40,226 | 65% |
+| Jun 26 | 14 | $62,064 | $41,826 | 67% |
