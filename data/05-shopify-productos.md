@@ -1,25 +1,26 @@
-# Top productos · Shopify (60 días)
-_Actualizado: 23/06/2026 · 189 órdenes_
+# Top productos · Shopify (auto-generado, ventana disponible vía API)
+
+_Actualizado: 2026-07-06 · 41 órdenes en la ventana accesible por el token_
 
 | # | Producto | Revenue | Unidades | Órdenes |
 |---|---|---:|---:|---:|
-| 1 | MYSTERY BOX | $225,150 | 64 | 60 |
-| 2 | ELITE MYSTERY BOX | $110,680 | 16 | 16 |
-| 3 | MAULER | $103,150 | 11 | 11 |
-| 4 | GRAFLEX V2 | $83,290 | 15 | 15 |
-| 5 | VADER MKII | $78,510 | 9 | 9 |
-| 6 | EXILE | $76,910 | 12 | 12 |
-| 7 | LIGHTSABER NECKLACE | $72,000 | 144 | 144 |
-| 8 | PREVENTA VELORIAN | $50,960 | 8 | 8 |
-| 9 | Vader V2 | $43,689 | 8 | 7 |
-| 10 | REVENGE | $30,978 | 7 | 7 |
-| 11 | PREVENTA BASTILA SHAN | $27,110 | 3 | 3 |
-| 12 | DARKSABER MKII | $26,910 | 3 | 3 |
-| 13 | GUARDIAN | $26,350 | 3 | 3 |
-| 14 | GRAFLEX MKII | $24,820 | 3 | 3 |
-| 15 | GUARDIAN V2 | $21,240 | 3 | 3 |
-| 16 | TICKET SORTEO MAY 4TH | $21,100 | 118 | 118 |
-| 17 | PREVENTA ONIX | $19,990 | 4 | 4 |
-| 18 | FALLEN | $19,950 | 3 | 3 |
-| 19 | KORRIBAN | $15,320 | 2 | 2 |
-| 20 | EXILE MKII | $14,830 | 2 | 2 |
+| 1 | MYSTERY BOX | $79,290 | 18 | 16 |
+| 2 | GRAFLEX V2 | $25,060 | 4 | 4 |
+| 3 | VADER MKII | $17,580 | 2 | 2 |
+| 4 | RAVAGER MKII | $16,270 | 3 | 2 |
+| 5 | FALLEN | $11,980 | 2 | 2 |
+| 6 | ELITE MYSTERY BOX | $7,870 | 1 | 1 |
+| 7 | GUARDIAN V2 | $7,540 | 1 | 1 |
+| 8 | ADEPT | $7,538 | 2 | 2 |
+| 9 | KORRIBAN | $7,440 | 1 | 1 |
+| 10 | ECLIPSE | $5,740 | 1 | 1 |
+| 11 | X-1 | $5,440 | 1 | 1 |
+| 12 | HALF MAULER | $4,870 | 1 | 1 |
+| 13 | INQUISITOR | $4,590 | 1 | 1 |
+| 14 | DROMUND KAAS | $3,870 | 1 | 1 |
+| 15 | DISSIDENT | $3,670 | 1 | 1 |
+| 16 | SISTEMAS ELECTRONICOS | $3,190 | 1 | 1 |
+| 17 | BASE ACERO PREMIUM | $1,270 | 1 | 1 |
+| 18 | HOJA DE POLICARBONATO | $974 | 2 | 2 |
+| 19 | BATERÍAS | $837 | 3 | 2 |
+| 20 | CARGADORES | $315 | 2 | 1 |

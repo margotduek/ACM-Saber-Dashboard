@@ -1,20 +1,21 @@
-# Distribución geográfica · Shopify (60 días)
-_Actualizado: 23/06/2026_
+# Distribución geográfica · Shopify (auto-generado)
+
+_Actualizado: 2026-07-06 · 41 órdenes con dirección_
 
 | # | Estado | Órdenes | % del total |
 |---|---|---:|---:|
-| 1 | Ciudad de México | 56 | 29.6% |
-| 2 | México | 27 | 14.3% |
-| 3 | Jalisco | 14 | 7.4% |
-| 4 | Nuevo León | 13 | 6.9% |
-| 5 | Querétaro | 11 | 5.8% |
-| 6 | Guanajuato | 11 | 5.8% |
-| 7 | Baja California | 8 | 4.2% |
-| 8 | Veracruz | 6 | 3.2% |
-| 9 | Coahuila | 5 | 2.6% |
-| 10 | Baja California Sur | 4 | 2.1% |
-| 11 | Hidalgo | 4 | 2.1% |
-| 12 | Tamaulipas | 4 | 2.1% |
-| 13 | Chihuahua | 3 | 1.6% |
-| 14 | Aguascalientes | 3 | 1.6% |
-| 15 | Sinaloa | 3 | 1.6% |
+| 1 | Ciudad de México | 10 | 24.4% |
+| 2 | México | 8 | 19.5% |
+| 3 | Jalisco | 4 | 9.8% |
+| 4 | Guanajuato | 3 | 7.3% |
+| 5 | Hidalgo | 3 | 7.3% |
+| 6 | Coahuila | 2 | 4.9% |
+| 7 | Querétaro | 2 | 4.9% |
+| 8 | Nuevo León | 2 | 4.9% |
+| 9 | San Luis Potosí | 1 | 2.4% |
+| 10 | Puebla | 1 | 2.4% |
+| 11 | Baja California Sur | 1 | 2.4% |
+| 12 | Chihuahua | 1 | 2.4% |
+| 13 | Michoacán | 1 | 2.4% |
+| 14 | Aguascalientes | 1 | 2.4% |
+| 15 | Baja California | 1 | 2.4% |

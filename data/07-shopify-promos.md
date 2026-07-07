@@ -1,10 +1,8 @@
-# Códigos de descuento usados · Shopify (60 días)
-_Actualizado: 23/06/2026 · 189 órdenes_
+# Códigos de descuento usados · Shopify (auto-generado)
+
+_Actualizado: 2026-07-06 · 41 órdenes en la ventana accesible_
 
 | Código | Usos | % de órdenes |
 |---|---:|---:|
-| `MAY4TH` | 103 | 54.5% |
-| `JEDI10` | 24 | 12.7% |
-| `HOTSALE` | 22 | 11.6% |
-| `SLMX10OFF` | 1 | 0.5% |
-| `Isaacvallejo` | 1 | 0.5% |
+| `HOTSALE` | 22 | 53.7% |
+| `SLMX10OFF` | 1 | 2.4% |
