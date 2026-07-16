@@ -19,7 +19,17 @@ python3 fetch_data.py         # jala Meta Ads + Shopify a data.json
 python3 build_report_data.py  # regenera las tablas de data/*.md desde data.json
 ```
 
-Requiere un `.env` (no está en el repo) con `ACCESS_TOKEN`, `AD_ACCOUNT_ID`, `SHOPIFY_STORE`, `SHOPIFY_TOKEN`.
+### 🔑 Credenciales (repo público — las claves nunca se suben)
+
+El script necesita 4 valores: `ACCESS_TOKEN`, `AD_ACCOUNT_ID`, `SHOPIFY_STORE`, `SHOPIFY_TOKEN`. Como este repo es **público**, las claves nunca van en el código. Hay dos formas de dárselas, según dónde trabajes:
+
+- **Local:** copia `.env.example` a `.env`, rellena los valores y listo. El `.env` está en `.gitignore`, así que no se sube.
+  ```bash
+  cp .env.example .env   # luego edita .env con tus claves
+  ```
+- **Remoto (Claude Code en la web):** no uses `.env`. Configura esas 4 variables como **variables de entorno / secrets del entorno de ejecución** desde la interfaz web. El script las toma automáticamente (las variables de entorno tienen prioridad sobre `.env`).
+
+En ambos casos las claves viven fuera del repo. Si falta alguna, el script avisa qué falta y no corre.
 
 ### Qué se regenera solo vs qué sigue siendo manual
 

@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
 """Pulls Meta Ads + Shopify data for the Saber Legacy dashboard and writes data.json."""
 import json
+import os
 import urllib.parse
 import urllib.request
 from pathlib import Path
+
+ENV_KEYS = ("ACCESS_TOKEN", "AD_ACCOUNT_ID", "SHOPIFY_STORE", "SHOPIFY_TOKEN")
 
 META_API_VERSION = "v23.0"
 META_BASE = f"https://graph.facebook.com/{META_API_VERSION}"
@@ -16,13 +19,30 @@ INSIGHT_FIELDS = (
 
 
 def load_env():
+    """Read credentials from a local .env file (if present) and from the
+    process environment. Environment variables take precedence, so remote
+    setups (Claude Code on the web) work by configuring secrets without
+    committing a .env file to this public repo."""
     env = {}
-    for line in Path(".env").read_text().splitlines():
-        line = line.strip()
-        if not line or line.startswith("#") or "=" not in line:
-            continue
-        k, v = line.split("=", 1)
-        env[k.strip()] = v.strip()
+    # 1. Local .env file — optional, used for local development.
+    if Path(".env").exists():
+        for line in Path(".env").read_text().splitlines():
+            line = line.strip()
+            if not line or line.startswith("#") or "=" not in line:
+                continue
+            k, v = line.split("=", 1)
+            env[k.strip()] = v.strip()
+    # 2. Environment variables — take precedence (remote / web).
+    for key in ENV_KEYS:
+        if os.environ.get(key):
+            env[key] = os.environ[key]
+    missing = [k for k in ENV_KEYS if not env.get(k)]
+    if missing:
+        raise SystemExit(
+            "Faltan credenciales: " + ", ".join(missing) + ".\n"
+            "Configúralas como variables de entorno (remoto) o en un archivo .env local.\n"
+            "Ver .env.example y el README para más detalle."
+        )
     return env
 
 
