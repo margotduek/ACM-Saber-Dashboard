@@ -3,576 +3,165 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <style>
-:root {
-  --bg: #08090d;
-  --panel: #11151c;
-  --panel-2: #181d27;
-  --border: #232a37;
-  --text: #e8edf5;
-  --muted: #7a8395;
-  --jedi: #38bdf8;
-  --yoda: #22c55e;
-  --sith: #ef4444;
-  --mace: #a78bfa;
-  --gold: #fbbf24;
-  --magenta: #ec4899;
-}
-* { box-sizing: border-box; }
-html, body { margin:0; padding:0; background:var(--bg); color:var(--text); font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif; font-size:14px; line-height:1.5; -webkit-font-smoothing:antialiased; }
-body { background-image: radial-gradient(ellipse at 0% 0%, rgba(56,189,248,0.04) 0%, transparent 50%), radial-gradient(ellipse at 100% 100%, rgba(167,139,250,0.04) 0%, transparent 50%); background-attachment:fixed; min-height:100vh; }
-.wrap { max-width:1480px; margin:0 auto; padding:24px; }
-
-/* TOP NAV — same in all pages */
-.topnav { display:flex; align-items:center; gap:16px; padding:14px 20px; background:var(--panel); border:1px solid var(--border); border-radius:12px; margin-bottom:20px; flex-wrap:wrap; }
-.topnav .brand { font-family:'Orbitron',sans-serif; font-size:16px; font-weight:800; letter-spacing:0.08em; color:var(--gold); text-shadow:0 0 12px rgba(251,191,36,0.3); }
-.topnav .nav-links { display:flex; gap:4px; flex:1; flex-wrap:wrap; }
-.topnav a { color:var(--muted); text-decoration:none; font-family:'Orbitron',sans-serif; font-size:11px; font-weight:600; padding:8px 14px; border-radius:8px; transition:all 0.15s; text-transform:uppercase; letter-spacing:0.08em; }
-.topnav a:hover { background:rgba(251,191,36,0.08); color:var(--text); }
-.topnav a.current { background:var(--gold); color:var(--bg); }
-.topnav .meta { font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--muted); }
-.topnav .meta strong { color:var(--yoda); }
-
-/* HERO BAR */
-.hero { padding:20px 24px; background:var(--panel); border:1px solid var(--border); border-radius:12px; margin-bottom:16px; }
-.hero h1 { font-family:'Orbitron',sans-serif; font-size:24px; font-weight:800; margin:0 0 6px; letter-spacing:0.04em; color:var(--text); }
-.hero .sub { font-size:13px; color:var(--muted); }
-.hero .sub strong { color:var(--text); }
-
-/* SECTION + HEADINGS */
-.section { background:var(--panel); border:1px solid var(--border); border-radius:12px; padding:18px 20px; margin-bottom:14px; }
-.section h2 { font-family:'Orbitron',sans-serif; font-size:13px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; margin:0 0 14px; color:var(--gold); display:flex; align-items:center; gap:10px; }
-.section h2::before { content:'◆'; font-size:9px; color:var(--magenta); }
-.section h2 .hint { font-family:'Inter',sans-serif; font-weight:400; color:var(--muted); font-size:12px; letter-spacing:0; text-transform:none; margin-left:6px; }
-
-/* GRIDS */
-.grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
-.grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
-.grid-4 { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
-.grid-5 { display:grid; grid-template-columns:repeat(5,1fr); gap:12px; }
-@media (max-width:1000px) { .grid-2,.grid-3,.grid-4,.grid-5 { grid-template-columns:1fr; } }
-
-/* STATS */
-.stat { background:var(--panel); border:1px solid var(--border); border-radius:12px; padding:18px 20px; position:relative; overflow:hidden; }
-.stat::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:var(--gold); }
-.stat.gold::before { background:var(--gold); }
-.stat.green::before { background:var(--yoda); }
-.stat.magenta::before { background:var(--magenta); }
-.stat.blue::before { background:var(--jedi); }
-.stat.purple::before { background:var(--mace); }
-.stat .lbl { font-size:10px; text-transform:uppercase; letter-spacing:0.1em; color:var(--muted); font-weight:700; }
-.stat .val { font-family:'Orbitron',sans-serif; font-size:28px; font-weight:800; margin:8px 0 4px; letter-spacing:-0.01em; color:var(--text); }
-.stat.gold .val { color:var(--gold); }
-.stat.green .val { color:var(--yoda); }
-.stat.magenta .val { color:var(--magenta); }
-.stat.blue .val { color:var(--jedi); }
-.stat.purple .val { color:var(--mace); }
-.stat .sub { font-size:11px; color:var(--muted); font-family:'JetBrains Mono',monospace; }
-.stat .delta { font-size:11px; font-weight:700; margin-top:4px; }
-.stat .delta.pos { color:var(--yoda); }
-.stat .delta.neg { color:var(--sith); }
-.stat .delta.muted { color:var(--muted); }
-.stat-mini { background:var(--panel); border:1px solid var(--border); border-radius:10px; padding:12px 14px; }
-.stat-mini .lbl { font-size:9px; text-transform:uppercase; letter-spacing:0.1em; color:var(--muted); font-weight:700; margin-bottom:6px; }
-.stat-mini .val { font-family:'Orbitron',sans-serif; font-size:18px; font-weight:700; }
-.stat-mini .delta { font-size:10px; margin-top:3px; font-weight:700; }
-.stat-mini .delta.pos { color:var(--yoda); }
-.stat-mini .delta.neg { color:var(--sith); }
-
-/* FILTER BAR */
-.filter-bar { background:var(--panel); border:1px solid var(--border); border-radius:10px; padding:12px 16px; margin-bottom:14px; display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
-.filter-bar .filter-label { font-family:'Orbitron',sans-serif; font-size:10px; text-transform:uppercase; letter-spacing:0.14em; color:var(--muted); font-weight:700; }
-.filter-buttons { display:flex; gap:4px; flex-wrap:wrap; background:var(--panel-2); padding:4px; border-radius:8px; }
-.filter-buttons button { background:transparent; border:none; color:var(--muted); padding:7px 14px; border-radius:6px; font-size:11px; font-weight:700; cursor:pointer; transition:all 0.15s; font-family:'Orbitron',sans-serif; letter-spacing:0.08em; text-transform:uppercase; }
-.filter-buttons button:hover { background:rgba(251,191,36,0.08); color:var(--text); }
-.filter-buttons button.active { background:var(--gold); color:var(--bg); }
-.yoy-toggle { display:inline-flex; align-items:center; gap:8px; cursor:pointer; user-select:none; font-size:11px; color:var(--muted); padding:7px 12px; border:1px solid var(--border); border-radius:8px; background:var(--panel-2); font-family:'Orbitron',sans-serif; letter-spacing:0.06em; text-transform:uppercase; font-weight:700; }
-.yoy-toggle input { accent-color:var(--gold); cursor:pointer; }
-.yoy-toggle.on { color:var(--gold); border-color:var(--gold); }
-.custom-range { display:none; gap:8px; align-items:center; }
-.custom-range.visible { display:flex; }
-.custom-range input[type="date"] { background:var(--panel-2); border:1px solid var(--border); color:var(--text); padding:6px 10px; border-radius:6px; font-family:'JetBrains Mono',monospace; font-size:11px; color-scheme:dark; }
-.custom-range button { background:var(--gold); color:var(--bg); border:none; padding:7px 14px; border-radius:6px; font-weight:700; cursor:pointer; font-size:11px; font-family:'Orbitron',sans-serif; text-transform:uppercase; letter-spacing:0.08em; }
-.period-info { padding:8px 14px; background:var(--panel-2); border-radius:8px; font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--muted); margin-bottom:12px; }
-.period-info strong { color:var(--gold); }
-
-/* CHARTS */
-.chart-wrap { height:240px; position:relative; }
-.chart-wrap.tall { height:320px; }
-.chart-wrap.short { height:180px; }
-
-/* TABLES */
-.tbl-panel { background:var(--panel); border:1px solid var(--border); border-radius:12px; overflow-x:auto; }
-.tbl-panel table { width:100%; border-collapse:collapse; font-size:12px; }
-.tbl-panel th { background:var(--panel-2); padding:10px 12px; text-align:left; font-size:10px; text-transform:uppercase; letter-spacing:0.08em; color:var(--muted); font-weight:700; border-bottom:1px solid var(--border); font-family:'Orbitron',sans-serif; }
-.tbl-panel th.num { text-align:right; }
-.tbl-panel td { padding:10px 12px; border-bottom:1px solid var(--border); font-size:12px; }
-.tbl-panel tr:last-child td { border-bottom:0; }
-.tbl-panel td.num { text-align:right; font-family:'JetBrains Mono',monospace; }
-
-/* GEO BARS */
-.geo-row { display:grid; grid-template-columns:130px 1fr 70px; gap:10px; align-items:center; padding:5px 0; font-size:12px; }
-.geo-name { font-weight:500; }
-.geo-bar-wrap { height:12px; background:var(--panel-2); border-radius:2px; overflow:hidden; }
-.geo-bar { height:100%; background:var(--gold); border-radius:2px; }
-.geo-val { text-align:right; font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--muted); }
-.geo-pct { color:var(--yoda); }
-
-/* BEST/WORST cards */
-.cw-card { background:var(--panel-2); border:1px solid var(--border); border-radius:8px; padding:10px 12px; margin-bottom:6px; display:flex; justify-content:space-between; align-items:center; gap:12px; }
-.cw-card:last-child { margin-bottom:0; }
-.cw-name { font-weight:700; font-size:12px; }
-.cw-metrics { font-size:10px; color:var(--muted); margin-top:2px; }
-.cw-val { font-family:'Orbitron',sans-serif; font-size:18px; font-weight:800; flex-shrink:0; }
-.best .cw-val { color:var(--yoda); }
-.worst .cw-val { color:var(--sith); }
-
-/* AD TABLE */
-.ad-thumb { width:42px; height:42px; object-fit:cover; border-radius:4px; border:1px solid var(--border); display:block; background:var(--panel-2); }
-.ad-name { font-weight:600; font-size:11px; line-height:1.3; }
-.ad-sub { font-size:9px; color:var(--muted); margin-top:2px; }
-.status-pill { display:inline-block; padding:2px 7px; border-radius:999px; font-size:9px; font-weight:700; letter-spacing:0.05em; }
-.st-ACTIVE { background:rgba(34,197,94,0.15); color:var(--yoda); border:1px solid rgba(34,197,94,0.3); }
-.st-PAUSED { background:rgba(122,131,149,0.15); color:var(--muted); border:1px solid var(--border); }
-.st-ARCHIVED { background:rgba(239,68,68,0.10); color:var(--sith); border:1px solid rgba(239,68,68,0.25); }
-.val-good { color:var(--yoda); }
-.val-mid { color:var(--gold); }
-.val-bad { color:var(--sith); }
-
-/* RECOMENDACIONES (checklist) */
-.checklist-cat { margin-bottom:32px; }
-.checklist-cat h3 { font-family:'Orbitron',sans-serif; font-size:15px; font-weight:700; margin:0 0 12px; letter-spacing:0.06em; display:flex; align-items:center; gap:10px; }
-.cat-urgent h3 { color:var(--sith); }
-.cat-week h3 { color:var(--gold); }
-.cat-month h3 { color:var(--jedi); }
-.cat-strategic h3 { color:var(--mace); }
-.cat-tag { display:inline-block; padding:3px 10px; border-radius:999px; font-size:10px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; }
-.cat-urgent .cat-tag { background:rgba(239,68,68,0.18); color:var(--sith); border:1px solid rgba(239,68,68,0.3); }
-.cat-week .cat-tag { background:rgba(251,191,36,0.18); color:var(--gold); border:1px solid rgba(251,191,36,0.3); }
-.cat-month .cat-tag { background:rgba(56,189,248,0.18); color:var(--jedi); border:1px solid rgba(56,189,248,0.3); }
-.cat-strategic .cat-tag { background:rgba(167,139,250,0.18); color:var(--mace); border:1px solid rgba(167,139,250,0.3); }
-.check-item { display:flex; gap:14px; align-items:flex-start; padding:14px 18px; background:var(--panel); border:1px solid var(--border); border-left-width:4px; border-radius:10px; margin-bottom:8px; transition:all 0.15s; }
-.check-item:hover { border-color:var(--gold); }
-.cat-urgent .check-item { border-left-color:var(--sith); }
-.cat-week .check-item { border-left-color:var(--gold); }
-.cat-month .check-item { border-left-color:var(--jedi); }
-.cat-strategic .check-item { border-left-color:var(--mace); }
-.check-item.done { opacity:0.5; text-decoration:line-through; }
-.check-item.done .ci-title { text-decoration:line-through; }
-.ci-checkbox { appearance:none; width:22px; height:22px; border:2px solid var(--border); border-radius:6px; cursor:pointer; flex-shrink:0; margin-top:2px; transition:all 0.15s; background:var(--panel-2); }
-.ci-checkbox:hover { border-color:var(--gold); }
-.ci-checkbox:checked { background:var(--yoda); border-color:var(--yoda); }
-.ci-checkbox:checked::after { content:'✓'; color:var(--bg); font-weight:900; display:flex; align-items:center; justify-content:center; height:100%; font-size:14px; }
-.ci-body { flex:1; }
-.ci-title { font-weight:700; font-size:14px; color:var(--text); margin-bottom:4px; display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
-.ci-desc { font-size:13px; color:var(--muted); line-height:1.55; margin-bottom:6px; }
-.ci-badges { display:flex; gap:6px; flex-wrap:wrap; margin-top:6px; }
-.badge { display:inline-block; padding:2px 8px; border-radius:999px; font-size:9px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; }
-.b-juan { background:rgba(56,189,248,0.15); color:var(--jedi); }
-.b-ivan { background:rgba(34,197,94,0.15); color:var(--yoda); }
-.b-margot { background:rgba(167,139,250,0.15); color:var(--mace); }
-.b-ambos { background:rgba(251,191,36,0.15); color:var(--gold); }
-.cat-now h3 { color:var(--sith); }
-.cat-now .cat-tag { background:rgba(239,68,68,0.25); color:var(--sith); border:1px solid rgba(239,68,68,0.4); }
-.cat-now .check-item { border-left-color:var(--sith); background:linear-gradient(90deg, rgba(239,68,68,0.04), var(--panel)); }
-.b-alto { background:rgba(239,68,68,0.15); color:var(--sith); }
-.b-medio { background:rgba(251,191,36,0.15); color:var(--gold); }
-.b-bajo { background:rgba(122,131,149,0.15); color:var(--muted); }
-
-/* PROGRESS */
-.progress-card { background:linear-gradient(135deg, rgba(34,197,94,0.08) 0%, rgba(56,189,248,0.04) 100%); border:1px solid var(--border); border-radius:14px; padding:24px 28px; margin-bottom:20px; }
-.progress-card .ptitle { font-family:'Orbitron',sans-serif; font-size:14px; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); margin-bottom:10px; font-weight:700; }
-.progress-num { font-family:'Orbitron',sans-serif; font-size:36px; font-weight:800; color:var(--yoda); margin-bottom:8px; }
-.progress-bar-wrap { height:10px; background:var(--panel-2); border-radius:6px; overflow:hidden; margin-top:8px; }
-.progress-bar { height:100%; background:linear-gradient(90deg, var(--yoda), var(--jedi)); transition:width 0.4s; border-radius:6px; }
-.progress-meta { font-size:12px; color:var(--muted); margin-top:8px; font-family:'JetBrains Mono',monospace; }
-.reset-btn { background:transparent; border:1px solid var(--border); color:var(--muted); padding:6px 12px; border-radius:6px; font-size:10px; cursor:pointer; font-family:'Orbitron',sans-serif; text-transform:uppercase; letter-spacing:0.08em; font-weight:700; }
-.reset-btn:hover { color:var(--sith); border-color:var(--sith); }
-
-/* FOOTER */
-footer { color:var(--muted); font-size:11px; margin-top:32px; padding-top:20px; border-top:1px solid var(--border); text-align:center; font-family:'JetBrains Mono',monospace; }
+:root {--bg:#08090d;--panel:#11151c;--panel-2:#181d27;--border:#232a37;--text:#e8edf5;--muted:#7a8395;--jedi:#38bdf8;--yoda:#22c55e;--sith:#ef4444;--mace:#a78bfa;--gold:#fbbf24;--magenta:#ec4899;}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,sans-serif;font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;}
+body{background-image:radial-gradient(ellipse at 0% 0%,rgba(56,189,248,0.04) 0%,transparent 50%),radial-gradient(ellipse at 100% 100%,rgba(167,139,250,0.04) 0%,transparent 50%);background-attachment:fixed;min-height:100vh;}
+.wrap{max-width:1480px;margin:0 auto;padding:24px;}
+.topnav{display:flex;align-items:center;gap:16px;padding:14px 20px;background:var(--panel);border:1px solid var(--border);border-radius:12px;margin-bottom:20px;flex-wrap:wrap;}
+.topnav .brand{font-family:'Orbitron',sans-serif;font-size:16px;font-weight:800;letter-spacing:0.08em;color:var(--gold);text-shadow:0 0 12px rgba(251,191,36,0.3);}
+.topnav .nav-links{display:flex;gap:4px;flex:1;flex-wrap:wrap;}
+.topnav a{color:var(--muted);text-decoration:none;font-family:'Orbitron',sans-serif;font-size:11px;font-weight:600;padding:8px 14px;border-radius:8px;transition:all 0.15s;text-transform:uppercase;letter-spacing:0.08em;}
+.topnav a:hover{background:rgba(251,191,36,0.08);color:var(--text);}
+.topnav a.current{background:var(--gold);color:var(--bg);}
+.topnav .meta{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);}
+.topnav .meta strong{color:var(--yoda);}
+.hero{padding:20px 24px;background:var(--panel);border:1px solid var(--border);border-radius:12px;margin-bottom:16px;}
+.hero h1{font-family:'Orbitron',sans-serif;font-size:24px;font-weight:800;margin:0 0 6px;letter-spacing:0.04em;color:var(--text);}
+.hero .sub{font-size:13px;color:var(--muted);}
+.hero .sub strong{color:var(--text);}
+.section{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:18px 20px;margin-bottom:14px;}
+.section h2{font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;margin:0 0 14px;color:var(--gold);display:flex;align-items:center;gap:10px;}
+.section h2::before{content:'◆';font-size:9px;color:var(--magenta);}
+.section h2 .hint{font-family:'Inter',sans-serif;font-weight:400;color:var(--muted);font-size:12px;letter-spacing:0;text-transform:none;margin-left:6px;}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+.grid-5{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;}
+@media (max-width:1000px){.grid-2,.grid-3,.grid-4,.grid-5{grid-template-columns:1fr;}}
+.stat{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:18px 20px;position:relative;overflow:hidden;}
+.stat::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold);}
+.stat.gold::before{background:var(--gold);}
+.stat.green::before{background:var(--yoda);}
+.stat.magenta::before{background:var(--magenta);}
+.stat.blue::before{background:var(--jedi);}
+.stat.purple::before{background:var(--mace);}
+.stat .lbl{font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);font-weight:700;}
+.stat .val{font-family:'Orbitron',sans-serif;font-size:28px;font-weight:800;margin:8px 0 4px;letter-spacing:-0.01em;color:var(--text);}
+.stat.gold .val{color:var(--gold);}
+.stat.green .val{color:var(--yoda);}
+.stat.magenta .val{color:var(--magenta);}
+.stat.blue .val{color:var(--jedi);}
+.stat.purple .val{color:var(--mace);}
+.stat .sub{font-size:11px;color:var(--muted);font-family:'JetBrains Mono',monospace;}
+.stat .delta{font-size:11px;font-weight:700;margin-top:4px;}
+.stat .delta.pos{color:var(--yoda);}
+.stat .delta.neg{color:var(--sith);}
+.stat .delta.muted{color:var(--muted);}
+.stat-mini{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 14px;}
+.stat-mini .lbl{font-size:9px;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);font-weight:700;margin-bottom:6px;}
+.stat-mini .val{font-family:'Orbitron',sans-serif;font-size:18px;font-weight:700;}
+.stat-mini .delta{font-size:10px;margin-top:3px;font-weight:700;}
+.stat-mini .delta.pos{color:var(--yoda);}
+.stat-mini .delta.neg{color:var(--sith);}
+.filter-bar{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:14px;display:flex;gap:12px;flex-wrap:wrap;align-items:center;}
+.filter-bar .filter-label{font-family:'Orbitron',sans-serif;font-size:10px;text-transform:uppercase;letter-spacing:0.14em;color:var(--muted);font-weight:700;}
+.filter-buttons{display:flex;gap:4px;flex-wrap:wrap;background:var(--panel-2);padding:4px;border-radius:8px;}
+.filter-buttons button{background:transparent;border:none;color:var(--muted);padding:7px 14px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;transition:all 0.15s;font-family:'Orbitron',sans-serif;letter-spacing:0.08em;text-transform:uppercase;}
+.filter-buttons button:hover{background:rgba(251,191,36,0.08);color:var(--text);}
+.filter-buttons button.active{background:var(--gold);color:var(--bg);}
+.yoy-toggle{display:inline-flex;align-items:center;gap:8px;cursor:pointer;user-select:none;font-size:11px;color:var(--muted);padding:7px 12px;border:1px solid var(--border);border-radius:8px;background:var(--panel-2);font-family:'Orbitron',sans-serif;letter-spacing:0.06em;text-transform:uppercase;font-weight:700;}
+.yoy-toggle input{accent-color:var(--gold);cursor:pointer;}
+.yoy-toggle.on{color:var(--gold);border-color:var(--gold);}
+.custom-range{display:none;gap:8px;align-items:center;}
+.custom-range.visible{display:flex;}
+.custom-range input[type="date"]{background:var(--panel-2);border:1px solid var(--border);color:var(--text);padding:6px 10px;border-radius:6px;font-family:'JetBrains Mono',monospace;font-size:11px;color-scheme:dark;}
+.custom-range button{background:var(--gold);color:var(--bg);border:none;padding:7px 14px;border-radius:6px;font-weight:700;cursor:pointer;font-size:11px;font-family:'Orbitron',sans-serif;text-transform:uppercase;letter-spacing:0.08em;}
+.period-info{padding:8px 14px;background:var(--panel-2);border-radius:8px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);margin-bottom:12px;}
+.period-info strong{color:var(--gold);}
+.chart-wrap{height:240px;position:relative;}
+.chart-wrap.tall{height:320px;}
+.tbl-panel{background:var(--panel);border:1px solid var(--border);border-radius:12px;overflow-x:auto;}
+.tbl-panel table{width:100%;border-collapse:collapse;font-size:12px;}
+.tbl-panel th{background:var(--panel-2);padding:10px 12px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);font-weight:700;border-bottom:1px solid var(--border);font-family:'Orbitron',sans-serif;}
+.tbl-panel th.num{text-align:right;}
+.tbl-panel td{padding:10px 12px;border-bottom:1px solid var(--border);font-size:12px;}
+.tbl-panel tr:last-child td{border-bottom:0;}
+.tbl-panel td.num{text-align:right;font-family:'JetBrains Mono',monospace;}
+.geo-row{display:grid;grid-template-columns:130px 1fr 70px;gap:10px;align-items:center;padding:5px 0;font-size:12px;}
+.geo-name{font-weight:500;}
+.geo-bar-wrap{height:12px;background:var(--panel-2);border-radius:2px;overflow:hidden;}
+.geo-bar{height:100%;background:var(--gold);border-radius:2px;}
+.geo-val{text-align:right;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);}
+.geo-pct{color:var(--yoda);}
+.cw-card{background:var(--panel-2);border:1px solid var(--border);border-radius:8px;padding:10px 12px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;gap:12px;}
+.cw-card:last-child{margin-bottom:0;}
+.cw-name{font-weight:700;font-size:12px;}
+.cw-metrics{font-size:10px;color:var(--muted);margin-top:2px;}
+.cw-val{font-family:'Orbitron',sans-serif;font-size:18px;font-weight:800;flex-shrink:0;}
+.best .cw-val{color:var(--yoda);}
+.worst .cw-val{color:var(--sith);}
+.ad-thumb{width:42px;height:42px;object-fit:cover;border-radius:4px;border:1px solid var(--border);display:block;background:var(--panel-2);}
+.ad-name{font-weight:600;font-size:11px;line-height:1.3;}
+.ad-sub{font-size:9px;color:var(--muted);margin-top:2px;}
+.status-pill{display:inline-block;padding:2px 7px;border-radius:999px;font-size:9px;font-weight:700;letter-spacing:0.05em;}
+.st-ACTIVE{background:rgba(34,197,94,0.15);color:var(--yoda);border:1px solid rgba(34,197,94,0.3);}
+.st-PAUSED{background:rgba(122,131,149,0.15);color:var(--muted);border:1px solid var(--border);}
+.st-ARCHIVED{background:rgba(239,68,68,0.10);color:var(--sith);border:1px solid rgba(239,68,68,0.25);}
+.val-good{color:var(--yoda);}.val-mid{color:var(--gold);}.val-bad{color:var(--sith);}
+.checklist-cat{margin-bottom:32px;}
+.checklist-cat h3{font-family:'Orbitron',sans-serif;font-size:15px;font-weight:700;margin:0 0 12px;letter-spacing:0.06em;display:flex;align-items:center;gap:10px;}
+.cat-urgent h3{color:var(--sith);}
+.cat-week h3{color:var(--gold);}
+.cat-month h3{color:var(--jedi);}
+.cat-strategic h3{color:var(--mace);}
+.cat-tag{display:inline-block;padding:3px 10px;border-radius:999px;font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;}
+.cat-urgent .cat-tag{background:rgba(239,68,68,0.18);color:var(--sith);border:1px solid rgba(239,68,68,0.3);}
+.cat-week .cat-tag{background:rgba(251,191,36,0.18);color:var(--gold);border:1px solid rgba(251,191,36,0.3);}
+.cat-month .cat-tag{background:rgba(56,189,248,0.18);color:var(--jedi);border:1px solid rgba(56,189,248,0.3);}
+.cat-strategic .cat-tag{background:rgba(167,139,250,0.18);color:var(--mace);border:1px solid rgba(167,139,250,0.3);}
+.check-item{display:flex;gap:14px;align-items:flex-start;padding:14px 18px;background:var(--panel);border:1px solid var(--border);border-left-width:4px;border-radius:10px;margin-bottom:8px;transition:all 0.15s;}
+.check-item:hover{border-color:var(--gold);}
+.cat-urgent .check-item{border-left-color:var(--sith);}
+.cat-week .check-item{border-left-color:var(--gold);}
+.cat-month .check-item{border-left-color:var(--jedi);}
+.cat-strategic .check-item{border-left-color:var(--mace);}
+.check-item.done{opacity:0.5;text-decoration:line-through;}
+.ci-checkbox{appearance:none;width:22px;height:22px;border:2px solid var(--border);border-radius:6px;cursor:pointer;flex-shrink:0;margin-top:2px;transition:all 0.15s;background:var(--panel-2);}
+.ci-checkbox:hover{border-color:var(--gold);}
+.ci-checkbox:checked{background:var(--yoda);border-color:var(--yoda);}
+.ci-checkbox:checked::after{content:'✓';color:var(--bg);font-weight:900;display:flex;align-items:center;justify-content:center;height:100%;font-size:14px;}
+.ci-body{flex:1;}
+.ci-title{font-weight:700;font-size:14px;color:var(--text);margin-bottom:4px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.ci-desc{font-size:13px;color:var(--muted);line-height:1.55;margin-bottom:6px;}
+.ci-badges{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;}
+.badge{display:inline-block;padding:2px 8px;border-radius:999px;font-size:9px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;}
+.b-juan{background:rgba(56,189,248,0.15);color:var(--jedi);}
+.b-ivan{background:rgba(34,197,94,0.15);color:var(--yoda);}
+.b-margot{background:rgba(167,139,250,0.15);color:var(--mace);}
+.b-ambos{background:rgba(251,191,36,0.15);color:var(--gold);}
+.b-alto{background:rgba(239,68,68,0.15);color:var(--sith);}
+.b-medio{background:rgba(251,191,36,0.15);color:var(--gold);}
+.b-bajo{background:rgba(122,131,149,0.15);color:var(--muted);}
+.cat-now h3{color:var(--sith);}
+.cat-now .cat-tag{background:rgba(239,68,68,0.25);color:var(--sith);border:1px solid rgba(239,68,68,0.4);}
+.cat-now .check-item{border-left-color:var(--sith);background:linear-gradient(90deg,rgba(239,68,68,0.04),var(--panel));}
+.progress-card{background:linear-gradient(135deg,rgba(34,197,94,0.08) 0%,rgba(56,189,248,0.04) 100%);border:1px solid var(--border);border-radius:14px;padding:24px 28px;margin-bottom:20px;}
+.progress-card .ptitle{font-family:'Orbitron',sans-serif;font-size:14px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;font-weight:700;}
+.progress-num{font-family:'Orbitron',sans-serif;font-size:36px;font-weight:800;color:var(--yoda);margin-bottom:8px;}
+.progress-bar-wrap{height:10px;background:var(--panel-2);border-radius:6px;overflow:hidden;margin-top:8px;}
+.progress-bar{height:100%;background:linear-gradient(90deg,var(--yoda),var(--jedi));transition:width 0.4s;border-radius:6px;}
+.progress-meta{font-size:12px;color:var(--muted);margin-top:8px;font-family:'JetBrains Mono',monospace;}
+.reset-btn{background:transparent;border:1px solid var(--border);color:var(--muted);padding:6px 12px;border-radius:6px;font-size:10px;cursor:pointer;font-family:'Orbitron',sans-serif;text-transform:uppercase;letter-spacing:0.08em;font-weight:700;}
+.reset-btn:hover{color:var(--sith);border-color:var(--sith);}
+footer{color:var(--muted);font-size:11px;margin-top:32px;padding-top:20px;border-top:1px solid var(--border);text-align:center;font-family:'JetBrains Mono',monospace;}
 </style></head><body>
 <div class="wrap">
-<nav class="topnav">
-  <span class="brand">⚔ SABER LEGACY</span>
-  <div class="nav-links"><a href="index.html">Cliente</a><a href="internas.html">Internas</a><a href="recomendaciones.html" class="current">Recomendaciones</a></div>
-  <span class="meta">Actualizado <strong>23/06/2026 · 13:22</strong></span>
-</nav>
-
-<div class="hero">
-  <h1>✅ Recomendaciones · Acciones pendientes</h1>
-  <div class="sub">Lista priorizada de acciones. Cada item tiene <strong>owner</strong> (Juan = cliente · Iván = community · Margot = pauta · Ambos). Palomea las que vayan completando, se guarda en tu navegador. <strong>26 items totales.</strong></div>
+<nav class="topnav"><span class="brand">⚔ SABER LEGACY</span><div class="nav-links"><a href="index.html">Cliente</a><a href="internas.html">Internas</a><a href="recomendaciones.html" class="current">Recomendaciones</a></div><span class="meta">Actualizado <strong>21/07/2026 · 12:21</strong></span></nav>
+<div class="hero"><h1>✅ Recomendaciones · Acciones pendientes</h1><div class="sub">Lista priorizada. Owner: <strong>Juan</strong> (cliente) · <strong>Iván</strong> (community) · <strong>Margot</strong> (pauta). 25 items.</div></div>
+<div class="progress-card"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap"><div style="flex:1"><div class="ptitle">Progreso</div><div class="progress-num"><span id="doneCount">0</span> / 25</div><div class="progress-bar-wrap"><div class="progress-bar" id="progressBar" style="width:0%"></div></div><div class="progress-meta" id="progressMeta">0% completado · Guardado en tu navegador</div></div><button class="reset-btn" id="resetBtn">Reset</button></div></div>
+<div class="checklist-cat cat-now"><h3>🚨 HOY MISMO <span class="cat-tag">Diagnóstico Jun 23</span></h3><div class="check-item" data-id="now_capi"><input type="checkbox" class="ci-checkbox" data-id="now_capi"><div class="ci-body"><div class="ci-title">🔴 Implementar CAPI (Conversions API server-side)</div><div class="ci-desc">CRÍTICO. El pixel actual solo captura 12% de ventas reales ($1.6K vs $13K Shopify en últimos 14d). Meta no puede optimizar con data tan pobre. Setup 3-5 días con dev de Juan (endpoint en Shopify → Meta). Al arreglar esto, ROAS reportado se multiplica x5-6.</div><div class="ci-badges"><span class="badge b-juan">Juan (cliente)</span><span class="badge b-alto">Impacto alto</span></div></div></div><div class="check-item" data-id="now_matar_evergreen"><input type="checkbox" class="ci-checkbox" data-id="now_matar_evergreen"><div class="ci-body"><div class="ci-title">🔴 Pausar 8 ads &quot;Evergreen&quot; con ROAS 0</div><div class="ci-desc">Últimos 7d: Img Mystery Box ($493), Vid Graflex ($410), Xenopixel ($340), Defiance/Adept/Exile — todos con 0 compras. ~$1,500 quemados sin vender. Concentrar en &quot;Cat - empezaste colección&quot; que sí convierte.</div><div class="ci-badges"><span class="badge b-margot">Margot</span><span class="badge b-alto">Impacto alto</span></div></div></div><div class="check-item" data-id="now_escalar_cat"><input type="checkbox" class="ci-checkbox" data-id="now_escalar_cat"><div class="ci-body"><div class="ci-title">🔴 Escalar &quot;Cat - empezaste colección&quot; x2</div><div class="ci-desc">Es el único ad que vende: $1,233 spend, ROAS 1.30x en 7d. Único converter. Duplicar budget a $350/día. Si aguanta ROAS, subir a $500/día.</div><div class="ci-badges"><span class="badge b-margot">Margot</span><span class="badge b-alto">Impacto alto</span></div></div></div><div class="check-item" data-id="now_hot_sale"><input type="checkbox" class="ci-checkbox" data-id="now_hot_sale"><div class="ci-body"><div class="ci-title">🔴 Escalar HOT SALE 2026 (+50% budget)</div><div class="ci-desc">Mejor campaña 30d: $15.9K spend con ROAS 4.41x. Meter 50% más budget (~$800/día en vez de $530) para capturar más volumen antes de que se enfríe.</div><div class="ci-badges"><span class="badge b-margot">Margot</span><span class="badge b-alto">Impacto alto</span></div></div></div><div class="check-item" data-id="now_dias_cero"><input type="checkbox" class="ci-checkbox" data-id="now_dias_cero"><div class="ci-body"><div class="ci-title">🔴 NUNCA MÁS 5 días apagada</div><div class="ci-desc">Jun 10-14: cuenta apagada = pixel se resetea de nuevo. Segunda vez en 3 semanas. Setup alerta si delivery &lt; $100/día por 2 días. Prender lo que sea antes de perder pixel.</div><div class="ci-badges"><span class="badge b-margot">Margot</span><span class="badge b-alto">Impacto alto</span></div></div></div><div class="check-item" data-id="now_rmkt_saturado"><input type="checkbox" class="ci-checkbox" data-id="now_rmkt_saturado"><div class="ci-body"><div class="ci-title">🔴 Refrescar REMKT-JUL (freq 4.9 saturada)</div><div class="ci-desc">Campaña remarketing con frecuencia 4.9 = misma persona vio anuncio 5 veces = fatiga. Cambiar creativo antes de que ROAS caiga más.</div><div class="ci-badges"><span class="badge b-margot">Margot</span><span class="badge b-medio">Impacto medio</span></div></div></div><div class="check-item" data-id="now_traff"><input type="checkbox" class="ci-checkbox" data-id="now_traff"><div class="ci-body"><div class="ci-title">🔴 Revisar campaña Traff (CTR 6% pero 0 compras)</div><div class="ci-desc">CTR excelente (6.37%) pero cero compras = tráfico equivocado. O la audiencia es de junkies del scroll, o la landing no cierra. Revisar URL de destino.</div><div class="ci-badges"><span class="badge b-margot">Margot</span><span class="badge b-medio">Impacto medio</span></div></div></div></div><div class="checklist-cat cat-urgent"><h3>🔥 URGENTE <span class="cat-tag">Esta semana</span></h3><div class="check-item" data-id="mp_checkout"><input type="checkbox" class="ci-checkbox" data-id="mp_checkout"><div class="ci-body"><div class="ci-title">🛒 Arreglar Mercado Pago checkout</div><div class="ci-desc">10.5% de transacciones fallan. Auditar config + edge cases. Arregla ROAS efectivo +11%.</div><div class="ci-badges"><span class="badge b-juan">Juan (cliente)</span><span class="badge b-alto">Impacto alto</span></div></div></div><div class="check-item" data-id="auditar_cvr"><input type="checkbox" class="ci-checkbox" data-id="auditar_cvr"><div class="ci-body"><div class="ci-title">📊 Auditar conversion rate del sitio (0.21%)</div><div class="ci-desc">Mediana MX 0.4-0.6%. Subir a 0.40% duplica ROAS sin tocar ads. Mobile UX, checkout, opciones de pago.</div><div class="ci-badges"><span class="badge b-juan">Juan (cliente)</span><span class="badge b-alto">Impacto alto</span></div></div></div><div class="check-item" data-id="naming_convention"><input type="checkbox" class="ci-checkbox" data-id="naming_convention"><div class="ci-body"><div class="ci-title">📝 Documentar naming convention</div><div class="ci-desc">TIPO_OBJ_AUDIENCIA_FECHA-vN. Subir a Notion.</div><div class="ci-badges"><span class="badge b-margot">Margot</span><span class="badge b-bajo">Impacto bajo</span></div></div></div><div class="check-item" data-id="pausar_saturadas"><input type="checkbox" class="ci-checkbox" data-id="pausar_saturadas"><div class="ci-body"><div class="ci-title">⏸ Auditoría semanal freq &gt;4</div><div class="ci-desc">Cualquier adset con freq &gt;4 = pausar y refrescar. Rutina cada lunes.</div><div class="ci-badges"><span class="badge b-margot">Margot</span><span class="badge b-medio">Impacto medio</span></div></div></div></div><div class="checklist-cat cat-week"><h3>📅 Esta semana <span class="cat-tag">7 días</span></h3><div class="check-item" data-id="fotos_top_skus"><input type="checkbox" class="ci-checkbox" data-id="fotos_top_skus"><div class="ci-body"><div class="ci-title">📸 Fotos/videos frescos top SKUs</div><div class="ci-desc">MYSTERY BOX, ELITE, GRAFLEX V2, MAULER, EXILE, VADER MKII. 3 ángulos + video 15s.</div><div class="ci-badges"><span class="badge b-ivan">Iván (community)</span><span class="badge b-medio">Impacto medio</span></div></div></div><div class="check-item" data-id="contenido_organico"><input type="checkbox" class="ci-checkbox" data-id="contenido_organico"><div class="ci-body"><div class="ci-title">📱 Contenido orgánico esta semana</div><div class="ci-desc">Post + stories + reel sincronizados con las campañas activas.</div><div class="ci-badges"><span class="badge b-ivan">Iván (community)</span><span class="badge b-medio">Impacto medio</span></div></div></div><div class="check-item" data-id="engagement_comments"><input type="checkbox" class="ci-checkbox" data-id="engagement_comments"><div class="ci-body"><div class="ci-title">💬 Responder comments en &lt;2h</div><div class="ci-desc">Cada respuesta sube engagement y reduce CPC. Monitor 2x/día.</div><div class="ci-badges"><span class="badge b-ivan">Iván (community)</span><span class="badge b-medio">Impacto medio</span></div></div></div></div><div class="checklist-cat cat-month"><h3>🗓 Este mes <span class="cat-tag">30 días</span></h3><div class="check-item" data-id="stripe_paypal"><input type="checkbox" class="ci-checkbox" data-id="stripe_paypal"><div class="ci-body"><div class="ci-title">💳 Backup Stripe/PayPal/OXXO</div><div class="ci-desc">88% depende de MP. Si MP falla, cuenta se cae. Agregar alternas.</div><div class="ci-badges"><span class="badge b-juan">Juan (cliente)</span><span class="badge b-alto">Impacto alto</span></div></div></div><div class="check-item" data-id="prep_halloween"><input type="checkbox" class="ci-checkbox" data-id="prep_halloween"><div class="ci-body"><div class="ci-title">🎃 Brief creativos Halloween 2026</div><div class="ci-desc">Halloween 2025 (Sith Sale) rindió 5.58x. Brief julio → producción agosto → campaña 25 oct.</div><div class="ci-badges"><span class="badge b-ambos">Ambos</span><span class="badge b-alto">Impacto alto</span></div></div></div><div class="check-item" data-id="flow_retencion"><input type="checkbox" class="ci-checkbox" data-id="flow_retencion"><div class="ci-body"><div class="ci-title">🔁 Flow retención email/WhatsApp</div><div class="ci-desc">0.4% repite vs 14% Q1. Post-compra 30/60/90d con producto complementario.</div><div class="ci-badges"><span class="badge b-juan">Juan (cliente)</span><span class="badge b-alto">Impacto alto</span></div></div></div><div class="check-item" data-id="testing_separado"><input type="checkbox" class="ci-checkbox" data-id="testing_separado"><div class="ci-body"><div class="ci-title">🧪 Separar TESTING de SCALING</div><div class="ci-desc">Campaña TESTING con $200/día tope. Solo lo que valida se mueve a SCALING.</div><div class="ci-badges"><span class="badge b-margot">Margot</span><span class="badge b-medio">Impacto medio</span></div></div></div><div class="check-item" data-id="lookalikes_frescas"><input type="checkbox" class="ci-checkbox" data-id="lookalikes_frescas"><div class="ci-body"><div class="ci-title">🎯 Refrescar Lookalikes</div><div class="ci-desc">LLA 1% de compradores 30/90/180d. Audiencias frescas rinden mejor.</div><div class="ci-badges"><span class="badge b-margot">Margot</span><span class="badge b-medio">Impacto medio</span></div></div></div><div class="check-item" data-id="ugc_compradores"><input type="checkbox" class="ci-checkbox" data-id="ugc_compradores"><div class="ci-body"><div class="ci-title">🎥 5 UGC de compradores reales</div><div class="ci-desc">Iván contacta top LTV y pide video desempaque. UGC convierte 4x más.</div><div class="ci-badges"><span class="badge b-ivan">Iván (community)</span><span class="badge b-medio">Impacto medio</span></div></div></div></div><div class="checklist-cat cat-strategic"><h3>🎯 Estratégico <span class="cat-tag">3 meses</span></h3><div class="check-item" data-id="calendario_q4"><input type="checkbox" class="ci-checkbox" data-id="calendario_q4"><div class="ci-body"><div class="ci-title">📅 Calendario Q4 con budget pre-asignado</div><div class="ci-desc">Halloween/Buen Fin/BF/Cyber/Navidad. Cada fecha con budget firme 30d antes.</div><div class="ci-badges"><span class="badge b-ambos">Ambos</span><span class="badge b-alto">Impacto alto</span></div></div></div><div class="check-item" data-id="linea_necklaces"><input type="checkbox" class="ci-checkbox" data-id="linea_necklaces"><div class="ci-body"><div class="ci-title">💎 Decidir línea Lightsaber Necklace separada</div><div class="ci-desc">167u a $500 en 60d. Perfil de comprador distinto. Evaluar línea dedicada.</div><div class="ci-badges"><span class="badge b-juan">Juan (cliente)</span><span class="badge b-medio">Impacto medio</span></div></div></div><div class="check-item" data-id="ampliar_variantes"><input type="checkbox" class="ci-checkbox" data-id="ampliar_variantes"><div class="ci-body"><div class="ci-title">🛒 Ampliar variantes de top sellers</div><div class="ci-desc">Vader MKII, Mystery Box, Graflex V2. Sacar variantes (colores, packs).</div><div class="ci-badges"><span class="badge b-juan">Juan (cliente)</span><span class="badge b-medio">Impacto medio</span></div></div></div><div class="check-item" data-id="preventas"><input type="checkbox" class="ci-checkbox" data-id="preventas"><div class="ci-body"><div class="ci-title">🚀 Replicar preventas</div><div class="ci-desc">Velorian ($51K) y Bastila Shan ($42K) validaron demanda. 1 preventa/quarter.</div><div class="ci-badges"><span class="badge b-ambos">Ambos</span><span class="badge b-medio">Impacto medio</span></div></div></div><div class="check-item" data-id="live_mensual"><input type="checkbox" class="ci-checkbox" data-id="live_mensual"><div class="ci-body"><div class="ci-title">📊 Live mensual de revisión con Juan</div><div class="ci-desc">30-45 min cada mes. Dashboard, decisiones, próximos pasos.</div><div class="ci-badges"><span class="badge b-ambos">Ambos</span><span class="badge b-bajo">Impacto bajo</span></div></div></div></div>
+<footer>SABER LEGACY · Recomendaciones · 21/07/2026 · 12:21</footer>
 </div>
-
-<div class="progress-card">
-  <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap">
-    <div style="flex:1">
-      <div class="ptitle">Progreso</div>
-      <div class="progress-num"><span id="doneCount">0</span> / 26</div>
-      <div class="progress-bar-wrap"><div class="progress-bar" id="progressBar" style="width:0%"></div></div>
-      <div class="progress-meta" id="progressMeta">0% completado · Guardado en tu navegador</div>
-    </div>
-    <button class="reset-btn" id="resetBtn">Reset</button>
-  </div>
-</div>
-
-
-        <div class="checklist-cat cat-now">
-          <h3>🚨 HOY MISMO <span class="cat-tag">Diagnóstico Jun 20</span></h3>
-          
-            <div class="check-item" data-id="now_triplicar_spend">
-              <input type="checkbox" class="ci-checkbox" data-id="now_triplicar_spend">
-              <div class="ci-body">
-                <div class="ci-title">🔴 TRIPLICAR spend HOY · $565 → $1,500-2,500/día</div>
-                <div class="ci-desc">Diagnóstico jun 20: estás en $565/día promedio, 25% de lo planeado. Meta NO puede salir de Learning Limited con 0-1 conversiones/día. Sin este cambio, ningún otro ajuste va a funcionar. Subir budgets en Ads Manager hoy mismo.</div>
-                <div class="ci-badges">
-                  <span class="badge b-margot">Margot</span>
-                  <span class="badge b-alto">Impacto alto</span>
-                </div>
-              </div>
-            </div>
-            <div class="check-item" data-id="now_pedir_budget">
-              <input type="checkbox" class="ci-checkbox" data-id="now_pedir_budget">
-              <div class="ci-body">
-                <div class="ci-title">🔴 Pedir a Juan $10K extra de pauta esta semana</div>
-                <div class="ci-desc">Mensaje directo: &quot;Necesito $10K extras para sacar la cuenta del cool-down post-mayo. Llevamos 18 días apagados y Meta necesita volumen de conversiones para reactivar. Sin empuje = 2-3 semanas más sin tracción. Con empuje = volumen en 7-10 días.&quot;</div>
-                <div class="ci-badges">
-                  <span class="badge b-margot">Margot</span>
-                  <span class="badge b-alto">Impacto alto</span>
-                </div>
-              </div>
-            </div>
-            <div class="check-item" data-id="now_matar_evergreen">
-              <input type="checkbox" class="ci-checkbox" data-id="now_matar_evergreen">
-              <div class="ci-body">
-                <div class="ci-title">🔴 Pausar ads &quot;Evergreen&quot; con ROAS 0</div>
-                <div class="ci-desc">Vid - Graflex MII Evergreen ($597), Img - Mystery Box Evergreen ($482), Vid - Xenopixel/Darksaber/Defiance/Exile Evergreen. Todos con compras = 0 últimos 7d. Están quemando budget que necesitas para campañas que sí vendan.</div>
-                <div class="ci-badges">
-                  <span class="badge b-margot">Margot</span>
-                  <span class="badge b-alto">Impacto alto</span>
-                </div>
-              </div>
-            </div>
-            <div class="check-item" data-id="now_reactivar_top">
-              <input type="checkbox" class="ci-checkbox" data-id="now_reactivar_top">
-              <div class="ci-body">
-                <div class="ci-title">🔴 Reactivar 3 campañas top históricas</div>
-                <div class="ci-desc">CBO Winners v2 (ROAS 5.12x histórico), CONV ABO v10 - vdr (5.43x), Conv v12 ABO - tests (7.31x). El algoritmo ya las conoce → recupera más rápido. Empezar c/u con $200-300/día.</div>
-                <div class="ci-badges">
-                  <span class="badge b-margot">Margot</span>
-                  <span class="badge b-alto">Impacto alto</span>
-                </div>
-              </div>
-            </div>
-            <div class="check-item" data-id="now_dia_padre">
-              <input type="checkbox" class="ci-checkbox" data-id="now_dia_padre">
-              <div class="ci-body">
-                <div class="ci-title">🔴 PRENDER campaña Día del Padre HOY (21 jun es mañana)</div>
-                <div class="ci-desc">Era acción #1 del plan original, no se ejecutó. Budget mínimo $3K para 3 días (21-23 jun). Audiencias: LLA compradores + interest &quot;regalo + hombre 30-55&quot;. Creativo: &quot;El regalo que siempre quiso ser Jedi&quot; + carrusel Top 5 SKUs. Si no la creas hoy, mañana ya no llega.</div>
-                <div class="ci-badges">
-                  <span class="badge b-margot">Margot</span>
-                  <span class="badge b-alto">Impacto alto</span>
-                </div>
-              </div>
-            </div>
-            <div class="check-item" data-id="now_audit_pixel">
-              <input type="checkbox" class="ci-checkbox" data-id="now_audit_pixel">
-              <div class="ci-body">
-                <div class="ci-title">🔴 Auditar pixel en Events Manager HOY</div>
-                <div class="ci-desc">Jun 11-14 hubo 4 días con CERO spend = pixel se reseteó parcialmente. Verificar en Events Manager → Diagnostics que purchase, ATC, IC estén disparando bien últimas 24h. Si no, Meta optimiza con data falsa.</div>
-                <div class="ci-badges">
-                  <span class="badge b-margot">Margot</span>
-                  <span class="badge b-alto">Impacto alto</span>
-                </div>
-              </div>
-            </div>
-            <div class="check-item" data-id="now_personajes_landing">
-              <input type="checkbox" class="ci-checkbox" data-id="now_personajes_landing">
-              <div class="ci-body">
-                <div class="ci-title">🔴 Revisar landing del adset &quot;Personajes Evergreen CC$1000&quot;</div>
-                <div class="ci-desc">7 días: CTR 2.42% (bueno) pero ROAS 0 → la gente clickea pero no compra. Algo está roto entre el ad y el checkout: o el creativo promete algo distinto a lo que muestra la landing, o el funnel está roto. Revisar URL exacta del ad y completar checkout tú misma.</div>
-                <div class="ci-badges">
-                  <span class="badge b-margot">Margot</span>
-                  <span class="badge b-alto">Impacto alto</span>
-                </div>
-              </div>
-            </div>
-        </div>
-        <div class="checklist-cat cat-urgent">
-          <h3>🔥 URGENTE <span class="cat-tag">Esta semana</span></h3>
-          
-            <div class="check-item" data-id="mp_checkout">
-              <input type="checkbox" class="ci-checkbox" data-id="mp_checkout">
-              <div class="ci-body">
-                <div class="ci-title">🛒 Arreglar Mercado Pago checkout</div>
-                <div class="ci-desc">10.5% de transacciones fallan en checkout (56 de 540 en 8 meses). Cada falla = venta perdida después de que ya pagaste el click. Auditar config MP + edge cases (3DS, tarjetas internacionales). Arregla ROAS efectivo +11%.</div>
-                <div class="ci-badges">
-                  <span class="badge b-juan">Juan (cliente)</span>
-                  <span class="badge b-alto">Impacto alto</span>
-                </div>
-              </div>
-            </div>
-            <div class="check-item" data-id="auditar_cvr">
-              <input type="checkbox" class="ci-checkbox" data-id="auditar_cvr">
-              <div class="ci-body">
-                <div class="ci-title">📊 Auditar tasa de conversión del sitio (0.21%)</div>
-                <div class="ci-desc">Mediana ecommerce MX: 0.4-0.6%. Si subes a 0.40%, las mismas campañas duplican ROAS sin tocar ads. Revisar: mobile UX, tiempo de carga, fricción checkout, opciones de pago.</div>
-                <div class="ci-badges">
-                  <span class="badge b-juan">Juan (cliente)</span>
-                  <span class="badge b-alto">Impacto alto</span>
-                </div>
-              </div>
-            </div>
-            <div class="check-item" data-id="naming_convention">
-              <input type="checkbox" class="ci-checkbox" data-id="naming_convention">
-              <div class="ci-body">
-                <div class="ci-title">📝 Documentar naming convention</div>
-                <div class="ci-desc">Nueva: TIPO_OBJ_AUDIENCIA_FECHA-vN (ej. CONV_ABO_LLA-CC1000_JUN26-v1). Subir a Notion/Drive y aplicar a todas las campañas nuevas.</div>
-                <div class="ci-badges">
-                  <span class="badge b-margot">Margot</span>
-                  <span class="badge b-bajo">Impacto bajo</span>
-                </div>
-              </div>
-            </div>
-            <div class="check-item" data-id="pausar_saturadas">
-              <input type="checkbox" class="ci-checkbox" data-id="pausar_saturadas">
-              <div class="ci-body">
-                <div class="ci-title">⏸ Auditoría semanal de frecuencia &gt;4</div>
-                <div class="ci-desc">Cualquier adset con freq &gt;4 = audiencia saturada → pausar y refrescar creativo. Marcar como rutina semanal (cada lunes).</div>
-                <div class="ci-badges">
-                  <span class="badge b-margot">Margot</span>
-                  <span class="badge b-medio">Impacto medio</span>
-                </div>
-              </div>
-            </div>
-        </div>
-        <div class="checklist-cat cat-week">
-          <h3>📅 Esta semana <span class="cat-tag">7 días</span></h3>
-          
-            <div class="check-item" data-id="fotos_top_skus">
-              <input type="checkbox" class="ci-checkbox" data-id="fotos_top_skus">
-              <div class="ci-body">
-                <div class="ci-title">📸 Conseguir fotos/videos frescos de top SKUs</div>
-                <div class="ci-desc">Necesitamos creativos nuevos de MYSTERY BOX, ELITE MYSTERY BOX, GRAFLEX V2, MAULER, EXILE, VADER MKII (~60% del revenue). 3 ángulos por producto + video corto (15s). Iván coordina con Juan.</div>
-                <div class="ci-badges">
-                  <span class="badge b-ivan">Iván (community)</span>
-                  <span class="badge b-medio">Impacto medio</span>
-                </div>
-              </div>
-            </div>
-            <div class="check-item" data-id="contenido_organico_dp">
-              <input type="checkbox" class="ci-checkbox" data-id="contenido_organico_dp">
-              <div class="ci-body">
-                <div class="ci-title">📱 Contenido orgánico Día del Padre (21 jun)</div>
-                <div class="ci-desc">Post + stories + reel del 19-21 jun. Pre-cargar carrusel &quot;Top 5 sables para regalar&quot;. Reel con padre + hijo recibiendo sable. Engagement multiplica los anuncios pagados.</div>
-                <div class="ci-badges">
-                  <span class="badge b-ivan">Iván (community)</span>
-                  <span class="badge b-medio">Impacto medio</span>
-                </div>
-              </div>
-            </div>
-            <div class="check-item" data-id="engagement_comments">
-              <input type="checkbox" class="ci-checkbox" data-id="engagement_comments">
-              <div class="ci-body">
-                <div class="ci-title">💬 Responder comments en ads activos en &lt;2h</div>
-                <div class="ci-desc">Cada respuesta en un comment de ad sube engagement rate y reduce CPC. Sobre todo en ads de RMKT donde la gente pregunta por entrega/garantía. Iván monitorea ads activos 2x/día.</div>
-                <div class="ci-badges">
-                  <span class="badge b-ivan">Iván (community)</span>
-                  <span class="badge b-medio">Impacto medio</span>
-                </div>
-              </div>
-            </div>
-        </div>
-        <div class="checklist-cat cat-month">
-          <h3>🗓 Este mes <span class="cat-tag">30 días</span></h3>
-          
-            <div class="check-item" data-id="stripe_paypal">
-              <input type="checkbox" class="ci-checkbox" data-id="stripe_paypal">
-              <div class="ci-body">
-                <div class="ci-title">💳 Agregar Stripe / PayPal / OXXO Pay como backup</div>
-                <div class="ci-desc">88% de pagos pasan por Mercado Pago. Si MP falla = la cuenta entera se cae. Agregar alternas reduce riesgo y captura compradores que no usan MP.</div>
-                <div class="ci-badges">
-                  <span class="badge b-juan">Juan (cliente)</span>
-                  <span class="badge b-alto">Impacto alto</span>
-                </div>
-              </div>
-            </div>
-            <div class="check-item" data-id="prep_halloween">
-              <input type="checkbox" class="ci-checkbox" data-id="prep_halloween">
-              <div class="ci-body">
-                <div class="ci-title">🎃 Brief de creativos Halloween 2026</div>
-                <div class="ci-desc">Halloween 2025 (Sith Sale) rindió ROAS 5.58x. Replicar con creativos nuevos. Brief listo en julio para producción agosto y campaña arrancando 25 oct.</div>
-                <div class="ci-badges">
-                  <span class="badge b-ambos">Ambos</span>
-                  <span class="badge b-alto">Impacto alto</span>
-                </div>
-              </div>
-            </div>
-            <div class="check-item" data-id="flow_retencion">
-              <input type="checkbox" class="ci-checkbox" data-id="flow_retencion">
-              <div class="ci-body">
-                <div class="ci-title">🔁 Crear flow de retención (email/WhatsApp)</div>
-                <div class="ci-desc">Solo 0.4% de clientes repite en muestra reciente vs 14.28% Q1. Secuencia post-compra a 30/60/90 días con producto complementario (necklace, kit mantenimiento, etc.).</div>
-                <div class="ci-badges">
-                  <span class="badge b-juan">Juan (cliente)</span>
-                  <span class="badge b-alto">Impacto alto</span>
-                </div>
-              </div>
-            </div>
-            <div class="check-item" data-id="testing_separado">
-              <input type="checkbox" class="ci-checkbox" data-id="testing_separado">
-              <div class="ci-body">
-                <div class="ci-title">🧪 Separar campaña TESTING de SCALING</div>
-                <div class="ci-desc">Estructura: una campaña dedicada &quot;TESTING&quot; con tope $200/día para experimentar audiencias/creativos nuevos. Solo lo que valida se mueve a SCALING.</div>
-                <div class="ci-badges">
-                  <span class="badge b-margot">Margot</span>
-                  <span class="badge b-medio">Impacto medio</span>
-                </div>
-              </div>
-            </div>
-            <div class="check-item" data-id="lookalikes_frescas">
-              <input type="checkbox" class="ci-checkbox" data-id="lookalikes_frescas">
-              <div class="ci-body">
-                <div class="ci-title">🎯 Refrescar Lookalikes con compradores CC$1000+</div>
-                <div class="ci-desc">LLAs actuales tienen meses. Crear LLA 1% basadas en compradores top últimos 30/90/180 días. Audiencias frescas rinden mejor.</div>
-                <div class="ci-badges">
-                  <span class="badge b-margot">Margot</span>
-                  <span class="badge b-medio">Impacto medio</span>
-                </div>
-              </div>
-            </div>
-            <div class="check-item" data-id="ugc_compradores">
-              <input type="checkbox" class="ci-checkbox" data-id="ugc_compradores">
-              <div class="ci-body">
-                <div class="ci-title">🎥 Conseguir 5 UGC de compradores reales</div>
-                <div class="ci-desc">Iván contacta a top compradores (LTV alto) y les pide video corto desempacando + reacción. UGC convierte 4x más que ads de marca en ecommerce.</div>
-                <div class="ci-badges">
-                  <span class="badge b-ivan">Iván (community)</span>
-                  <span class="badge b-medio">Impacto medio</span>
-                </div>
-              </div>
-            </div>
-        </div>
-        <div class="checklist-cat cat-strategic">
-          <h3>🎯 Estratégico <span class="cat-tag">3 meses</span></h3>
-          
-            <div class="check-item" data-id="calendario_q4">
-              <input type="checkbox" class="ci-checkbox" data-id="calendario_q4">
-              <div class="ci-body">
-                <div class="ci-title">📅 Calendario Q4 2026 con presupuesto pre-asignado</div>
-                <div class="ci-desc">Halloween (25-31 oct), Buen Fin (13-16 nov), Black Friday (27 nov), Cyber Monday (30 nov), Navidad (15-24 dic). Cada fecha necesita budget firme 30d antes. Black Friday 2025 fue $8K → 2026 debe ser $30K+.</div>
-                <div class="ci-badges">
-                  <span class="badge b-ambos">Ambos</span>
-                  <span class="badge b-alto">Impacto alto</span>
-                </div>
-              </div>
-            </div>
-            <div class="check-item" data-id="linea_necklaces">
-              <input type="checkbox" class="ci-checkbox" data-id="linea_necklaces">
-              <div class="ci-body">
-                <div class="ci-title">💎 Decidir si lanzar línea Lightsaber Necklace como producto separado</div>
-                <div class="ci-desc">167 unidades a $500 prom en 60 días. Perfil de comprador distinto (gift/impulso). Vale evaluar línea dedicada con marketing propio.</div>
-                <div class="ci-badges">
-                  <span class="badge b-juan">Juan (cliente)</span>
-                  <span class="badge b-medio">Impacto medio</span>
-                </div>
-              </div>
-            </div>
-            <div class="check-item" data-id="ampliar_variantes">
-              <input type="checkbox" class="ci-checkbox" data-id="ampliar_variantes">
-              <div class="ci-body">
-                <div class="ci-title">🛒 Ampliar variantes de top sellers</div>
-                <div class="ci-desc">Vader MKII, Mystery Box, Graflex V2 son los heavy hitters. Sacar variantes (colores, ediciones limitadas, packs) para extender ciclo de vida y AOV.</div>
-                <div class="ci-badges">
-                  <span class="badge b-juan">Juan (cliente)</span>
-                  <span class="badge b-medio">Impacto medio</span>
-                </div>
-              </div>
-            </div>
-            <div class="check-item" data-id="capi_server">
-              <input type="checkbox" class="ci-checkbox" data-id="capi_server">
-              <div class="ci-body">
-                <div class="ci-title">🔧 Implementar CAPI (Conversions API server-side)</div>
-                <div class="ci-desc">El pixel cliente-side pierde ~15-20% de eventos por iOS/cookies. CAPI manda eventos desde Shopify directo a Meta = mejor atribución + algoritmo afinado. Setup ~3-5 días de dev.</div>
-                <div class="ci-badges">
-                  <span class="badge b-juan">Juan (cliente)</span>
-                  <span class="badge b-alto">Impacto alto</span>
-                </div>
-              </div>
-            </div>
-            <div class="check-item" data-id="preventas">
-              <input type="checkbox" class="ci-checkbox" data-id="preventas">
-              <div class="ci-body">
-                <div class="ci-title">🚀 Replicar mecánica de preventas</div>
-                <div class="ci-desc">PREVENTA VELORIAN ($51K) y BASTILA SHAN ($42K) = producto que se vende ANTES de existir. Excelente demanda + cash flow positivo. Replicar 1 preventa/quarter.</div>
-                <div class="ci-badges">
-                  <span class="badge b-ambos">Ambos</span>
-                  <span class="badge b-medio">Impacto medio</span>
-                </div>
-              </div>
-            </div>
-            <div class="check-item" data-id="live_mensual">
-              <input type="checkbox" class="ci-checkbox" data-id="live_mensual">
-              <div class="ci-body">
-                <div class="ci-title">📊 Live mensual de revisión con Juan</div>
-                <div class="ci-desc">Sesión 30-45 min cada mes para revisar dashboard, decisiones, próximos pasos. Mantiene alineación y permite ajustar rápido.</div>
-                <div class="ci-badges">
-                  <span class="badge b-ambos">Ambos</span>
-                  <span class="badge b-bajo">Impacto bajo</span>
-                </div>
-              </div>
-            </div>
-        </div>
-
-<footer>SABER LEGACY · Recomendaciones operativas y estratégicas · Generado 23/06/2026 · 13:22 · Los items se guardan en localStorage de tu navegador</footer>
-</div>
-
 <script>
-const TOTAL = 26;
-const STORAGE_KEY = 'saber_recs_v1';
-
-function load() {
-  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch(e) { return {}; }
-}
-function save(state) { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
-
-function updateProgress() {
-  const state = load();
-  const done = Object.values(state).filter(Boolean).length;
-  document.getElementById('doneCount').textContent = done;
-  const pct = TOTAL ? (done/TOTAL*100).toFixed(0) : 0;
-  document.getElementById('progressBar').style.width = pct + '%';
-  document.getElementById('progressMeta').textContent = `${pct}% completado · Guardado en tu navegador`;
-}
-
-function applyState() {
-  const state = load();
-  document.querySelectorAll('.ci-checkbox').forEach(cb => {
-    const id = cb.dataset.id;
-    const checked = !!state[id];
-    cb.checked = checked;
-    cb.closest('.check-item').classList.toggle('done', checked);
-  });
-  updateProgress();
-}
-
-document.querySelectorAll('.ci-checkbox').forEach(cb => {
-  cb.addEventListener('change', e => {
-    const id = e.target.dataset.id;
-    const state = load();
-    state[id] = e.target.checked;
-    save(state);
-    e.target.closest('.check-item').classList.toggle('done', e.target.checked);
-    updateProgress();
-  });
-});
-
-document.getElementById('resetBtn').addEventListener('click', () => {
-  if (!confirm('¿Limpiar todas las marcas?')) return;
-  localStorage.removeItem(STORAGE_KEY);
-  applyState();
-});
-
+const TOTAL=25;const STORAGE_KEY='saber_recs_v1';
+function load(){try{return JSON.parse(localStorage.getItem(STORAGE_KEY))||{};}catch(e){return{};}}
+function save(s){localStorage.setItem(STORAGE_KEY,JSON.stringify(s));}
+function updateProgress(){const s=load();const done=Object.values(s).filter(Boolean).length;document.getElementById('doneCount').textContent=done;const pct=TOTAL?(done/TOTAL*100).toFixed(0):0;document.getElementById('progressBar').style.width=pct+'%';document.getElementById('progressMeta').textContent=`${pct}% completado · Guardado en tu navegador`;}
+function applyState(){const s=load();document.querySelectorAll('.ci-checkbox').forEach(cb=>{const id=cb.dataset.id;const c=!!s[id];cb.checked=c;cb.closest('.check-item').classList.toggle('done',c);});updateProgress();}
+document.querySelectorAll('.ci-checkbox').forEach(cb=>{cb.addEventListener('change',e=>{const id=e.target.dataset.id;const s=load();s[id]=e.target.checked;save(s);e.target.closest('.check-item').classList.toggle('done',e.target.checked);updateProgress();});});
+document.getElementById('resetBtn').addEventListener('click',()=>{if(!confirm('¿Limpiar todas las marcas?'))return;localStorage.removeItem(STORAGE_KEY);applyState();});
 applyState();
-</script>
-</body></html>
+</script></body></html>
