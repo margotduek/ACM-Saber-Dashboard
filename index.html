@@ -147,9 +147,48 @@ body{background-image:radial-gradient(ellipse at 0% 0%,rgba(56,189,248,0.04) 0%,
 .reset-btn{background:transparent;border:1px solid var(--border);color:var(--muted);padding:6px 12px;border-radius:6px;font-size:10px;cursor:pointer;font-family:'Orbitron',sans-serif;text-transform:uppercase;letter-spacing:0.08em;font-weight:700;}
 .reset-btn:hover{color:var(--sith);border-color:var(--sith);}
 footer{color:var(--muted);font-size:11px;margin-top:32px;padding-top:20px;border-top:1px solid var(--border);text-align:center;font-family:'JetBrains Mono',monospace;}
+.explain-hero{background:linear-gradient(135deg,rgba(56,189,248,0.10) 0%,rgba(167,139,250,0.06) 100%);border:1px solid var(--jedi);border-radius:14px;padding:24px 28px;margin-bottom:20px;}
+.explain-hero h1{font-family:'Orbitron',sans-serif;font-size:26px;margin:0 0 8px;color:var(--jedi);}
+.explain-hero p{margin:0;font-size:14px;color:var(--text);line-height:1.6;}
+.explain-section{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:26px 30px;margin-bottom:16px;}
+.explain-section h2{font-family:'Orbitron',sans-serif;font-size:20px;margin:0 0 14px;color:var(--gold);letter-spacing:0.02em;}
+.explain-section h2 .n{display:inline-block;width:36px;height:36px;line-height:36px;border-radius:50%;background:var(--gold);color:var(--bg);font-family:'Orbitron',sans-serif;font-weight:800;text-align:center;margin-right:12px;vertical-align:middle;font-size:16px;}
+.explain-section h3{font-family:'Orbitron',sans-serif;font-size:14px;color:var(--text);margin:22px 0 10px;letter-spacing:0.06em;text-transform:uppercase;}
+.explain-section p{font-size:14.5px;line-height:1.7;color:var(--text);margin:0 0 12px;}
+.explain-section p strong{color:var(--gold);}
+.explain-section ul{padding-left:22px;margin:8px 0 14px;}
+.explain-section li{margin-bottom:8px;line-height:1.6;}
+.analogy{background:linear-gradient(135deg,rgba(251,191,36,0.06) 0%,rgba(167,139,250,0.04) 100%);border-left:4px solid var(--gold);border-radius:8px;padding:16px 20px;margin:12px 0;font-style:italic;font-size:14px;line-height:1.7;}
+.analogy strong{font-style:normal;color:var(--gold);}
+.number-box{background:var(--panel-2);border:1px solid var(--border);border-radius:10px;padding:16px 20px;margin:14px 0;font-family:'JetBrains Mono',monospace;font-size:13px;}
+.number-box .row{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px dashed var(--border);}
+.number-box .row:last-child{border-bottom:0;padding-top:8px;margin-top:8px;border-top:2px solid var(--gold);font-weight:700;color:var(--gold);}
+.step{background:var(--panel-2);border-left:4px solid var(--jedi);border-radius:8px;padding:14px 18px;margin:8px 0;display:flex;gap:14px;align-items:flex-start;}
+.step .step-n{background:var(--jedi);color:var(--bg);width:28px;height:28px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-weight:800;font-size:13px;}
+.step .step-body{flex:1;font-size:14px;line-height:1.55;}
+.step code{background:rgba(56,189,248,0.15);color:var(--jedi);padding:2px 6px;border-radius:4px;font-size:12px;font-family:'JetBrains Mono',monospace;}
+.warning{background:rgba(239,68,68,0.08);border-left:4px solid var(--sith);border-radius:8px;padding:14px 18px;margin:14px 0;font-size:14px;color:var(--text);line-height:1.6;}
+.warning strong{color:var(--sith);}
+.good{background:rgba(34,197,94,0.08);border-left:4px solid var(--yoda);border-radius:8px;padding:14px 18px;margin:14px 0;font-size:14px;color:var(--text);line-height:1.6;}
+.good strong{color:var(--yoda);}
+.tip{background:rgba(56,189,248,0.06);border-left:4px solid var(--jedi);border-radius:8px;padding:14px 18px;margin:14px 0;font-size:14px;color:var(--text);line-height:1.6;}
+.tip strong{color:var(--jedi);}
+.tbl-compact{width:100%;border-collapse:collapse;margin:14px 0;font-size:13px;}
+.tbl-compact th{background:var(--panel-2);padding:10px 14px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);font-weight:700;border-bottom:1px solid var(--border);}
+.tbl-compact th.num{text-align:right;}
+.tbl-compact td{padding:10px 14px;border-bottom:1px solid var(--border);}
+.tbl-compact td.num{text-align:right;font-family:'JetBrains Mono',monospace;}
+.tbl-compact .highlight{background:rgba(34,197,94,0.08);}
+.tbl-compact .highlight td{color:var(--yoda);font-weight:700;}
+.toc{background:var(--panel-2);border-radius:10px;padding:16px 22px;margin-bottom:20px;}
+.toc h4{margin:0 0 10px;font-family:'Orbitron',sans-serif;font-size:12px;letter-spacing:0.1em;color:var(--muted);text-transform:uppercase;}
+.toc ol{padding-left:24px;margin:0;}
+.toc li{margin-bottom:4px;}
+.toc a{color:var(--text);text-decoration:none;font-size:13px;}
+.toc a:hover{color:var(--gold);}
 </style></head><body>
 <div class="wrap">
-<nav class="topnav"><span class="brand">⚔ SABER LEGACY</span><div class="nav-links"><a href="index.html" class="current">Cliente</a><a href="internas.html">Internas</a><a href="recomendaciones.html">Recomendaciones</a></div><span class="meta">Actualizado <strong>21/07/2026 · 12:26</strong></span></nav>
+<nav class="topnav"><span class="brand">⚔ SABER LEGACY</span><div class="nav-links"><a href="index.html" class="current">Cliente</a><a href="internas.html">Internas</a><a href="recomendaciones.html">Recomendaciones</a><a href="explicaciones.html">📚 Explicaciones</a></div><span class="meta">Actualizado <strong>21/07/2026 · 12:47</strong></span></nav>
 <div class="hero"><h1>📊 Analíticas · Para Juan</h1>
 <div class="sub">Vista limpia del performance de Meta Ads. Todo filtra por la fecha que elijas. <strong>Default: 30 días.</strong></div></div>
 
@@ -197,7 +236,7 @@ footer{color:var(--muted);font-size:11px;margin-top:32px;padding-top:20px;border
   <div class="chart-wrap"><canvas id="chartMonthly"></canvas></div>
 </div>
 
-<footer>SABER LEGACY · Al Chile Media · 21/07/2026 · 12:26</footer>
+<footer>SABER LEGACY · Al Chile Media · 21/07/2026 · 12:47</footer>
 </div>
 
 <script>
