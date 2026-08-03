@@ -5,13 +5,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <style>
-:root {--bg:#08090d;--panel:#11151c;--panel-2:#181d27;--border:#232a37;--text:#e8edf5;--muted:#7a8395;--jedi:#38bdf8;--yoda:#22c55e;--sith:#ef4444;--mace:#a78bfa;--gold:#fbbf24;--magenta:#ec4899;}
+:root{--bg:#08090d;--panel:#11151c;--panel-2:#181d27;--border:#232a37;--text:#e8edf5;--muted:#7a8395;--jedi:#38bdf8;--yoda:#22c55e;--sith:#ef4444;--mace:#a78bfa;--gold:#fbbf24;--magenta:#ec4899;}
 *{box-sizing:border-box;}
 html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,sans-serif;font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;}
 body{background-image:radial-gradient(ellipse at 0% 0%,rgba(56,189,248,0.04) 0%,transparent 50%),radial-gradient(ellipse at 100% 100%,rgba(167,139,250,0.04) 0%,transparent 50%);background-attachment:fixed;min-height:100vh;}
 .wrap{max-width:1480px;margin:0 auto;padding:24px;}
 .topnav{display:flex;align-items:center;gap:16px;padding:14px 20px;background:var(--panel);border:1px solid var(--border);border-radius:12px;margin-bottom:20px;flex-wrap:wrap;}
-.topnav .brand{font-family:'Orbitron',sans-serif;font-size:16px;font-weight:800;letter-spacing:0.08em;color:var(--gold);text-shadow:0 0 12px rgba(251,191,36,0.3);}
+.topnav .brand{font-family:'Orbitron',sans-serif;font-size:16px;font-weight:800;letter-spacing:0.08em;color:var(--gold);}
 .topnav .nav-links{display:flex;gap:4px;flex:1;flex-wrap:wrap;}
 .topnav a{color:var(--muted);text-decoration:none;font-family:'Orbitron',sans-serif;font-size:11px;font-weight:600;padding:8px 14px;border-radius:8px;transition:all 0.15s;text-transform:uppercase;letter-spacing:0.08em;}
 .topnav a:hover{background:rgba(251,191,36,0.08);color:var(--text);}
@@ -19,7 +19,7 @@ body{background-image:radial-gradient(ellipse at 0% 0%,rgba(56,189,248,0.04) 0%,
 .topnav .meta{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);}
 .topnav .meta strong{color:var(--yoda);}
 .hero{padding:20px 24px;background:var(--panel);border:1px solid var(--border);border-radius:12px;margin-bottom:16px;}
-.hero h1{font-family:'Orbitron',sans-serif;font-size:24px;font-weight:800;margin:0 0 6px;letter-spacing:0.04em;color:var(--text);}
+.hero h1{font-family:'Orbitron',sans-serif;font-size:24px;font-weight:800;margin:0 0 6px;letter-spacing:0.04em;}
 .hero .sub{font-size:13px;color:var(--muted);}
 .hero .sub strong{color:var(--text);}
 .section{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:18px 20px;margin-bottom:14px;}
@@ -33,36 +33,27 @@ body{background-image:radial-gradient(ellipse at 0% 0%,rgba(56,189,248,0.04) 0%,
 @media (max-width:1000px){.grid-2,.grid-3,.grid-4,.grid-5{grid-template-columns:1fr;}}
 .stat{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:18px 20px;position:relative;overflow:hidden;}
 .stat::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold);}
-.stat.gold::before{background:var(--gold);}
-.stat.green::before{background:var(--yoda);}
-.stat.magenta::before{background:var(--magenta);}
-.stat.blue::before{background:var(--jedi);}
-.stat.purple::before{background:var(--mace);}
+.stat.gold::before{background:var(--gold);}.stat.green::before{background:var(--yoda);}
+.stat.magenta::before{background:var(--magenta);}.stat.blue::before{background:var(--jedi);}
 .stat .lbl{font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);font-weight:700;}
-.stat .val{font-family:'Orbitron',sans-serif;font-size:28px;font-weight:800;margin:8px 0 4px;letter-spacing:-0.01em;color:var(--text);}
-.stat.gold .val{color:var(--gold);}
-.stat.green .val{color:var(--yoda);}
-.stat.magenta .val{color:var(--magenta);}
-.stat.blue .val{color:var(--jedi);}
-.stat.purple .val{color:var(--mace);}
+.stat .val{font-family:'Orbitron',sans-serif;font-size:28px;font-weight:800;margin:8px 0 4px;letter-spacing:-0.01em;}
+.stat.gold .val{color:var(--gold);}.stat.green .val{color:var(--yoda);}
+.stat.magenta .val{color:var(--magenta);}.stat.blue .val{color:var(--jedi);}
 .stat .sub{font-size:11px;color:var(--muted);font-family:'JetBrains Mono',monospace;}
 .stat .delta{font-size:11px;font-weight:700;margin-top:4px;}
-.stat .delta.pos{color:var(--yoda);}
-.stat .delta.neg{color:var(--sith);}
-.stat .delta.muted{color:var(--muted);}
+.stat .delta.pos{color:var(--yoda);}.stat .delta.neg{color:var(--sith);}.stat .delta.muted{color:var(--muted);}
 .stat-mini{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 14px;}
 .stat-mini .lbl{font-size:9px;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);font-weight:700;margin-bottom:6px;}
 .stat-mini .val{font-family:'Orbitron',sans-serif;font-size:18px;font-weight:700;}
 .stat-mini .delta{font-size:10px;margin-top:3px;font-weight:700;}
-.stat-mini .delta.pos{color:var(--yoda);}
-.stat-mini .delta.neg{color:var(--sith);}
+.stat-mini .delta.pos{color:var(--yoda);}.stat-mini .delta.neg{color:var(--sith);}
 .filter-bar{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:14px;display:flex;gap:12px;flex-wrap:wrap;align-items:center;}
 .filter-bar .filter-label{font-family:'Orbitron',sans-serif;font-size:10px;text-transform:uppercase;letter-spacing:0.14em;color:var(--muted);font-weight:700;}
 .filter-buttons{display:flex;gap:4px;flex-wrap:wrap;background:var(--panel-2);padding:4px;border-radius:8px;}
-.filter-buttons button{background:transparent;border:none;color:var(--muted);padding:7px 14px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;transition:all 0.15s;font-family:'Orbitron',sans-serif;letter-spacing:0.08em;text-transform:uppercase;}
+.filter-buttons button{background:transparent;border:none;color:var(--muted);padding:7px 14px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Orbitron',sans-serif;letter-spacing:0.08em;text-transform:uppercase;}
 .filter-buttons button:hover{background:rgba(251,191,36,0.08);color:var(--text);}
 .filter-buttons button.active{background:var(--gold);color:var(--bg);}
-.yoy-toggle{display:inline-flex;align-items:center;gap:8px;cursor:pointer;user-select:none;font-size:11px;color:var(--muted);padding:7px 12px;border:1px solid var(--border);border-radius:8px;background:var(--panel-2);font-family:'Orbitron',sans-serif;letter-spacing:0.06em;text-transform:uppercase;font-weight:700;}
+.yoy-toggle{display:inline-flex;align-items:center;gap:8px;cursor:pointer;font-size:11px;color:var(--muted);padding:7px 12px;border:1px solid var(--border);border-radius:8px;background:var(--panel-2);font-family:'Orbitron',sans-serif;letter-spacing:0.06em;text-transform:uppercase;font-weight:700;}
 .yoy-toggle input{accent-color:var(--gold);cursor:pointer;}
 .yoy-toggle.on{color:var(--gold);border-color:var(--gold);}
 .custom-range{display:none;gap:8px;align-items:center;}
@@ -78,7 +69,6 @@ body{background-image:radial-gradient(ellipse at 0% 0%,rgba(56,189,248,0.04) 0%,
 .tbl-panel th{background:var(--panel-2);padding:10px 12px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);font-weight:700;border-bottom:1px solid var(--border);font-family:'Orbitron',sans-serif;}
 .tbl-panel th.num{text-align:right;}
 .tbl-panel td{padding:10px 12px;border-bottom:1px solid var(--border);font-size:12px;}
-.tbl-panel tr:last-child td{border-bottom:0;}
 .tbl-panel td.num{text-align:right;font-family:'JetBrains Mono',monospace;}
 .geo-row{display:grid;grid-template-columns:130px 1fr 70px;gap:10px;align-items:center;padding:5px 0;font-size:12px;}
 .geo-name{font-weight:500;}
@@ -87,12 +77,10 @@ body{background-image:radial-gradient(ellipse at 0% 0%,rgba(56,189,248,0.04) 0%,
 .geo-val{text-align:right;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);}
 .geo-pct{color:var(--yoda);}
 .cw-card{background:var(--panel-2);border:1px solid var(--border);border-radius:8px;padding:10px 12px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;gap:12px;}
-.cw-card:last-child{margin-bottom:0;}
 .cw-name{font-weight:700;font-size:12px;}
 .cw-metrics{font-size:10px;color:var(--muted);margin-top:2px;}
-.cw-val{font-family:'Orbitron',sans-serif;font-size:18px;font-weight:800;flex-shrink:0;}
-.best .cw-val{color:var(--yoda);}
-.worst .cw-val{color:var(--sith);}
+.cw-val{font-family:'Orbitron',sans-serif;font-size:18px;font-weight:800;}
+.best .cw-val{color:var(--yoda);}.worst .cw-val{color:var(--sith);}
 .ad-thumb{width:42px;height:42px;object-fit:cover;border-radius:4px;border:1px solid var(--border);display:block;background:var(--panel-2);}
 .ad-name{font-weight:600;font-size:11px;line-height:1.3;}
 .ad-sub{font-size:9px;color:var(--muted);margin-top:2px;}
@@ -103,24 +91,19 @@ body{background-image:radial-gradient(ellipse at 0% 0%,rgba(56,189,248,0.04) 0%,
 .val-good{color:var(--yoda);}.val-mid{color:var(--gold);}.val-bad{color:var(--sith);}
 .checklist-cat{margin-bottom:32px;}
 .checklist-cat h3{font-family:'Orbitron',sans-serif;font-size:15px;font-weight:700;margin:0 0 12px;letter-spacing:0.06em;display:flex;align-items:center;gap:10px;}
-.cat-urgent h3{color:var(--sith);}
-.cat-week h3{color:var(--gold);}
-.cat-month h3{color:var(--jedi);}
-.cat-strategic h3{color:var(--mace);}
+.cat-urgent h3{color:var(--sith);}.cat-week h3{color:var(--gold);}.cat-month h3{color:var(--jedi);}.cat-strategic h3{color:var(--mace);}
 .cat-tag{display:inline-block;padding:3px 10px;border-radius:999px;font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;}
 .cat-urgent .cat-tag{background:rgba(239,68,68,0.18);color:var(--sith);border:1px solid rgba(239,68,68,0.3);}
 .cat-week .cat-tag{background:rgba(251,191,36,0.18);color:var(--gold);border:1px solid rgba(251,191,36,0.3);}
 .cat-month .cat-tag{background:rgba(56,189,248,0.18);color:var(--jedi);border:1px solid rgba(56,189,248,0.3);}
 .cat-strategic .cat-tag{background:rgba(167,139,250,0.18);color:var(--mace);border:1px solid rgba(167,139,250,0.3);}
-.check-item{display:flex;gap:14px;align-items:flex-start;padding:14px 18px;background:var(--panel);border:1px solid var(--border);border-left-width:4px;border-radius:10px;margin-bottom:8px;transition:all 0.15s;}
-.check-item:hover{border-color:var(--gold);}
+.check-item{display:flex;gap:14px;align-items:flex-start;padding:14px 18px;background:var(--panel);border:1px solid var(--border);border-left-width:4px;border-radius:10px;margin-bottom:8px;}
 .cat-urgent .check-item{border-left-color:var(--sith);}
 .cat-week .check-item{border-left-color:var(--gold);}
 .cat-month .check-item{border-left-color:var(--jedi);}
 .cat-strategic .check-item{border-left-color:var(--mace);}
 .check-item.done{opacity:0.5;text-decoration:line-through;}
-.ci-checkbox{appearance:none;width:22px;height:22px;border:2px solid var(--border);border-radius:6px;cursor:pointer;flex-shrink:0;margin-top:2px;transition:all 0.15s;background:var(--panel-2);}
-.ci-checkbox:hover{border-color:var(--gold);}
+.ci-checkbox{appearance:none;width:22px;height:22px;border:2px solid var(--border);border-radius:6px;cursor:pointer;flex-shrink:0;margin-top:2px;background:var(--panel-2);}
 .ci-checkbox:checked{background:var(--yoda);border-color:var(--yoda);}
 .ci-checkbox:checked::after{content:'✓';color:var(--bg);font-weight:900;display:flex;align-items:center;justify-content:center;height:100%;font-size:14px;}
 .ci-body{flex:1;}
@@ -142,10 +125,9 @@ body{background-image:radial-gradient(ellipse at 0% 0%,rgba(56,189,248,0.04) 0%,
 .progress-card .ptitle{font-family:'Orbitron',sans-serif;font-size:14px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;font-weight:700;}
 .progress-num{font-family:'Orbitron',sans-serif;font-size:36px;font-weight:800;color:var(--yoda);margin-bottom:8px;}
 .progress-bar-wrap{height:10px;background:var(--panel-2);border-radius:6px;overflow:hidden;margin-top:8px;}
-.progress-bar{height:100%;background:linear-gradient(90deg,var(--yoda),var(--jedi));transition:width 0.4s;border-radius:6px;}
+.progress-bar{height:100%;background:linear-gradient(90deg,var(--yoda),var(--jedi));border-radius:6px;}
 .progress-meta{font-size:12px;color:var(--muted);margin-top:8px;font-family:'JetBrains Mono',monospace;}
 .reset-btn{background:transparent;border:1px solid var(--border);color:var(--muted);padding:6px 12px;border-radius:6px;font-size:10px;cursor:pointer;font-family:'Orbitron',sans-serif;text-transform:uppercase;letter-spacing:0.08em;font-weight:700;}
-.reset-btn:hover{color:var(--sith);border-color:var(--sith);}
 footer{color:var(--muted);font-size:11px;margin-top:32px;padding-top:20px;border-top:1px solid var(--border);text-align:center;font-family:'JetBrains Mono',monospace;}
 .explain-hero{background:linear-gradient(135deg,rgba(56,189,248,0.10) 0%,rgba(167,139,250,0.06) 100%);border:1px solid var(--jedi);border-radius:14px;padding:24px 28px;margin-bottom:20px;}
 .explain-hero h1{font-family:'Orbitron',sans-serif;font-size:26px;margin:0 0 8px;color:var(--jedi);}
@@ -160,261 +142,58 @@ footer{color:var(--muted);font-size:11px;margin-top:32px;padding-top:20px;border
 .explain-section li{margin-bottom:8px;line-height:1.6;}
 .analogy{background:linear-gradient(135deg,rgba(251,191,36,0.06) 0%,rgba(167,139,250,0.04) 100%);border-left:4px solid var(--gold);border-radius:8px;padding:16px 20px;margin:12px 0;font-style:italic;font-size:14px;line-height:1.7;}
 .analogy strong{font-style:normal;color:var(--gold);}
-.number-box{background:var(--panel-2);border:1px solid var(--border);border-radius:10px;padding:16px 20px;margin:14px 0;font-family:'JetBrains Mono',monospace;font-size:13px;}
-.number-box .row{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px dashed var(--border);}
-.number-box .row:last-child{border-bottom:0;padding-top:8px;margin-top:8px;border-top:2px solid var(--gold);font-weight:700;color:var(--gold);}
-.step{background:var(--panel-2);border-left:4px solid var(--jedi);border-radius:8px;padding:14px 18px;margin:8px 0;display:flex;gap:14px;align-items:flex-start;}
-.step .step-n{background:var(--jedi);color:var(--bg);width:28px;height:28px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-weight:800;font-size:13px;}
-.step .step-body{flex:1;font-size:14px;line-height:1.55;}
-.step code{background:rgba(56,189,248,0.15);color:var(--jedi);padding:2px 6px;border-radius:4px;font-size:12px;font-family:'JetBrains Mono',monospace;}
-.warning{background:rgba(239,68,68,0.08);border-left:4px solid var(--sith);border-radius:8px;padding:14px 18px;margin:14px 0;font-size:14px;color:var(--text);line-height:1.6;}
+.warning{background:rgba(239,68,68,0.08);border-left:4px solid var(--sith);border-radius:8px;padding:14px 18px;margin:14px 0;font-size:14px;line-height:1.6;}
 .warning strong{color:var(--sith);}
-.good{background:rgba(34,197,94,0.08);border-left:4px solid var(--yoda);border-radius:8px;padding:14px 18px;margin:14px 0;font-size:14px;color:var(--text);line-height:1.6;}
+.good{background:rgba(34,197,94,0.08);border-left:4px solid var(--yoda);border-radius:8px;padding:14px 18px;margin:14px 0;font-size:14px;line-height:1.6;}
 .good strong{color:var(--yoda);}
-.tip{background:rgba(56,189,248,0.06);border-left:4px solid var(--jedi);border-radius:8px;padding:14px 18px;margin:14px 0;font-size:14px;color:var(--text);line-height:1.6;}
+.tip{background:rgba(56,189,248,0.06);border-left:4px solid var(--jedi);border-radius:8px;padding:14px 18px;margin:14px 0;font-size:14px;line-height:1.6;}
 .tip strong{color:var(--jedi);}
-.tbl-compact{width:100%;border-collapse:collapse;margin:14px 0;font-size:13px;}
-.tbl-compact th{background:var(--panel-2);padding:10px 14px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);font-weight:700;border-bottom:1px solid var(--border);}
-.tbl-compact th.num{text-align:right;}
-.tbl-compact td{padding:10px 14px;border-bottom:1px solid var(--border);}
-.tbl-compact td.num{text-align:right;font-family:'JetBrains Mono',monospace;}
-.tbl-compact .highlight{background:rgba(34,197,94,0.08);}
-.tbl-compact .highlight td{color:var(--yoda);font-weight:700;}
-.toc{background:var(--panel-2);border-radius:10px;padding:16px 22px;margin-bottom:20px;}
-.toc h4{margin:0 0 10px;font-family:'Orbitron',sans-serif;font-size:12px;letter-spacing:0.1em;color:var(--muted);text-transform:uppercase;}
-.toc ol{padding-left:24px;margin:0;}
-.toc li{margin-bottom:4px;}
-.toc a{color:var(--text);text-decoration:none;font-size:13px;}
-.toc a:hover{color:var(--gold);}
 </style></head><body>
 <div class="wrap">
-<nav class="topnav"><span class="brand">⚔ SABER LEGACY</span><div class="nav-links"><a href="index.html">Cliente</a><a href="internas.html">Internas</a><a href="recomendaciones.html">Recomendaciones</a><a href="explicaciones.html" class="current">📚 Explicaciones</a></div><span class="meta">Actualizado <strong>21/07/2026 · 12:47</strong></span></nav>
+<nav class="topnav"><span class="brand">⚔ SABER LEGACY</span><div class="nav-links"><a href="index.html">Cliente</a><a href="internas.html">Internas</a><a href="recomendaciones.html">Recomendaciones</a><a href="explicaciones.html" class="current">📚 Explicaciones</a></div><span class="meta">Actualizado <strong>03/08/2026 · 13:47</strong></span></nav>
+<div class="explain-hero"><h1>📚 Guía para entender qué pasa (y arreglarlo)</h1><p>Por qué Meta reporta 10 ventas cuando Shopify tiene 3, y cómo arreglarlo. <strong>Léelo completo en 10 min.</strong></p></div>
 
-<div class="explain-hero">
-  <h1>📚 Guía para entender qué pasa (y arreglarlo)</h1>
-  <p>Aquí te explico paso por paso, sin jerga, por qué Meta reporta 10 ventas cuando Shopify solo tiene 3, qué está mal, y cómo arreglarlo. <strong>Diseñado para leerlo completo en 10 minutos.</strong></p>
-</div>
+<div class="explain-section"><h2><span class="n">1</span>¿Por qué Meta dice 10 y Shopify dice 3?</h2>
+<p>Meta cuenta la MISMA compra con muchos nombres distintos y en la vista "Purchases" te los suma todos.</p>
+<div class="analogy"><strong>Piénsalo así:</strong> imagínate que cada vez que un cliente compra, el vendedor lo apunta 3 veces — una porque llegó a caja, otra por la tarjeta, otra por firmar. Fue 1 compra pero la libreta dice 3.</div>
+<div class="warning"><strong>No está mal configurada la campaña.</strong> El problema es cómo la UI de Meta agrupa eventos por default: suma variantes del mismo Purchase (omni_purchase, web_in_store_purchase, onsite_web_purchase, etc.). Todas son la misma venta.</div></div>
 
-<div class="toc">
-  <h4>Contenido</h4>
-  <ol>
-    <li><a href="#p1">¿Por qué Meta dice 10 ventas y Shopify dice 3?</a></li>
-    <li><a href="#p2">¿Qué es CAPI y por qué lo necesitamos?</a></li>
-    <li><a href="#p3">Cómo verificar tú misma el problema en Meta Ads Manager</a></li>
-    <li><a href="#p4">Cómo arreglarlo (checklist paso a paso)</a></li>
-    <li><a href="#p5">Cómo saber si ya funciona bien</a></li>
-    <li><a href="#p6">Glosario rápido de términos raros</a></li>
-  </ol>
-</div>
+<div class="explain-section"><h2><span class="n">2</span>¿Qué es CAPI?</h2>
+<p><strong>CAPI = Conversions API.</strong> Es una forma más confiable de que Shopify le avise a Meta cuando alguien compra.</p>
+<div class="analogy"><strong>Piénsalo así:</strong> el <em>pixel</em> es un mensajero que corre desde el navegador del cliente. Si usa AdBlock, iPhone privado, o cierra la pestaña, el mensajero no llega. <strong>CAPI es un segundo mensajero</strong> desde el servidor de tu tienda — ese siempre llega.</div>
+<p>Sin CAPI: pixel pierde 30-40% eventos + puede duplicar. Con CAPI: 95%+ eventos capturados y deduplicados con event_id único.</p>
+<div class="good"><strong>💡 Simple:</strong> instalar CAPI le dice a Meta "aquí está la lista oficial de ventas reales". Después de 48h tus números en Meta se van a parecer mucho más a los de Shopify.</div></div>
 
-<div class="explain-section" id="p1">
-  <h2><span class="n">1</span>¿Por qué Meta dice 10 ventas y Shopify dice 3?</h2>
+<div class="explain-section"><h2><span class="n">3</span>Cómo verificar tú misma</h2>
+<p><strong>Meta Ads Manager:</strong></p>
+<ol><li>Entra a business.facebook.com/adsmanager</li>
+<li>Botón "Columnas" arriba derecha → "Personalizar columnas"</li>
+<li>Busca "purchase" → DESMARCA "Purchases" → MARCA "Website Purchases"</li>
+<li>Aplica. Ahora la vista te muestra el número real.</li></ol>
+<p><strong>Events Manager (fuente de verdad):</strong></p>
+<ol><li>business.facebook.com/events_manager2</li><li>Selecciona pixel Saber Legacy</li><li>Overview → evento Purchase → cuenta debe = órdenes Shopify</li></ol></div>
 
-  <p><strong>La respuesta corta:</strong> Meta cuenta el mismo evento con muchos nombres distintos, y en la vista "Purchases" te suma todos. Shopify solo cuenta la venta 1 vez.</p>
+<div class="explain-section"><h2><span class="n">4</span>Cómo arreglarlo</h2>
+<h3>4.1 · Ganancia rápida (5 min)</h3>
+<p>Cambiar columna en Ads Manager (pasos arriba). No arregla el problema real pero deja de mentirte.</p>
+<h3>4.2 · Instalar CAPI vía plugin Shopify (recomendado, 30 min sin dev)</h3>
+<ol><li>Admin Shopify Saber Legacy → Sales channels → Add app</li><li>Busca "Facebook & Instagram" (oficial de Meta)</li><li>Instala + conecta Business Manager</li><li>Data sharing → activa "Maximum"</li><li>Espera 24-48h → verifica en Events Manager que aparecen "Server events"</li></ol>
+<div class="good"><strong>✅ Después:</strong> los eventos Purchase se deduplican automáticamente. Meta = Shopify ±5%.</div>
+<h3>4.3 · Deshabilitar Facebook Shop si no lo usan</h3>
+<p>Los eventos onsite_purchase vienen de tienda Facebook conectada. Si no la usan activamente, desactivarla en Commerce Manager.</p></div>
 
-  <div class="analogy">
-    <strong>Piénsalo así:</strong> imagínate que cada vez que un cliente compra en tu tienda física, el vendedor lo apunta 3 veces en su libreta — una porque llegó a caja, otra porque tocó su tarjeta, otra porque firmó el ticket. En realidad fue <em>1 compra</em>, pero su libreta dice <em>3</em>. Meta hace exactamente esto con eventos digitales.
-  </div>
+<div class="explain-section"><h2><span class="n">5</span>Cómo saber si ya funciona</h2>
+<p>48h después de activar CAPI:</p>
+<ul><li>Website Purchases últimos 7d = Órdenes paid Shopify (±5%)</li><li>Test: compra de prueba con código 100% off → 1 solo Purchase en Test Events</li></ul>
+<div class="good"><strong>Meta bien configurado = más ventas.</strong> El algoritmo optimiza mejor cuando ve las conversiones reales. Mejora típica: ROAS +15-30% en 30-60 días.</div></div>
 
-  <h3>Cómo ve Meta una sola compra tuya</h3>
+<div class="explain-section"><h2><span class="n">6</span>Glosario</h2>
+<p><strong>Pixel:</strong> código JS invisible en tu sitio que le avisa a Meta cuando pasan cosas (compra, add-to-cart, ver producto).</p>
+<p><strong>CAPI:</strong> alternativa server-side al pixel. Más confiable. Ideal usar los dos juntos.</p>
+<p><strong>Evento:</strong> algo trackable en tu sitio (ViewContent, AddToCart, InitiateCheckout, Purchase).</p>
+<p><strong>event_id:</strong> ID único por evento. Pixel + CAPI mandan mismo ID = Meta desduplica.</p>
+<p><strong>Atribución default:</strong> 7-day click + 1-day view. Meta cuenta ventas de personas que dieron click al ad en los últimos 7 días.</p>
+<p><strong>Events Manager:</strong> panel de Meta donde ves todos los eventos que el pixel/CAPI reportan. Fuente de verdad para debugear.</p></div>
 
-  <p>Cuando alguien compra en tu Shopify, un código invisible llamado "pixel" (más sobre él abajo) le manda un mensaje a Meta diciendo "¡hubo una compra!". Pero Meta guarda ese mensaje bajo <strong>muchos nombres diferentes al mismo tiempo</strong>:</p>
-
-  <div class="number-box">
-    <div style="font-weight:700;color:var(--gold);margin-bottom:8px;">📊 Datos REALES de Saber Legacy · Jul 6-21</div>
-    <div class="row"><span>purchase</span><span>3 veces</span></div>
-    <div class="row"><span>omni_purchase</span><span>4 veces</span></div>
-    <div class="row"><span>offsite_conversion.fb_pixel_purchase</span><span>3 veces</span></div>
-    <div class="row"><span>onsite_web_purchase</span><span>4 veces</span></div>
-    <div class="row"><span>onsite_web_app_purchase</span><span>4 veces</span></div>
-    <div class="row"><span>web_in_store_purchase</span><span>3 veces</span></div>
-    <div class="row"><span>web_app_in_store_purchase</span><span>3 veces</span></div>
-    <div class="row"><span>onsite_app_purchase</span><span>1 vez</span></div>
-    <div class="row"><span>onsite_conversion.purchase</span><span>1 vez</span></div>
-    <div class="row"><span>➡ Si sumas todo (lo que hace la UI de Meta)</span><span>~26</span></div>
-  </div>
-
-  <p><strong>Cuando abres Meta Ads Manager y ves la columna "Purchases"</strong>, esa columna por default suma varias de estas variantes, por eso te aparece un número más grande que la realidad. La UI puede mostrarte "10" cuando en Shopify hay 3.</p>
-
-  <div class="warning">
-    <strong>⚠️ No es que la campaña esté mal.</strong> La campaña "Finalizar compra" está bien configurada. El pixel está disparando el evento correcto. El problema es <strong>cómo la interfaz de Meta te muestra los números por default</strong>: agrega eventos duplicados con nombres distintos.
-  </div>
-
-  <h3>El número verdadero</h3>
-  <table class="tbl-compact">
-    <thead><tr><th>Fuente</th><th class="num">Ventas Jul 6-21</th><th class="num">Es real?</th></tr></thead>
-    <tbody>
-      <tr class="highlight"><td>Shopify (financial_status = paid)</td><td class="num">3</td><td class="num">✅ La verdad</td></tr>
-      <tr><td>Meta · evento "purchase" limpio</td><td class="num">3</td><td class="num">✅ Match</td></tr>
-      <tr><td>Meta · columna "Purchases" default</td><td class="num">~10</td><td class="num">❌ Inflado</td></tr>
-    </tbody>
-  </table>
-</div>
-
-<div class="explain-section" id="p2">
-  <h2><span class="n">2</span>¿Qué es CAPI y por qué lo necesitamos?</h2>
-
-  <p><strong>CAPI = Conversions API</strong> (API de Conversiones de Meta). Es una forma más confiable de que Shopify le avise a Meta cuando alguien compra.</p>
-
-  <div class="analogy">
-    <strong>Piénsalo así:</strong> el <em>pixel</em> es como un mensajero que corre desde el navegador del cliente hasta Meta. Si el cliente tiene un iPhone con configuración privada, usa AdBlock, o cierra la pestaña muy rápido, el mensajero <em>no llega</em>. <strong>CAPI es un segundo mensajero</strong> que corre desde tu servidor de Shopify directo a Meta — ese siempre llega, sin depender del navegador del cliente.
-  </div>
-
-  <h3>Sin CAPI (situación actual)</h3>
-  <ul>
-    <li>Solo el pixel client-side reporta compras.</li>
-    <li>Se pierden ~30-40% de eventos por AdBlock, iOS 14+, cookies bloqueadas, extensiones de privacidad.</li>
-    <li>Meta ve pocas conversiones → algoritmo optimiza mal → CPA sube, ROAS baja.</li>
-    <li>Además: sin CAPI bien configurado con <code>event_id</code>, Meta cuenta el mismo evento dos veces.</li>
-  </ul>
-
-  <h3>Con CAPI bien puesto</h3>
-  <ul>
-    <li>Pixel + CAPI trabajan juntos, capturan 95%+ de eventos.</li>
-    <li>Cada evento lleva un <code>event_id</code> único.</li>
-    <li>Meta usa ese ID para <strong>deduplicar</strong>: si ve pixel Y CAPI del mismo evento, lo cuenta 1 vez.</li>
-    <li>Meta sabe mejor quién compra → algoritmo optimiza mejor → mejor ROAS.</li>
-  </ul>
-
-  <div class="good">
-    <strong>💡 En términos simples:</strong> instalar CAPI es como decirle a Meta "aquí está la lista oficial de ventas reales, no le hagas caso al pixel loco que cuenta doble". Después de instalarlo, tus números en Meta van a parecerse mucho más a los de Shopify.
-  </div>
-</div>
-
-<div class="explain-section" id="p3">
-  <h2><span class="n">3</span>Cómo verificar tú misma el problema (paso a paso)</h2>
-
-  <p>Sigue esto exactamente. Todo se hace en el navegador, no necesitas nada más:</p>
-
-  <div class="step"><div class="step-n">1</div><div class="step-body">Entra a <code>business.facebook.com/adsmanager</code> con tu cuenta.</div></div>
-  <div class="step"><div class="step-n">2</div><div class="step-body">Arriba a la izquierda selecciona <strong>Saber Legacy Ad account</strong> (act_461452066012476).</div></div>
-  <div class="step"><div class="step-n">3</div><div class="step-body">En la vista de campañas, arriba a la derecha hay un botón <strong>"Columnas: Performance"</strong>. Click ahí.</div></div>
-  <div class="step"><div class="step-n">4</div><div class="step-body">Del menú que aparece, hasta abajo click <strong>"Personalizar columnas"</strong>.</div></div>
-  <div class="step"><div class="step-n">5</div><div class="step-body">Se abre un modal enorme. En el buscador escribe <code>purchase</code>.</div></div>
-  <div class="step"><div class="step-n">6</div><div class="step-body">Vas a ver <strong>como 20-30 opciones</strong> con la palabra "purchase". Aquí está lo importante:
-    <ul style="margin-top:8px;margin-bottom:0;">
-      <li><strong>Desmarca:</strong> "Purchases" (esta suma todo, es la que te miente)</li>
-      <li><strong>Marca:</strong> "Website Purchases" (esta es la del pixel, la real)</li>
-      <li><strong>Marca:</strong> "Cost per Website Purchase" (para ver el CPA real)</li>
-      <li><strong>Marca:</strong> "Website Purchase ROAS" (para el ROAS real)</li>
-    </ul>
-  </div></div>
-  <div class="step"><div class="step-n">7</div><div class="step-body">Abajo del modal click <strong>"Guardar como preajuste"</strong> → nombre: "Columnas Real" → Aplicar.</div></div>
-  <div class="step"><div class="step-n">8</div><div class="step-body">Regresa a tu vista de campañas. Ahora la columna "Purchases" te muestra el número real (no inflado).</div></div>
-
-  <div class="tip">
-    <strong>Tip:</strong> Guarda ese preajuste "Columnas Real" en TODAS tus cuentas de clientes. La columna default de Meta es engañosa para todos.
-  </div>
-
-  <h3>Verificar en Events Manager (la fuente de la verdad)</h3>
-
-  <div class="step"><div class="step-n">1</div><div class="step-body">Entra a <code>business.facebook.com/events_manager2</code></div></div>
-  <div class="step"><div class="step-n">2</div><div class="step-body">Selecciona el pixel de <strong>Saber Legacy</strong>.</div></div>
-  <div class="step"><div class="step-n">3</div><div class="step-body">Click en <strong>"Overview"</strong>. Ve al evento <strong>"Purchase"</strong>.</div></div>
-  <div class="step"><div class="step-n">4</div><div class="step-body">Ahí ves cuántos eventos "Purchase" únicos se dispararon en un período. Compáralo con las órdenes de Shopify en el mismo período.</div></div>
-
-  <div class="warning">
-    <strong>Si Events Manager muestra más eventos que órdenes en Shopify</strong> = tienes doble tracking (probablemente el mismo evento se dispara desde el pixel Y desde CAPI/otro sistema, sin deduplicar).<br><br>
-    <strong>Si muestra igual o menos</strong> = el pixel está bien, el problema es solo la columna de Ads Manager (arreglado con paso 6).
-  </div>
-</div>
-
-<div class="explain-section" id="p4">
-  <h2><span class="n">4</span>Cómo arreglarlo (checklist paso a paso)</h2>
-
-  <h3>4.1 · La ganancia rápida (5 minutos, hoy)</h3>
-  <div class="step"><div class="step-n">✓</div><div class="step-body"><strong>Cambiar la columna en Ads Manager</strong> a "Website Purchases" (pasos 1-8 arriba). Esto no arregla el problema real, pero deja de mentirte a ti misma sobre cuántas ventas hay.</div></div>
-
-  <h3>4.2 · Instalar CAPI vía plugin oficial de Shopify (recomendado)</h3>
-
-  <p>Es la forma más fácil y no requiere developer. Toma ~30 minutos y es gratis:</p>
-
-  <div class="step"><div class="step-n">1</div><div class="step-body">Entra al admin de Shopify de Saber Legacy.</div></div>
-  <div class="step"><div class="step-n">2</div><div class="step-body">Sales channels (Canales de venta) → <strong>Add app</strong>.</div></div>
-  <div class="step"><div class="step-n">3</div><div class="step-body">Busca <strong>"Facebook & Instagram"</strong> (el oficial, de Meta, tiene el logo azul). Instala.</div></div>
-  <div class="step"><div class="step-n">4</div><div class="step-body">En la configuración de la app: conecta la cuenta de Business Manager de Saber Legacy.</div></div>
-  <div class="step"><div class="step-n">5</div><div class="step-body">En "Data sharing" activa <strong>"Maximum"</strong> — esto habilita CAPI automáticamente y manda todos los eventos con event_id para deduplicar.</div></div>
-  <div class="step"><div class="step-n">6</div><div class="step-body">Espera 24-48h. Ve a Events Manager y verifica que el pixel ahora muestre <strong>"Server events"</strong> además de "Browser events" — significa que CAPI está funcionando.</div></div>
-
-  <div class="good">
-    <strong>✅ Después de esto:</strong> los eventos "Purchase" se van a deduplicar automáticamente y Meta te reportará ~3 ventas cuando Shopify tenga 3 (con máximo ±5% de diferencia por lag de reporte).
-  </div>
-
-  <h3>4.3 · Deshabilitar Facebook Shop si no lo usas</h3>
-
-  <p>Los eventos raros <code>onsite_web_purchase</code>, <code>onsite_conversion.purchase</code> vienen de una "Facebook Shop" (tienda dentro de Facebook/Instagram) conectada a Saber Legacy.</p>
-
-  <div class="step"><div class="step-n">1</div><div class="step-body">En Business Manager → <strong>Commerce Manager</strong>.</div></div>
-  <div class="step"><div class="step-n">2</div><div class="step-body">Si aparece una tienda "Saber Legacy" ahí y no la usan activamente para vender dentro de FB/IG → desactívala o quítale el catalog sync.</div></div>
-  <div class="step"><div class="step-n">3</div><div class="step-body">Los eventos "onsite_*" van a dejar de aparecer y tus reportes quedan más limpios.</div></div>
-
-  <h3>4.4 · Configuración de atribución</h3>
-
-  <p>En Ads Manager, la atribución default es "7-day click, 1-day view". Eso significa: si alguien vio tu anuncio hoy y compra en 6 días, Meta lo cuenta como venta atribuida. Eso está bien, no lo cambies.</p>
-
-  <div class="tip">
-    <strong>Tip:</strong> No cambies la ventana de atribución a "28-day click" a menos que sepas exactamente por qué. 28 días infla mucho las cifras y engaña con "ventas" que en realidad no vinieron del anuncio.
-  </div>
-</div>
-
-<div class="explain-section" id="p5">
-  <h2><span class="n">5</span>Cómo saber si ya funciona</h2>
-
-  <p>Después de instalar CAPI y arreglar columnas, así verificas que quedó bien:</p>
-
-  <h3>Test 1 · Comparación manual (5 min, en 48h)</h3>
-  <ul>
-    <li>Espera 48h después de activar CAPI.</li>
-    <li>Ve a Ads Manager → últimos 7 días → columna "Website Purchases".</li>
-    <li>Ve a Shopify → Orders → últimos 7 días → filtra "Paid".</li>
-    <li><strong>Los números deben coincidir ±5%.</strong></li>
-  </ul>
-
-  <h3>Test 2 · Compra de prueba (10 min)</h3>
-  <ul>
-    <li>En Shopify → Discounts → crea un código <strong>100% off</strong> temporal.</li>
-    <li>En otra pestaña, entra a saberlegacy.com desde tu celular.</li>
-    <li>Agrega algo al carrito, aplica el código, completa la compra.</li>
-    <li>Ve inmediatamente a Events Manager → <strong>Test Events</strong> (en vivo).</li>
-    <li>Debe aparecer <strong>1 Purchase</strong> event (no 2, no 3).</li>
-    <li>Después borra el código de descuento y cancela la orden en Shopify.</li>
-  </ul>
-
-  <h3>Test 3 · Overview en Events Manager (cada semana)</h3>
-  <ul>
-    <li>Events Manager → tu pixel → Overview → últimos 7 días.</li>
-    <li>Purchase events debe = órdenes Shopify (misma semana).</li>
-    <li>Si sigue habiendo diferencia >10%, algo sigue mal.</li>
-  </ul>
-
-  <div class="good">
-    <strong>Meta bien configurado = más ventas.</strong> El algoritmo optimiza mejor cuando ve las conversiones reales. Empresas que arreglan CAPI típicamente ven mejora de ROAS de 15-30% en 30-60 días sin cambiar nada más.
-  </div>
-</div>
-
-<div class="explain-section" id="p6">
-  <h2><span class="n">6</span>Glosario rápido</h2>
-
-  <p><strong>Pixel:</strong> códigito de JavaScript invisible que Meta te da para instalar en tu sitio. Cuando alguien hace algo importante (compra, agregar al carrito, ver producto), el pixel le avisa a Meta desde el navegador del cliente.</p>
-
-  <p><strong>CAPI (Conversions API):</strong> alternativa al pixel que corre desde el servidor de tu tienda. Más confiable porque no depende del navegador del cliente. Ideal es usar pixel + CAPI juntos (el plugin oficial de Facebook para Shopify lo hace automáticamente).</p>
-
-  <p><strong>Evento:</strong> algo que pasa en tu sitio que Meta puede rastrear. Los principales: <code>ViewContent</code> (vio producto), <code>AddToCart</code>, <code>InitiateCheckout</code>, <code>AddPaymentInfo</code>, <code>Purchase</code>.</p>
-
-  <p><strong>event_id:</strong> identificador único que se le pone a cada evento. Cuando pixel y CAPI mandan el mismo evento con el mismo event_id, Meta sabe que es el mismo y no lo cuenta doble. Sin event_id, Meta cree que son dos eventos separados = doble conteo.</p>
-
-  <p><strong>Deduplicación:</strong> proceso donde Meta usa el event_id para "eliminar duplicados". Requiere que tanto el pixel como CAPI manden el mismo event_id.</p>
-
-  <p><strong>Atribución:</strong> el proceso donde Meta decide "esta venta vino de este anuncio". La ventana default es "7-day click + 1-day view" — o sea, cuenta ventas de personas que dieron click al anuncio en los últimos 7 días, o vieron el anuncio en el último día.</p>
-
-  <p><strong>Purchase (evento):</strong> el evento del pixel que se dispara cuando alguien COMPLETA una compra en tu sitio (llega a la página de "Gracias por tu compra"). Debe dispararse UNA vez por compra.</p>
-
-  <p><strong>omni_purchase, onsite_purchase, etc.:</strong> variantes que Meta crea automáticamente del mismo evento Purchase. Ninguno de estos son eventos nuevos que tú configuraste — son cómo Meta clasifica internamente el mismo Purchase.</p>
-
-  <p><strong>Events Manager:</strong> panel de Meta (<code>business.facebook.com/events_manager2</code>) donde ves todos los eventos que tu pixel/CAPI están reportando. Es tu "fuente de verdad" para debugear problemas.</p>
-
-  <p><strong>Business Manager:</strong> el panel de administración general de Meta (<code>business.facebook.com</code>) donde gestionas cuentas publicitarias, pixels, catálogos, tiendas de Facebook, permisos de equipo.</p>
-</div>
-
-<footer>SABER LEGACY · Guía técnica · 21/07/2026 · 12:47</footer>
+<footer>SABER LEGACY · 03/08/2026 · 13:47</footer>
 </div>
