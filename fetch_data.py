@@ -54,6 +54,8 @@ def meta_paginate(path, params, token, max_pages=40):
 def fetch_meta(env, data):
     token = env["ACCESS_TOKEN"]
     act = env["AD_ACCOUNT_ID"]
+    if not act.startswith("act_"):
+        act = "act_" + act
 
     print("→ meta: account info")
     data["meta_account"] = meta_fetch(

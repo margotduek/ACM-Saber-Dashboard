@@ -150,50 +150,64 @@ footer{color:var(--muted);font-size:11px;margin-top:32px;padding-top:20px;border
 .tip strong{color:var(--jedi);}
 </style></head><body>
 <div class="wrap">
-<nav class="topnav"><span class="brand">⚔ SABER LEGACY</span><div class="nav-links"><a href="index.html">Cliente</a><a href="internas.html">Internas</a><a href="recomendaciones.html">Recomendaciones</a><a href="explicaciones.html" class="current">📚 Explicaciones</a></div><span class="meta">Actualizado <strong>03/08/2026 · 13:47</strong></span></nav>
-<div class="explain-hero"><h1>📚 Guía para entender qué pasa (y arreglarlo)</h1><p>Por qué Meta reporta 10 ventas cuando Shopify tiene 3, y cómo arreglarlo. <strong>Léelo completo en 10 min.</strong></p></div>
+<nav class="topnav"><span class="brand">⚔ SABER LEGACY</span><div class="nav-links"><a href="index.html">Cliente</a><a href="internas.html">Internas</a><a href="recomendaciones.html">Recomendaciones</a><a href="explicaciones.html" class="current">📚 Explicaciones</a></div><span class="meta">Actualizado <strong>24/08/2026 · 17:59</strong></span></nav>
+<div class="explain-hero"><h1>📚 Qué está pasando con la cuenta (y cómo leer el dashboard)</h1><p>Por qué el rendimiento cayó desde junio, por qué Meta y Shopify nunca van a dar el mismo número, y qué significa cada métrica. <strong>Léelo completo en 10 min.</strong></p></div>
 
-<div class="explain-section"><h2><span class="n">1</span>¿Por qué Meta dice 10 y Shopify dice 3?</h2>
-<p>Meta cuenta la MISMA compra con muchos nombres distintos y en la vista "Purchases" te los suma todos.</p>
-<div class="analogy"><strong>Piénsalo así:</strong> imagínate que cada vez que un cliente compra, el vendedor lo apunta 3 veces — una porque llegó a caja, otra por la tarjeta, otra por firmar. Fue 1 compra pero la libreta dice 3.</div>
-<div class="warning"><strong>No está mal configurada la campaña.</strong> El problema es cómo la UI de Meta agrupa eventos por default: suma variantes del mismo Purchase (omni_purchase, web_in_store_purchase, onsite_web_purchase, etc.). Todas son la misma venta.</div></div>
+<div class="explain-section"><h2><span class="n">0</span>Corrección importante al reporte anterior</h2>
+<p>El reporte de julio decía dos cosas que, al revisar la API con el histórico completo, <strong>resultaron equivocadas</strong>. Las corregimos aquí porque llevaban a decisiones malas.</p>
+<div class="warning"><strong>Decía:</strong> "el pixel no tiene ningún evento purchase configurado, 0 conversiones en 3 años".<br><strong>Realidad:</strong> sí hay eventos <em>purchase</em> registrados de forma continua desde agosto 2024 — 689 compras en total. El pixel funciona.</div>
+<div class="warning"><strong>Decía:</strong> "Meta infla los números x3, dice 10 ventas cuando Shopify tiene 3".<br><strong>Realidad:</strong> las variantes del evento (<em>purchase</em>, <em>omni_purchase</em>, <em>web_in_store_purchase</em>…) reportan todas el <strong>mismo</strong> número — 689, 699, 689 — no se suman entre sí. Meta no está duplicando nada.</div>
+<div class="good"><strong>Lo que sí pasa hoy es lo contrario:</strong> Meta atribuye <em>menos</em> ventas que Shopify. Julio: Meta 8 vs Shopify 10. Agosto: Meta 5 vs Shopify 8. Eso es normal y esperado — la sección 1 explica por qué.</div></div>
 
-<div class="explain-section"><h2><span class="n">2</span>¿Qué es CAPI?</h2>
-<p><strong>CAPI = Conversions API.</strong> Es una forma más confiable de que Shopify le avise a Meta cuando alguien compra.</p>
-<div class="analogy"><strong>Piénsalo así:</strong> el <em>pixel</em> es un mensajero que corre desde el navegador del cliente. Si usa AdBlock, iPhone privado, o cierra la pestaña, el mensajero no llega. <strong>CAPI es un segundo mensajero</strong> desde el servidor de tu tienda — ese siempre llega.</div>
-<p>Sin CAPI: pixel pierde 30-40% eventos + puede duplicar. Con CAPI: 95%+ eventos capturados y deduplicados con event_id único.</p>
-<div class="good"><strong>💡 Simple:</strong> instalar CAPI le dice a Meta "aquí está la lista oficial de ventas reales". Después de 48h tus números en Meta se van a parecer mucho más a los de Shopify.</div></div>
+<div class="explain-section"><h2><span class="n">1</span>Por qué Meta y Shopify nunca van a cuadrar exacto</h2>
+<p>No están contando lo mismo, y eso está bien.</p>
+<div class="analogy"><strong>Piénsalo así:</strong> Shopify es la caja registradora — cuenta <em>toda</em> venta que entra, venga de donde venga. Meta es el vendedor que levanta la mano y dice "esa la traje yo". Si alguien te encontró en Google, por un amigo, o porque ya te conocía, entra a la caja pero ningún vendedor la reclama.</div>
+<p>Por eso el número de Shopify casi siempre es mayor. La diferencia entre los dos es aproximadamente tu <strong>venta orgánica</strong>: en agosto, 8 pedidos en Shopify menos 5 atribuidos a Meta = 3 ventas que no vinieron de pauta.</p>
+<div class="warning"><strong>Nota sobre el histórico:</strong> el dashboard solo puede leer los pedidos de Shopify de los últimos ~60 días. Es un límite del token, no un error. Comparar meses anteriores contra Shopify va a dar mal — para eso está el punto "pedir scope read_all_orders" en Recomendaciones.</div></div>
 
-<div class="explain-section"><h2><span class="n">3</span>Cómo verificar tú misma</h2>
-<p><strong>Meta Ads Manager:</strong></p>
+<div class="explain-section"><h2><span class="n">2</span>El problema real: la audiencia se quemó</h2>
+<p>Este es el hallazgo importante del trimestre. Mira la secuencia:</p>
+<table style="width:100%;border-collapse:collapse;margin:14px 0;font-size:13px">
+<tr style="border-bottom:1px solid var(--border)"><th style="text-align:left;padding:8px">Mes</th><th style="text-align:right;padding:8px">Alcance</th><th style="text-align:right;padding:8px">CTR</th><th style="text-align:right;padding:8px">CPC</th><th style="text-align:right;padding:8px">CPM</th></tr>
+<tr><td style="padding:8px">Marzo</td><td style="text-align:right;padding:8px">269,302</td><td style="text-align:right;padding:8px">7.66%</td><td style="text-align:right;padding:8px">$0.48</td><td style="text-align:right;padding:8px">$36.78</td></tr>
+<tr><td style="padding:8px">Mayo</td><td style="text-align:right;padding:8px">770,129</td><td style="text-align:right;padding:8px">3.24%</td><td style="text-align:right;padding:8px">$1.21</td><td style="text-align:right;padding:8px">$39.20</td></tr>
+<tr><td style="padding:8px">Julio</td><td style="text-align:right;padding:8px">155,628</td><td style="text-align:right;padding:8px">2.06%</td><td style="text-align:right;padding:8px">$2.05</td><td style="text-align:right;padding:8px">$42.14</td></tr>
+<tr style="color:var(--sith);font-weight:600"><td style="padding:8px">Agosto</td><td style="text-align:right;padding:8px">120,692</td><td style="text-align:right;padding:8px">1.47%</td><td style="text-align:right;padding:8px">$2.71</td><td style="text-align:right;padding:8px">$39.98</td></tr>
+</table>
+<p>Fíjate en la última columna: <strong>el CPM casi no se movió</strong> ($36.78 → $39.98). Eso significa que Meta no nos está cobrando más caro por mostrar anuncios.</p>
+<div class="analogy"><strong>Piénsalo así:</strong> el CPM es lo que cuesta repartir volantes. El CTR es cuánta gente los agarra. El costo de repartir sigue igual — lo que cambió es que <strong>cada vez menos gente los agarra</strong>. Y como pagas por repartir pero mides por clic, el clic te sale 5 veces más caro.</div>
+<div class="warning"><strong>El caso extremo:</strong> la campaña SABER15 alcanzó a 3,129 personas y les mostró 51,002 impresiones. Cada persona vio el anuncio <strong>16 veces</strong> en un mes. A esa audiencia ya no le puedes vender nada.</div>
+<div class="good"><strong>Qué lo arregla:</strong> audiencias nuevas (Lookalikes frescas de compradores 30/90/180d, audiencias amplias) y creativo nuevo. No lo arregla subir el presupuesto — eso solo acelera el desgaste.</div></div>
+
+<div class="explain-section"><h2><span class="n">3</span>Dónde se está yendo el dinero</h2>
+<p>En los últimos 30 días se gastaron <strong>$29,587</strong>. De esos, <strong>$14,520 (49%)</strong> fueron a tres campañas que no vendieron absolutamente nada:</p>
+<ul><li><strong>MISTERYBOX</strong> — $8,446, cero compras</li>
+<li><strong>KITINICIACIÓN</strong> — $4,770, cero compras</li>
+<li><strong>DESCESCALONADO</strong> — $1,303, cero compras</li></ul>
+<p>Mientras tanto la familia <strong>IGEngage2</strong> gastó $7,780 y trajo 6 de las 8 compras del mes, con ROAS 4.17x.</p>
+<div class="good"><strong>Lo importante:</strong> no hace falta más presupuesto. Mover esos $14,520 a lo que sí convierte cambia el mes completo sin gastar un peso extra.</div>
+<div class="warning"><strong>Ojo con MYSTERY BOX:</strong> la campaña no vendió, pero el producto sí — Shopify registró 4 Mystery Box por $16,250 en el mismo periodo. El producto funciona; lo que falló fue la campaña Advantage+ que lo promovía.</div></div>
+
+<div class="explain-section"><h2><span class="n">4</span>Cómo verificar tú misma en Meta</h2>
+<p><strong>Ads Manager:</strong></p>
 <ol><li>Entra a business.facebook.com/adsmanager</li>
-<li>Botón "Columnas" arriba derecha → "Personalizar columnas"</li>
-<li>Busca "purchase" → DESMARCA "Purchases" → MARCA "Website Purchases"</li>
-<li>Aplica. Ahora la vista te muestra el número real.</li></ol>
-<p><strong>Events Manager (fuente de verdad):</strong></p>
-<ol><li>business.facebook.com/events_manager2</li><li>Selecciona pixel Saber Legacy</li><li>Overview → evento Purchase → cuenta debe = órdenes Shopify</li></ol></div>
+<li>Botón "Columnas" arriba a la derecha → "Personalizar columnas"</li>
+<li>Agrega <em>Frecuencia</em>, <em>Alcance</em>, <em>CPM</em> y <em>CTR</em> junto a las de venta</li>
+<li>Ordena por gasto: cualquier campaña con frecuencia arriba de 4 y CTR abajo de 1.5% está quemada</li></ol>
+<p><strong>Events Manager</strong> (para confirmar que el pixel sigue vivo):</p>
+<ol><li>business.facebook.com/events_manager2</li><li>Selecciona el pixel de Saber Legacy</li><li>Overview → evento Purchase → debe mostrar actividad continua</li></ol></div>
 
-<div class="explain-section"><h2><span class="n">4</span>Cómo arreglarlo</h2>
-<h3>4.1 · Ganancia rápida (5 min)</h3>
-<p>Cambiar columna en Ads Manager (pasos arriba). No arregla el problema real pero deja de mentirte.</p>
-<h3>4.2 · Instalar CAPI vía plugin Shopify (recomendado, 30 min sin dev)</h3>
-<ol><li>Admin Shopify Saber Legacy → Sales channels → Add app</li><li>Busca "Facebook & Instagram" (oficial de Meta)</li><li>Instala + conecta Business Manager</li><li>Data sharing → activa "Maximum"</li><li>Espera 24-48h → verifica en Events Manager que aparecen "Server events"</li></ol>
-<div class="good"><strong>✅ Después:</strong> los eventos Purchase se deduplican automáticamente. Meta = Shopify ±5%.</div>
-<h3>4.3 · Deshabilitar Facebook Shop si no lo usan</h3>
-<p>Los eventos onsite_purchase vienen de tienda Facebook conectada. Si no la usan activamente, desactivarla en Commerce Manager.</p></div>
+<div class="explain-section"><h2><span class="n">5</span>Glosario</h2>
+<p><strong>Alcance (reach):</strong> personas distintas que vieron el anuncio. Si baja, tu audiencia se está achicando.</p>
+<p><strong>Impresiones:</strong> veces que se mostró el anuncio, contando repeticiones.</p>
+<p><strong>Frecuencia:</strong> impresiones ÷ alcance. Cuántas veces vio el anuncio la misma persona. Arriba de 4 es señal de fatiga; arriba de 8 es dinero tirado.</p>
+<p><strong>CTR:</strong> % de gente que da clic. Es el termómetro del creativo.</p>
+<p><strong>CPC:</strong> costo por clic. Sube cuando el creativo cansa, aunque el CPM siga igual.</p>
+<p><strong>CPM:</strong> costo por mil impresiones. Es el precio de la subasta de Meta, casi independiente de tu creativo.</p>
+<p><strong>ROAS:</strong> revenue atribuido ÷ gasto. 4.17x = por cada peso, $4.17 de venta atribuida. Ojo: es venta, no ganancia — no descuenta costo de producto ni envío.</p>
+<p><strong>Atribución default:</strong> 7 días post-clic + 1 día post-vista. Meta reclama ventas de quien vio o clicó el anuncio en esa ventana.</p>
+<p><strong>Pixel:</strong> código en el sitio que le avisa a Meta cuando pasan cosas (ver producto, agregar al carrito, comprar).</p>
+<p><strong>CAPI:</strong> el mismo aviso pero desde el servidor de la tienda en vez del navegador. Más confiable ante AdBlock e iOS. Complemento del pixel, no reemplazo.</p></div>
 
-<div class="explain-section"><h2><span class="n">5</span>Cómo saber si ya funciona</h2>
-<p>48h después de activar CAPI:</p>
-<ul><li>Website Purchases últimos 7d = Órdenes paid Shopify (±5%)</li><li>Test: compra de prueba con código 100% off → 1 solo Purchase en Test Events</li></ul>
-<div class="good"><strong>Meta bien configurado = más ventas.</strong> El algoritmo optimiza mejor cuando ve las conversiones reales. Mejora típica: ROAS +15-30% en 30-60 días.</div></div>
-
-<div class="explain-section"><h2><span class="n">6</span>Glosario</h2>
-<p><strong>Pixel:</strong> código JS invisible en tu sitio que le avisa a Meta cuando pasan cosas (compra, add-to-cart, ver producto).</p>
-<p><strong>CAPI:</strong> alternativa server-side al pixel. Más confiable. Ideal usar los dos juntos.</p>
-<p><strong>Evento:</strong> algo trackable en tu sitio (ViewContent, AddToCart, InitiateCheckout, Purchase).</p>
-<p><strong>event_id:</strong> ID único por evento. Pixel + CAPI mandan mismo ID = Meta desduplica.</p>
-<p><strong>Atribución default:</strong> 7-day click + 1-day view. Meta cuenta ventas de personas que dieron click al ad en los últimos 7 días.</p>
-<p><strong>Events Manager:</strong> panel de Meta donde ves todos los eventos que el pixel/CAPI reportan. Fuente de verdad para debugear.</p></div>
-
-<footer>SABER LEGACY · 03/08/2026 · 13:47</footer>
+<footer>SABER LEGACY · 24/08/2026 · 17:59</footer>
 </div>

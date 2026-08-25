@@ -85,26 +85,30 @@ KEY_DATES = [
     ("Navidad 2025", "2025-12-20", "2025-12-25"),
     ("Día del Niño 2026", "2026-04-27", "2026-05-03"),
     ("Día del Padre 2026", "2026-06-08", "2026-06-14"),
+    ("Regreso a clases 2026", "2026-08-01", "2026-08-23"),
 ]
 
 
 def build_key_dates(data):
     daily_by_date = {row["date_start"]: row for row in data["meta_daily"]}
     lines = ["# Performance en fechas clave (auto-generado)\n", f"_Actualizado: {date.today().isoformat()}_\n"]
-    lines.append("_Sin eventos de `purchase` en el pixel — solo se reporta gasto/clics de Meta, no Ventas/ROAS._\n")
-    lines.append("| Fecha | Rango | Inversión | Clics | CTR prom. |")
-    lines.append("|---|---|---:|---:|---:|")
+    lines.append("_Ventas y ROAS son atribución de Meta (7d clic / 1d vista), no pedidos de Shopify._\n")
+    lines.append("| Fecha | Rango | Inversión | Clics | CTR prom. | Ventas | Revenue | ROAS |")
+    lines.append("|---|---|---:|---:|---:|---:|---:|---:|")
     for name, start, end in KEY_DATES:
-        spend = clicks = impressions = 0.0
+        spend = clicks = impressions = purch = rev = 0.0
         days = 0
         for ds, row in daily_by_date.items():
             if start <= ds <= end:
                 spend += num(row.get("spend"))
                 clicks += num(row.get("clicks"))
                 impressions += num(row.get("impressions"))
+                purch += action_value(row.get("actions"), PURCHASE_ACTIONS)
+                rev += action_value(row.get("action_values"), PURCHASE_ACTIONS)
                 days += 1
         ctr = clicks / impressions * 100 if impressions else 0
-        lines.append(f"| {name} | {start} → {end} ({days}d) | ${spend:,.0f} | {clicks:.0f} | {ctr:.2f}% |")
+        roas = rev / spend if spend else 0
+        lines.append(f"| {name} | {start} → {end} ({days}d) | ${spend:,.0f} | {clicks:.0f} | {ctr:.2f}% | {purch:.0f} | ${rev:,.0f} | {roas:.2f}x |")
     Path("data/03-meta-fechas-clave.md").write_text("\n".join(lines) + "\n")
     print("✓ data/03-meta-fechas-clave.md")
 
@@ -203,6 +207,47 @@ def build_customers(data):
     print("✓ data/08-shopify-clientes.md")
 
 
+SECTIONS = [
+    ("01-meta-mensual.md",      "📅 Evolución mensual · Meta Ads"),
+    ("02-meta-campañas.md",     "🎯 Top campañas · histórico"),
+    ("03-meta-fechas-clave.md", "⚡ Performance en fechas clave"),
+    ("04-shopify-atribucion.md","🛒 Atribución · Shopify vs Meta"),
+    ("05-shopify-productos.md", "📦 Top productos · Shopify"),
+    ("06-shopify-geo.md",       "🗺️ Distribución geográfica"),
+    ("07-shopify-promos.md",    "🏷️ Códigos de descuento"),
+    ("08-shopify-clientes.md",  "👥 Clientes y LTV"),
+    ("09-presupuesto.md",       "💰 Propuesta de presupuesto · 12 meses"),
+]
+
+
+def build_consolidated():
+    """Concatena data/01..09 en 00-todo-junto.md para copiar y pegar."""
+    today = date.today().strftime("%d/%m/%Y")
+    out = [
+        "# Saber Legacy · Todos los datos",
+        f"_Actualizado: {today}_\n",
+        "Documento único con todas las tablas. Selecciona la sección, copia, "
+        "pega en Notion / Excel / Google Sheets.\n",
+        "## Índice\n",
+    ]
+    out += [f"{i}. {title}" for i, (_, title) in enumerate(SECTIONS, 1)]
+    out.append("\n---")
+    for fname, title in SECTIONS:
+        src = Path("data") / fname
+        if not src.exists():
+            continue
+        body = src.read_text().splitlines()
+        # se descarta el H1 propio del archivo; el título de sección lo reemplaza
+        body = [ln for ln in body if not ln.startswith("# ")]
+        # los H2 internos bajan un nivel para no competir con el título de sección
+        body = [("#" + ln) if ln.startswith("## ") else ln for ln in body]
+        out.append(f"\n## {title}\n")
+        out.append("\n".join(body).strip())
+        out.append("\n---")
+    Path("data/00-todo-junto.md").write_text("\n".join(out).rstrip() + "\n")
+    print("✓ data/00-todo-junto.md")
+
+
 def main():
     data = load()
     Path("data").mkdir(exist_ok=True)
@@ -213,6 +258,7 @@ def main():
     build_geo(data)
     build_promos(data)
     build_customers(data)
+    build_consolidated()
     print(
         "\nNota: 04-shopify-atribucion.md (histórico completo Shopify vs Meta) y "
         "09-presupuesto.md (propuesta forward-looking) NO se regeneran — ver README."

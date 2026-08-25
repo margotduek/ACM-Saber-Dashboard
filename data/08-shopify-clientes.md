@@ -1,13 +1,13 @@
 # Clientes · Shopify (auto-generado)
 
-_Actualizado: 2026-07-06 · 438 clientes con compras_
+_Actualizado: 2026-08-24 · 451 clientes con compras_
 
 ## Stats generales
 
-- **Customers con compras:** 438
-- **LTV total:** $2,468,080
+- **Customers con compras:** 451
+- **LTV total:** $2,541,224
 - **LTV promedio:** $5,635
-- **Clientes que repiten (2+ órdenes):** 30 (6.8%)
+- **Clientes que repiten (2+ órdenes):** 33 (7.3%)
 
 ## Top 10 LTV
 
