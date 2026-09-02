@@ -1,5 +1,5 @@
 # Saber Legacy · Todos los datos
-_Actualizado: 24/08/2026_
+_Actualizado: 02/09/2026_
 
 Documento único con todas las tablas. Selecciona la sección, copia, pega en Notion / Excel / Google Sheets.
 
@@ -19,7 +19,7 @@ Documento único con todas las tablas. Selecciona la sección, copia, pega en No
 
 ## 📅 Evolución mensual · Meta Ads
 
-_Actualizado: 2026-08-24_
+_Actualizado: 2026-09-02_
 
 **⚠️ El pixel de Meta no tiene ningún evento de `purchase` configurado (0 en los 3 años de historial de la cuenta) — no hay Ventas/ROAS/CPA nativos de Meta que reportar.** El ROAS de los reportes anteriores salía de cruzar manualmente el total de Shopify contra el gasto del mes, no de atribución real de Meta. Vale la pena revisar si el Conversions API / pixel está bien instalado en el checkout.
 
@@ -60,13 +60,14 @@ _Actualizado: 2026-08-24_
 | 2026-05 | $92,621 | 76661 | $1.21 | 1.5 |
 | 2026-06 | $8,072 | 5913 | $1.37 | 1.1 |
 | 2026-07 | $24,351 | 11904 | $2.05 | 1.8 |
-| 2026-08 | $23,731 | 8739 | $2.72 | 1.9 |
+| 2026-08 | $31,960 | 12080 | $2.65 | 1.8 |
+| 2026-09 | $2,070 | 1483 | $1.40 | 1.5 |
 
 ---
 
 ## 🎯 Top campañas · histórico
 
-_Actualizado: 2026-08-24_
+_Actualizado: 2026-09-02_
 
 _Sin eventos de `purchase` en el pixel — no hay Ventas/ROAS/Compras por campaña que reportar (ver 01-meta-mensual.md)._
 
@@ -98,55 +99,55 @@ _Sin eventos de `purchase` en el pixel — no hay Ventas/ROAS/Compras por campa�
 | 24 | Traf v2 | $11,192 | 17919 | 2.72% | 1.7 |
 | 25 | EVERGREEN-JUL | $11,078 | 5326 | 2.48% | 2.5 |
 | 26 | Conv v11  ABO | $10,680 | 13741 | 5.72% | 2.1 |
-| 27 | Ventas - Modelos | $9,188 | 8277 | 2.83% | 10.1 |
-| 28 | REMKT-JUL | $9,072 | 4871 | 1.79% | 8.5 |
-| 29 | RMKT Whatsapp | $8,909 | 14587 | 2.89% | 6.3 |
-| 30 | VENTAS-MISTERYBOX - Real | $8,446 | 3436 | 1.74% | 2.5 |
-| 31 | SL RMKT v2 | $8,213 | 4158 | 2.89% | 4.7 |
-| 32 | CONV CBO v4 graflex | $8,188 | 11631 | 5.36% | 2.2 |
-| 33 | Whats Summer v2 | $8,143 | 14911 | 4.41% | 2.2 |
-| 34 | RMKT v1 | $8,024 | 13067 | 2.66% | 11.2 |
-| 35 | CONV - MAY 6TH | $7,389 | 3668 | 1.67% | 2.2 |
-| 36 | RMKT Whatsapp | $7,375 | 6350 | 2.69% | 6.6 |
-| 37 | Conv v12  ABO - tests | $7,053 | 7383 | 5.06% | 2.8 |
-| 38 | CONV v11 | $6,989 | 3704 | 2.00% | 3.7 |
-| 39 | A+ Campaña | $6,804 | 5176 | 2.40% | 2.9 |
-| 40 | RMKT WhatsApp Campaña | $6,655 | 6974 | 1.94% | 6.9 |
-| 41 | RMKT BF v2 | $6,000 | 3152 | 2.77% | 5.0 |
-| 42 | Traff | $5,825 | 28131 | 7.41% | 1.4 |
-| 43 | RMKT | BF Campaña | $5,706 | 4334 | 3.41% | 3.4 |
-| 44 | HOT SALE CBO | $5,686 | 1698 | 2.07% | 3.9 |
-| 45 | CONV v11 - CC - Beta | $5,658 | 5635 | 4.58% | 1.9 |
-| 46 | Traf v1 | $5,595 | 7255 | 1.77% | 1.5 |
-| 47 | SL-TESTING | $5,299 | 10164 | 7.00% | 1.9 |
-| 48 | CONV - HALLOWEEN | $5,191 | 1662 | 1.77% | 6.0 |
-| 49 | VENTAS/BACKTOSCHOOL/KITINICIACIÓN/ | $5,104 | 1816 | 1.38% | 2.8 |
-| 50 | RMKT Whats Adept | $4,938 | 11923 | 4.27% | 5.4 |
-| 51 | CONV CBO BC V8 | $4,281 | 7734 | 4.91% | 1.9 |
-| 52 | CONV ABO v11 | $4,265 | 1411 | 1.50% | 2.6 |
-| 53 | CONV v10 v2 | $4,089 | 8497 | 2.25% | 1.7 |
-| 54 | RMKT | Discount Halloween Campaña | $4,000 | 4279 | 3.52% | 2.9 |
-| 55 | RMKT - BF24 | $4,000 | 2500 | 2.43% | 3.7 |
-| 56 | RMKT - BLACK Friday 24 | $3,978 | 1695 | 1.52% | 3.9 |
-| 57 | CBO Winners | $3,710 | 1335 | 2.52% | 3.1 |
-| 58 | RMKT v2 | $3,446 | 4220 | 1.64% | 7.9 |
-| 59 | Cat - Halloween sale | $3,024 | 1070 | 1.34% | 4.0 |
-| 60 | RMKT - Hot Sale | $3,000 | 2274 | 2.39% | 6.4 |
-| 61 | VENTAS-MISTERYBOX | $2,971 | 1726 | 2.12% | 2.3 |
-| 62 | VENTAS/BACKTOSCHOOL/SABER15/ | $2,882 | 819 | 1.50% | 16.4 |
-| 63 | CONV V6 | $2,667 | 5155 | 5.68% | 1.5 |
-| 64 | RMKT - Spring v2 | $2,648 | 5738 | 3.21% | 7.7 |
-| 65 | RMKT | $2,328 | 1511 | 3.59% | 3.4 |
-| 66 | VV - Th | $2,306 | 8680 | 1.80% | 1.3 |
-| 67 | Traf | $2,259 | 4482 | 5.42% | 1.3 |
-| 68 | VENTAS-10OFF | $1,883 | 1689 | 2.43% | 2.8 |
-| 69 | CONV ASC - Viena | $1,863 | 5097 | 8.24% | 1.5 |
-| 70 | [Spring Sale] — Roma | $1,794 | 640 | 1.39% | 3.0 |
-| 71 | A+ v2 Campaña | $1,767 | 760 | 2.38% | 3.4 |
-| 72 | Conv 10 - catalogo | $1,763 | 949 | 1.73% | 4.2 |
-| 73 | CONV - Halloween v2 | $1,620 | 788 | 2.02% | 3.5 |
-| 74 | RMKT v4 | $1,595 | 1866 | 2.83% | 7.0 |
-| 75 | VENTAS/BACKTOSCHOOL/DESCESCALONADO/ | $1,531 | 379 | 1.26% | 2.9 |
+| 27 | VENTAS/BACKTOSCHOOL/KITINICIACIÓN/ | $10,214 | 3558 | 1.47% | 3.4 |
+| 28 | Ventas - Modelos | $9,188 | 8277 | 2.83% | 10.1 |
+| 29 | REMKT-JUL | $9,072 | 4871 | 1.79% | 8.5 |
+| 30 | RMKT Whatsapp | $8,909 | 14587 | 2.89% | 6.3 |
+| 31 | VENTAS-MISTERYBOX - Real | $8,446 | 3436 | 1.74% | 2.5 |
+| 32 | SL RMKT v2 | $8,213 | 4158 | 2.89% | 4.7 |
+| 33 | CONV CBO v4 graflex | $8,188 | 11631 | 5.36% | 2.2 |
+| 34 | Whats Summer v2 | $8,143 | 14911 | 4.41% | 2.2 |
+| 35 | RMKT v1 | $8,024 | 13067 | 2.66% | 11.2 |
+| 36 | CONV - MAY 6TH | $7,389 | 3668 | 1.67% | 2.2 |
+| 37 | RMKT Whatsapp | $7,375 | 6350 | 2.69% | 6.6 |
+| 38 | Conv v12  ABO - tests | $7,053 | 7383 | 5.06% | 2.8 |
+| 39 | CONV v11 | $6,989 | 3704 | 2.00% | 3.7 |
+| 40 | A+ Campaña | $6,804 | 5176 | 2.40% | 2.9 |
+| 41 | VENTAS/BACKTOSCHOOL/DESCESCALONADO/ | $6,715 | 3460 | 1.82% | 2.8 |
+| 42 | RMKT WhatsApp Campaña | $6,655 | 6974 | 1.94% | 6.9 |
+| 43 | RMKT BF v2 | $6,000 | 3152 | 2.77% | 5.0 |
+| 44 | Traff | $5,825 | 28131 | 7.41% | 1.4 |
+| 45 | RMKT | BF Campaña | $5,706 | 4334 | 3.41% | 3.4 |
+| 46 | HOT SALE CBO | $5,686 | 1698 | 2.07% | 3.9 |
+| 47 | CONV v11 - CC - Beta | $5,658 | 5635 | 4.58% | 1.9 |
+| 48 | Traf v1 | $5,595 | 7255 | 1.77% | 1.5 |
+| 49 | SL-TESTING | $5,299 | 10164 | 7.00% | 1.9 |
+| 50 | CONV - HALLOWEEN | $5,191 | 1662 | 1.77% | 6.0 |
+| 51 | RMKT Whats Adept | $4,938 | 11923 | 4.27% | 5.4 |
+| 52 | CONV CBO BC V8 | $4,281 | 7734 | 4.91% | 1.9 |
+| 53 | CONV ABO v11 | $4,265 | 1411 | 1.50% | 2.6 |
+| 54 | CONV v10 v2 | $4,089 | 8497 | 2.25% | 1.7 |
+| 55 | RMKT | Discount Halloween Campaña | $4,000 | 4279 | 3.52% | 2.9 |
+| 56 | RMKT - BF24 | $4,000 | 2500 | 2.43% | 3.7 |
+| 57 | RMKT - BLACK Friday 24 | $3,978 | 1695 | 1.52% | 3.9 |
+| 58 | CBO Winners | $3,710 | 1335 | 2.52% | 3.1 |
+| 59 | RMKT v2 | $3,446 | 4220 | 1.64% | 7.9 |
+| 60 | Cat - Halloween sale | $3,024 | 1070 | 1.34% | 4.0 |
+| 61 | RMKT - Hot Sale | $3,000 | 2274 | 2.39% | 6.4 |
+| 62 | VENTAS-MISTERYBOX | $2,971 | 1726 | 2.12% | 2.3 |
+| 63 | VENTAS/BACKTOSCHOOL/SABER15/ | $2,886 | 820 | 1.50% | 16.4 |
+| 64 | CONV V6 | $2,667 | 5155 | 5.68% | 1.5 |
+| 65 | RMKT - Spring v2 | $2,648 | 5738 | 3.21% | 7.7 |
+| 66 | RMKT | $2,328 | 1511 | 3.59% | 3.4 |
+| 67 | VV - Th | $2,306 | 8680 | 1.80% | 1.3 |
+| 68 | Traf | $2,259 | 4482 | 5.42% | 1.3 |
+| 69 | VENTAS-10OFF | $1,883 | 1689 | 2.43% | 2.8 |
+| 70 | CONV ASC - Viena | $1,863 | 5097 | 8.24% | 1.5 |
+| 71 | [Spring Sale] — Roma | $1,794 | 640 | 1.39% | 3.0 |
+| 72 | A+ v2 Campaña | $1,767 | 760 | 2.38% | 3.4 |
+| 73 | Conv 10 - catalogo | $1,763 | 949 | 1.73% | 4.2 |
+| 74 | CONV - Halloween v2 | $1,620 | 788 | 2.02% | 3.5 |
+| 75 | RMKT v4 | $1,595 | 1866 | 2.83% | 7.0 |
 | 76 | Conv - Cat v11 | $1,483 | 3698 | 3.98% | 1.9 |
 | 77 | CBO BC | $1,386 | 349 | 1.12% | 4.5 |
 | 78 | CONV - m4 - CAT dinamico | $1,243 | 2033 | 4.59% | 2.6 |
@@ -168,7 +169,7 @@ _Sin eventos de `purchase` en el pixel — no hay Ventas/ROAS/Compras por campa�
 
 ## ⚡ Performance en fechas clave
 
-_Actualizado: 2026-08-24_
+_Actualizado: 2026-09-02_
 
 _Ventas y ROAS son atribución de Meta (7d clic / 1d vista), no pedidos de Shopify._
 
@@ -217,56 +218,56 @@ _Actualizado: 23/06/2026 · 542 transacciones · histórico_
 
 ## 📦 Top productos · Shopify
 
-_Actualizado: 2026-08-24 · 19 órdenes en la ventana accesible por el token_
+_Actualizado: 2026-09-02 · 19 órdenes en la ventana accesible por el token_
 
 | # | Producto | Revenue | Unidades | Órdenes |
 |---|---|---:|---:|---:|
 | 1 | MYSTERY BOX | $16,250 | 4 | 4 |
-| 2 | AP-01 | $10,347 | 3 | 2 |
-| 3 | DROMUND KAAS | $7,960 | 2 | 2 |
-| 4 | Vader V2 | $7,430 | 1 | 1 |
-| 5 | EXILE | $7,190 | 1 | 1 |
-| 6 | GUARDIAN V2 | $7,160 | 1 | 1 |
-| 7 | GRAFLEX V2 | $6,790 | 1 | 1 |
-| 8 | REVENGE | $5,060 | 1 | 1 |
-| 9 | MALAK | $4,750 | 1 | 1 |
-| 10 | ADEPT | $3,879 | 1 | 1 |
-| 11 | X-1 | $3,470 | 1 | 1 |
-| 12 | ESTUCHE DE COLECCIÓN | $1,470 | 1 | 1 |
-| 13 | BASE ACERO PREMIUM | $1,270 | 1 | 1 |
-| 14 | Shipping Protection | $1,197 | 10 | 10 |
-| 15 | Protección de Envío | $1,007 | 2 | 2 |
-| 16 | LIGHTSABER NECKLACE | $500 | 1 | 1 |
-| 17 | HOJA DE POLICARBONATO | $377 | 1 | 1 |
-| 18 | BATERÍAS | $279 | 1 | 1 |
-| 19 | Protección de envío | $278 | 2 | 2 |
-| 20 | producto prueba | $20 | 2 | 2 |
+| 2 | AP-01 | $15,287 | 4 | 3 |
+| 3 | VADER MKII | $9,790 | 1 | 1 |
+| 4 | ELITE MYSTERY BOX | $9,770 | 1 | 1 |
+| 5 | COMMANDER | $8,090 | 1 | 1 |
+| 6 | Vader V2 | $7,430 | 1 | 1 |
+| 7 | EXILE | $7,190 | 1 | 1 |
+| 8 | GUARDIAN V2 | $7,160 | 1 | 1 |
+| 9 | GRAFLEX V2 | $6,790 | 1 | 1 |
+| 10 | REVENGE | $5,060 | 1 | 1 |
+| 11 | MALAK | $4,750 | 1 | 1 |
+| 12 | DROMUND KAAS | $4,090 | 1 | 1 |
+| 13 | X-1 | $3,470 | 1 | 1 |
+| 14 | ESTUCHE DE COLECCIÓN | $2,940 | 2 | 2 |
+| 15 | BASE ACERO PREMIUM | $1,270 | 1 | 1 |
+| 16 | Shipping Protection | $1,197 | 10 | 10 |
+| 17 | Protección de Envío | $999 | 1 | 1 |
+| 18 | Protección de envío | $716 | 4 | 4 |
+| 19 | LIGHTSABER NECKLACE | $500 | 1 | 1 |
+| 20 | HOJA DE POLICARBONATO | $377 | 1 | 1 |
 
 ---
 
 ## 🗺️ Distribución geográfica
 
-_Actualizado: 2026-08-24 · 19 órdenes con dirección_
+_Actualizado: 2026-09-02 · 19 órdenes con dirección_
 
 | # | Estado | Órdenes | % del total |
 |---|---|---:|---:|
-| 1 | México | 5 | 26.3% |
-| 2 | Ciudad de México | 2 | 10.5% |
-| 3 | Nuevo León | 2 | 10.5% |
+| 1 | México | 4 | 21.1% |
+| 2 | Ciudad de México | 3 | 15.8% |
+| 3 | Nuevo León | 3 | 15.8% |
 | 4 | Jalisco | 2 | 10.5% |
-| 5 | San Luis Potosí | 2 | 10.5% |
-| 6 | Oaxaca | 1 | 5.3% |
-| 7 | Puebla | 1 | 5.3% |
-| 8 | Coahuila | 1 | 5.3% |
-| 9 | Hidalgo | 1 | 5.3% |
-| 10 | Querétaro | 1 | 5.3% |
-| 11 | Sonora | 1 | 5.3% |
+| 5 | Oaxaca | 1 | 5.3% |
+| 6 | Puebla | 1 | 5.3% |
+| 7 | Coahuila | 1 | 5.3% |
+| 8 | Hidalgo | 1 | 5.3% |
+| 9 | Querétaro | 1 | 5.3% |
+| 10 | Sonora | 1 | 5.3% |
+| 11 | San Luis Potosí | 1 | 5.3% |
 
 ---
 
 ## 🏷️ Códigos de descuento
 
-_Actualizado: 2026-08-24 · 19 órdenes en la ventana accesible_
+_Actualizado: 2026-09-02 · 19 órdenes en la ventana accesible_
 
 | Código | Usos | % de órdenes |
 |---|---:|---:|
@@ -278,13 +279,13 @@ _Actualizado: 2026-08-24 · 19 órdenes en la ventana accesible_
 
 ## 👥 Clientes y LTV
 
-_Actualizado: 2026-08-24 · 451 clientes con compras_
+_Actualizado: 2026-09-02 · 454 clientes con compras_
 
 ### Stats generales
 
-- **Customers con compras:** 451
-- **LTV total:** $2,541,224
-- **LTV promedio:** $5,635
+- **Customers con compras:** 454
+- **LTV total:** $2,568,342
+- **LTV promedio:** $5,657
 - **Clientes que repiten (2+ órdenes):** 33 (7.3%)
 
 ### Top 10 LTV

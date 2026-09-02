@@ -18,6 +18,22 @@ body{background-image:radial-gradient(ellipse at 0% 0%,rgba(56,189,248,0.04) 0%,
 .topnav a.current{background:var(--gold);color:var(--bg);}
 .topnav .meta{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);}
 .topnav .meta strong{color:var(--yoda);}
+.alerts{background:linear-gradient(180deg,rgba(239,68,68,0.07),rgba(239,68,68,0.02));border:1px solid rgba(239,68,68,0.35);border-radius:12px;padding:18px 20px;margin-bottom:16px;}
+.alerts h2{font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin:0 0 4px;color:var(--sith);display:flex;align-items:center;gap:10px;}
+.alerts h2::before{content:'▲';font-size:10px;}
+.alerts .asub{font-size:12px;color:var(--muted);margin-bottom:14px;}
+.agrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(268px,1fr));gap:10px;}
+.alert{background:var(--panel-2);border:1px solid var(--border);border-left:3px solid var(--sith);border-radius:0 8px 8px 0;padding:13px 15px;}
+.alert.warn{border-left-color:var(--gold);}
+.alert .at{font-size:12.5px;font-weight:700;color:var(--text);margin-bottom:5px;line-height:1.35;}
+.alert .an{font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700;color:var(--sith);line-height:1.1;margin-bottom:5px;}
+.alert.warn .an{color:var(--gold);}
+.alert .ad{font-size:11.5px;color:var(--muted);line-height:1.5;}
+.alert .ad strong{color:var(--text);}
+.invbar{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;}
+.invchip{font-family:'JetBrains Mono',monospace;font-size:10.5px;background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:5px 9px;color:var(--muted);}
+.invchip strong{color:var(--yoda);}
+.invchip.dead strong{color:var(--sith);}
 .hero{padding:20px 24px;background:var(--panel);border:1px solid var(--border);border-radius:12px;margin-bottom:16px;}
 .hero h1{font-family:'Orbitron',sans-serif;font-size:24px;font-weight:800;margin:0 0 6px;letter-spacing:0.04em;}
 .hero .sub{font-size:13px;color:var(--muted);}
@@ -150,7 +166,7 @@ footer{color:var(--muted);font-size:11px;margin-top:32px;padding-top:20px;border
 .tip strong{color:var(--jedi);}
 </style></head><body>
 <div class="wrap">
-<nav class="topnav"><span class="brand">⚔ SABER LEGACY</span><div class="nav-links"><a href="index.html">Cliente</a><a href="internas.html">Internas</a><a href="recomendaciones.html">Recomendaciones</a><a href="explicaciones.html" class="current">📚 Explicaciones</a></div><span class="meta">Actualizado <strong>24/08/2026 · 17:59</strong></span></nav>
+<nav class="topnav"><span class="brand">⚔ SABER LEGACY</span><div class="nav-links"><a href="index.html">Cliente</a><a href="internas.html">Internas</a><a href="recomendaciones.html">Recomendaciones</a><a href="explicaciones.html" class="current">📚 Explicaciones</a></div><span class="meta">Actualizado <strong>02/09/2026 · 15:33</strong></span></nav>
 <div class="explain-hero"><h1>📚 Qué está pasando con la cuenta (y cómo leer el dashboard)</h1><p>Por qué el rendimiento cayó desde junio, por qué Meta y Shopify nunca van a dar el mismo número, y qué significa cada métrica. <strong>Léelo completo en 10 min.</strong></p></div>
 
 <div class="explain-section"><h2><span class="n">0</span>Corrección importante al reporte anterior</h2>
@@ -209,5 +225,5 @@ footer{color:var(--muted);font-size:11px;margin-top:32px;padding-top:20px;border
 <p><strong>Pixel:</strong> código en el sitio que le avisa a Meta cuando pasan cosas (ver producto, agregar al carrito, comprar).</p>
 <p><strong>CAPI:</strong> el mismo aviso pero desde el servidor de la tienda en vez del navegador. Más confiable ante AdBlock e iOS. Complemento del pixel, no reemplazo.</p></div>
 
-<footer>SABER LEGACY · 24/08/2026 · 17:59</footer>
+<footer>SABER LEGACY · 02/09/2026 · 15:33</footer>
 </div>

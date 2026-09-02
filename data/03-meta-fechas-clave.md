@@ -1,6 +1,6 @@
 # Performance en fechas clave (auto-generado)
 
-_Actualizado: 2026-08-24_
+_Actualizado: 2026-09-02_
 
 _Ventas y ROAS son atribución de Meta (7d clic / 1d vista), no pedidos de Shopify._
 

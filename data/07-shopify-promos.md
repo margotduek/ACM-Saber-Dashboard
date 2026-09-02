@@ -1,6 +1,6 @@
 # Códigos de descuento usados · Shopify (auto-generado)
 
-_Actualizado: 2026-08-24 · 19 órdenes en la ventana accesible_
+_Actualizado: 2026-09-02 · 19 órdenes en la ventana accesible_
 
 | Código | Usos | % de órdenes |
 |---|---:|---:|

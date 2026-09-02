@@ -1,6 +1,6 @@
 # Evolución mensual · Meta Ads (auto-generado)
 
-_Actualizado: 2026-08-24_
+_Actualizado: 2026-09-02_
 
 **⚠️ El pixel de Meta no tiene ningún evento de `purchase` configurado (0 en los 3 años de historial de la cuenta) — no hay Ventas/ROAS/CPA nativos de Meta que reportar.** El ROAS de los reportes anteriores salía de cruzar manualmente el total de Shopify contra el gasto del mes, no de atribución real de Meta. Vale la pena revisar si el Conversions API / pixel está bien instalado en el checkout.
 
@@ -41,4 +41,5 @@ _Actualizado: 2026-08-24_
 | 2026-05 | $92,621 | 76661 | $1.21 | 1.5 |
 | 2026-06 | $8,072 | 5913 | $1.37 | 1.1 |
 | 2026-07 | $24,351 | 11904 | $2.05 | 1.8 |
-| 2026-08 | $23,731 | 8739 | $2.72 | 1.9 |
+| 2026-08 | $31,960 | 12080 | $2.65 | 1.8 |
+| 2026-09 | $2,070 | 1483 | $1.40 | 1.5 |
