@@ -30,6 +30,15 @@ body{background-image:radial-gradient(ellipse at 0% 0%,rgba(56,189,248,0.04) 0%,
 .alert.warn .an{color:var(--gold);}
 .alert .ad{font-size:11.5px;color:var(--muted);line-height:1.5;}
 .alert .ad strong{color:var(--text);}
+.yoygrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin-top:6px;}
+.ycard{background:var(--panel-2);border:1px solid var(--border);border-radius:10px;padding:15px 17px;}
+.ycard.now{border-color:var(--sith);background:rgba(239,68,68,0.07);}
+.ycard .yy{font-family:'Orbitron',sans-serif;font-size:12px;letter-spacing:.12em;color:var(--muted);margin-bottom:6px;}
+.ycard.now .yy{color:var(--sith);}
+.ycard .yr{font-family:'JetBrains Mono',monospace;font-size:32px;font-weight:700;color:var(--jedi);line-height:1.05;}
+.ycard.now .yr{color:var(--sith);}
+.ycard .yd{font-size:11.5px;color:var(--muted);line-height:1.65;margin-top:8px;}
+.ycard .yd b{color:var(--text);font-weight:600;}
 .roasstrip{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:14px;}
 .rcell{background:var(--panel-2);border:1px solid var(--border);border-top:3px solid var(--jedi);border-radius:0 0 8px 8px;padding:10px 11px;text-align:center;}
 .rcell.lose{border-top-color:var(--sith);}
@@ -177,7 +186,7 @@ footer{color:var(--muted);font-size:11px;margin-top:32px;padding-top:20px;border
 .tip strong{color:var(--jedi);}
 </style></head><body>
 <div class="wrap">
-<nav class="topnav"><span class="brand">⚔ SABER LEGACY</span><div class="nav-links"><a href="index.html">Cliente</a><a href="internas.html" class="current">Internas</a><a href="recomendaciones.html">Recomendaciones</a><a href="explicaciones.html">📚 Explicaciones</a></div><span class="meta">Actualizado <strong>02/09/2026 · 15:44</strong></span></nav>
+<nav class="topnav"><span class="brand">⚔ SABER LEGACY</span><div class="nav-links"><a href="index.html">Cliente</a><a href="internas.html" class="current">Internas</a><a href="recomendaciones.html">Recomendaciones</a><a href="explicaciones.html">📚 Explicaciones</a></div><span class="meta">Actualizado <strong>02/09/2026 · 15:47</strong></span></nav>
 <div class="hero"><h1>⚙ Analíticas Internas</h1><div class="sub">Dashboard operativo · filtros + YoY. Para uso del equipo.</div></div>
 <div class="alerts"><h2>Focos rojos</h2><div class="asub">Revisado contra Shopify y Meta al 2026-08-31. Estos seis puntos mandan sobre cualquier optimización de campaña.</div><div class="agrid"><div class="alert "><div class="an">57 de 73</div><div class="at">Productos activos sin inventario</div><div class="ad">La tienda se ve llena y está hueca. Solo <strong>16</strong> se pueden surtir.</div></div><div class="alert "><div class="an">$538,203</div><div class="at">Inventario parado, ya pagado</div><div class="ad"><strong>231 unidades</strong> a precio de lista. Es capital inmovilizado, no capital faltante.</div></div><div class="alert "><div class="an">$14,055</div><div class="at">Pauta a campañas con CERO ventas (45%)</div><div class="ad">Últimos 30 días (2026-07-25 al 2026-08-31): $14,055 de $31,072. KITINICIACIÓN $9,107, VENTAS-MISTERYBOX - Real $4,948.</div></div><div class="alert warn"><div class="an">44 variantes</div><div class="at">Agotadas que SIGUEN aceptando pedidos</div><div class="ad">Genera inventario negativo: LIGHTSABER NECKLACE -128 · Protección de envío -4 · BATERÍAS -2 · COMMANDER -1. Son ventas cobradas que quizá no se surtieron.</div></div><div class="alert "><div class="an">1.31x</div><div class="at">Retorno sobre venta total · agosto completo</div><div class="ad">Mes calendario: $41,850 de venta Shopify contra $31,960 de pauta. El promedio de los últimos 12 meses es <strong>5.39x</strong>.</div></div><div class="alert warn"><div class="an">33 de 454</div><div class="at">Compradores que han repetido</div><div class="ad">7.3% de recompra. Cada venta tiene que pagarse sola a la primera.</div></div></div><div class="invbar"><span class="invchip"><strong>MYSTERY BOX</strong> · 46 uds · $164,220</span><span class="invchip"><strong>ADEPT</strong> · 38 uds · $130,674</span><span class="invchip"><strong>ONIX</strong> · 16 uds · $105,120</span><span class="invchip"><strong>HOJA DE POLICARBONATO</strong> · 35 uds · $34,879</span><span class="invchip"><strong>B-45 Neopixel Promo</strong> · 4 uds · $23,120</span><span class="invchip"><strong>SISTEMAS ELECTRONICOS</strong> · 10 uds · $19,500</span></div><div class="ad" style="margin-top:10px;font-size:11.5px;color:var(--muted)">Estos son los únicos productos que se pueden vender hoy. <strong style="color:var(--gold)">ONIX y ADEPT no tienen ni un anuncio dedicado.</strong></div></div>
 
@@ -252,6 +261,20 @@ footer{color:var(--muted);font-size:11px;margin-top:32px;padding-top:20px;border
 </div>
 
 
+<div class="section">
+  <h2>El mismo mes, año contra año <span class="hint">agosto · histórico desde 2023-09</span></h2>
+  <div class="yoygrid"><div class="ycard "><div class="yy">agosto 2024</div><div class="yr">3.31x</div><div class="yd"><b>$16,654</b> de inversión → <b>$55,112</b><br>6 compras · CTR 3.31% · CPC $0.83</div></div><div class="ycard "><div class="yy">agosto 2025</div><div class="yr">2.50x</div><div class="yd"><b>$14,001</b> de inversión → <b>$35,032</b><br>8 compras · CTR 5.23% · CPC $0.91</div></div><div class="ycard now"><div class="yy">agosto 2026</div><div class="yr">0.72x</div><div class="yd"><b>$31,960</b> de inversión → <b>$23,157</b><br>6 compras · CTR 1.51% · CPC $2.65</div></div></div>
+  <div class="roasnote">
+    <strong>Agosto no es un mes malo por temporada.</strong> En 2024 rindió 3.31x
+    y en 2025 2.50x — los dos por encima del punto en que la pauta se paga sola.
+    Este año cerró en <strong>0.72x</strong> gastando +128% contra el año pasado
+    ($31,960 vs $14,001) y trayendo 6 compras contra 8.
+    <br><br>El CPC pasó de $0.91 a $2.65 y el CTR de 5.23% a 1.51%:
+    pagamos más por cada clic y menos gente hace clic. Eso es desgaste de audiencia y creativo, no estacionalidad.
+  </div>
+</div>
+
+
 <div class="grid-2">
   <div class="section"><h2>Geografía Shopify</h2><div id="geoPanel"></div></div>
   <div class="section"><h2>Códigos de descuento</h2><div id="dcPanel"></div></div>
@@ -264,7 +287,7 @@ footer{color:var(--muted);font-size:11px;margin-top:32px;padding-top:20px;border
   </div>
 </div>
 
-<footer>SABER LEGACY · ACM Internal · 02/09/2026 · 15:44</footer>
+<footer>SABER LEGACY · ACM Internal · 02/09/2026 · 15:47</footer>
 </div>
 
 <script>

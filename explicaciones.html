@@ -30,6 +30,15 @@ body{background-image:radial-gradient(ellipse at 0% 0%,rgba(56,189,248,0.04) 0%,
 .alert.warn .an{color:var(--gold);}
 .alert .ad{font-size:11.5px;color:var(--muted);line-height:1.5;}
 .alert .ad strong{color:var(--text);}
+.yoygrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin-top:6px;}
+.ycard{background:var(--panel-2);border:1px solid var(--border);border-radius:10px;padding:15px 17px;}
+.ycard.now{border-color:var(--sith);background:rgba(239,68,68,0.07);}
+.ycard .yy{font-family:'Orbitron',sans-serif;font-size:12px;letter-spacing:.12em;color:var(--muted);margin-bottom:6px;}
+.ycard.now .yy{color:var(--sith);}
+.ycard .yr{font-family:'JetBrains Mono',monospace;font-size:32px;font-weight:700;color:var(--jedi);line-height:1.05;}
+.ycard.now .yr{color:var(--sith);}
+.ycard .yd{font-size:11.5px;color:var(--muted);line-height:1.65;margin-top:8px;}
+.ycard .yd b{color:var(--text);font-weight:600;}
 .roasstrip{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:14px;}
 .rcell{background:var(--panel-2);border:1px solid var(--border);border-top:3px solid var(--jedi);border-radius:0 0 8px 8px;padding:10px 11px;text-align:center;}
 .rcell.lose{border-top-color:var(--sith);}
@@ -177,7 +186,7 @@ footer{color:var(--muted);font-size:11px;margin-top:32px;padding-top:20px;border
 .tip strong{color:var(--jedi);}
 </style></head><body>
 <div class="wrap">
-<nav class="topnav"><span class="brand">⚔ SABER LEGACY</span><div class="nav-links"><a href="index.html">Cliente</a><a href="internas.html">Internas</a><a href="recomendaciones.html">Recomendaciones</a><a href="explicaciones.html" class="current">📚 Explicaciones</a></div><span class="meta">Actualizado <strong>02/09/2026 · 15:44</strong></span></nav>
+<nav class="topnav"><span class="brand">⚔ SABER LEGACY</span><div class="nav-links"><a href="index.html">Cliente</a><a href="internas.html">Internas</a><a href="recomendaciones.html">Recomendaciones</a><a href="explicaciones.html" class="current">📚 Explicaciones</a></div><span class="meta">Actualizado <strong>02/09/2026 · 15:47</strong></span></nav>
 <div class="explain-hero"><h1>📚 Qué está pasando con la cuenta (y cómo leer el dashboard)</h1><p>Por qué el rendimiento cayó desde junio, por qué Meta y Shopify nunca van a dar el mismo número, y qué significa cada métrica. <strong>Léelo completo en 10 min.</strong></p></div>
 
 <div class="explain-section"><h2><span class="n">0</span>Corrección importante al reporte anterior</h2>
@@ -236,5 +245,5 @@ footer{color:var(--muted);font-size:11px;margin-top:32px;padding-top:20px;border
 <p><strong>Pixel:</strong> código en el sitio que le avisa a Meta cuando pasan cosas (ver producto, agregar al carrito, comprar).</p>
 <p><strong>CAPI:</strong> el mismo aviso pero desde el servidor de la tienda en vez del navegador. Más confiable ante AdBlock e iOS. Complemento del pixel, no reemplazo.</p></div>
 
-<footer>SABER LEGACY · 02/09/2026 · 15:44</footer>
+<footer>SABER LEGACY · 02/09/2026 · 15:47</footer>
 </div>
