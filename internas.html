@@ -30,6 +30,8 @@ body{background-image:radial-gradient(ellipse at 0% 0%,rgba(56,189,248,0.04) 0%,
 .alert.warn .an{color:var(--gold);}
 .alert .ad{font-size:11.5px;color:var(--muted);line-height:1.5;}
 .alert .ad strong{color:var(--text);}
+.capnote{background:var(--panel-2);border-left:3px solid var(--jedi);border-radius:0 8px 8px 0;padding:14px 16px;margin-top:14px;font-size:12px;color:var(--muted);line-height:1.65;}
+.capnote strong{color:var(--text);} .capnote .big{color:var(--jedi);font-family:'JetBrains Mono',monospace;font-weight:700;}
 .yoygrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin-top:6px;}
 .ycard{background:var(--panel-2);border:1px solid var(--border);border-radius:10px;padding:15px 17px;}
 .ycard.now{border-color:var(--sith);background:rgba(239,68,68,0.07);}
@@ -186,7 +188,7 @@ footer{color:var(--muted);font-size:11px;margin-top:32px;padding-top:20px;border
 .tip strong{color:var(--jedi);}
 </style></head><body>
 <div class="wrap">
-<nav class="topnav"><span class="brand">⚔ SABER LEGACY</span><div class="nav-links"><a href="index.html">Cliente</a><a href="internas.html" class="current">Internas</a><a href="recomendaciones.html">Recomendaciones</a><a href="explicaciones.html">📚 Explicaciones</a></div><span class="meta">Actualizado <strong>02/09/2026 · 15:47</strong></span></nav>
+<nav class="topnav"><span class="brand">⚔ SABER LEGACY</span><div class="nav-links"><a href="index.html">Cliente</a><a href="internas.html" class="current">Internas</a><a href="recomendaciones.html">Recomendaciones</a><a href="explicaciones.html">📚 Explicaciones</a></div><span class="meta">Actualizado <strong>02/09/2026 · 15:55</strong></span></nav>
 <div class="hero"><h1>⚙ Analíticas Internas</h1><div class="sub">Dashboard operativo · filtros + YoY. Para uso del equipo.</div></div>
 <div class="alerts"><h2>Focos rojos</h2><div class="asub">Revisado contra Shopify y Meta al 2026-08-31. Estos seis puntos mandan sobre cualquier optimización de campaña.</div><div class="agrid"><div class="alert "><div class="an">57 de 73</div><div class="at">Productos activos sin inventario</div><div class="ad">La tienda se ve llena y está hueca. Solo <strong>16</strong> se pueden surtir.</div></div><div class="alert "><div class="an">$538,203</div><div class="at">Inventario parado, ya pagado</div><div class="ad"><strong>231 unidades</strong> a precio de lista. Es capital inmovilizado, no capital faltante.</div></div><div class="alert "><div class="an">$14,055</div><div class="at">Pauta a campañas con CERO ventas (45%)</div><div class="ad">Últimos 30 días (2026-07-25 al 2026-08-31): $14,055 de $31,072. KITINICIACIÓN $9,107, VENTAS-MISTERYBOX - Real $4,948.</div></div><div class="alert warn"><div class="an">44 variantes</div><div class="at">Agotadas que SIGUEN aceptando pedidos</div><div class="ad">Genera inventario negativo: LIGHTSABER NECKLACE -128 · Protección de envío -4 · BATERÍAS -2 · COMMANDER -1. Son ventas cobradas que quizá no se surtieron.</div></div><div class="alert "><div class="an">1.31x</div><div class="at">Retorno sobre venta total · agosto completo</div><div class="ad">Mes calendario: $41,850 de venta Shopify contra $31,960 de pauta. El promedio de los últimos 12 meses es <strong>5.39x</strong>.</div></div><div class="alert warn"><div class="an">33 de 454</div><div class="at">Compradores que han repetido</div><div class="ad">7.3% de recompra. Cada venta tiene que pagarse sola a la primera.</div></div></div><div class="invbar"><span class="invchip"><strong>MYSTERY BOX</strong> · 46 uds · $164,220</span><span class="invchip"><strong>ADEPT</strong> · 38 uds · $130,674</span><span class="invchip"><strong>ONIX</strong> · 16 uds · $105,120</span><span class="invchip"><strong>HOJA DE POLICARBONATO</strong> · 35 uds · $34,879</span><span class="invchip"><strong>B-45 Neopixel Promo</strong> · 4 uds · $23,120</span><span class="invchip"><strong>SISTEMAS ELECTRONICOS</strong> · 10 uds · $19,500</span></div><div class="ad" style="margin-top:10px;font-size:11.5px;color:var(--muted)">Estos son los únicos productos que se pueden vender hoy. <strong style="color:var(--gold)">ONIX y ADEPT no tienen ni un anuncio dedicado.</strong></div></div>
 
@@ -275,6 +277,23 @@ footer{color:var(--muted);font-size:11px;margin-top:32px;padding-top:20px;border
 </div>
 
 
+<div class="section">
+  <h2>Ventas reales vs lo que Meta ve <span class="hint">pedidos, no pesos</span></h2>
+  <div class="chart-wrap"><canvas id="chartCapture"></canvas></div>
+  <div class="capnote">
+    Mucha gente ve el anuncio, no le pica, y compra después entrando directo. Meta no cuenta esas ventas.
+    Aquí está medido: de <strong>496 pedidos reales</strong> en la vida de la tienda, Meta se atribuye
+    <strong>417</strong>, o sea el <span class="big">84%</span>. Los 79 restantes
+    son ventas que la pauta pudo haber influido sin llevarse el crédito.
+    <br><br><strong>Por eso el ROAS de Meta es un piso, no la verdad.</strong> El techo es el ROAS sobre venta
+    total de Shopify, que sobreestima porque incluye lo orgánico. El número real vive entre los dos.
+    <br><br><em>Nota técnica:</em> esta gráfica va en pedidos y no en pesos porque el token de Shopify solo
+    entrega el importe de los últimos 60 días. El conteo sí está disponible en todo el histórico. Para tener
+    el ROAS real en pesos mes a mes hace falta el permiso <code>read_reports</code> o un export CSV del admin.
+  </div>
+</div>
+
+
 <div class="grid-2">
   <div class="section"><h2>Geografía Shopify</h2><div id="geoPanel"></div></div>
   <div class="section"><h2>Códigos de descuento</h2><div id="dcPanel"></div></div>
@@ -287,7 +306,7 @@ footer{color:var(--muted);font-size:11px;margin-top:32px;padding-top:20px;border
   </div>
 </div>
 
-<footer>SABER LEGACY · ACM Internal · 02/09/2026 · 15:47</footer>
+<footer>SABER LEGACY · ACM Internal · 02/09/2026 · 15:55</footer>
 </div>
 
 <script>
@@ -366,6 +385,23 @@ new Chart(document.getElementById('chartMonthly').getContext('2d'),{type:'bar',d
               y:{beginAtZero:true,grid:{color:'rgba(56,189,248,0.06)'},
                  ticks:{font:{size:9},callback:v=>v+'x'}}}},
     plugins:[avgLine]
+  });
+})();
+
+
+(function(){
+  const D=[{"m": "2025-09", "shop": 1, "meta": 5, "gap": -4, "pct": 500}, {"m": "2025-10", "shop": 66, "meta": 62, "gap": 4, "pct": 94}, {"m": "2025-11", "shop": 63, "meta": 55, "gap": 8, "pct": 87}, {"m": "2025-12", "shop": 59, "meta": 50, "gap": 9, "pct": 85}, {"m": "2026-01", "shop": 35, "meta": 30, "gap": 5, "pct": 86}, {"m": "2026-02", "shop": 5, "meta": 4, "gap": 1, "pct": 80}, {"m": "2026-03", "shop": 16, "meta": 11, "gap": 5, "pct": 69}, {"m": "2026-04", "shop": 70, "meta": 54, "gap": 16, "pct": 77}, {"m": "2026-05", "shop": 145, "meta": 122, "gap": 23, "pct": 84}, {"m": "2026-06", "shop": 17, "meta": 10, "gap": 7, "pct": 59}, {"m": "2026-07", "shop": 10, "meta": 8, "gap": 2, "pct": 80}, {"m": "2026-08", "shop": 9, "meta": 6, "gap": 3, "pct": 67}];
+  new Chart(document.getElementById('chartCapture').getContext('2d'),{
+    type:'bar',
+    data:{labels:D.map(d=>d.m),datasets:[
+      {label:'Pedidos reales Shopify',data:D.map(d=>d.shop),backgroundColor:'rgba(34,197,94,0.55)',borderColor:'#22c55e',borderWidth:1,borderRadius:3},
+      {label:'Compras que Meta reclama',data:D.map(d=>d.meta),backgroundColor:'rgba(56,189,248,0.75)',borderColor:'#38bdf8',borderWidth:1,borderRadius:3}]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{position:'top',align:'end'},tooltip:{callbacks:{afterBody:i=>{
+        const d=D[i[0].dataIndex];
+        return ['Meta no vio '+d.gap+' pedidos','Cobertura '+d.pct+'%'];}}}},
+      scales:{x:{grid:{display:false},ticks:{font:{size:9},autoSkip:false,maxRotation:60,minRotation:60}},
+              y:{beginAtZero:true,grid:{color:'rgba(56,189,248,0.06)'},ticks:{font:{size:9}}}}}
   });
 })();
 
